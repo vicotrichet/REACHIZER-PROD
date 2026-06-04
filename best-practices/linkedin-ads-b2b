@@ -1,0 +1,129 @@
+# LinkedIn Ads — Référence consultant 2026
+> Fichier de référence injecté par l'orchestrateur Reachizer dans le sous-agent LinkedIn Ads.
+
+---
+
+## Rôle de ce sous-agent
+Produire des recommandations stratégiques LinkedIn Ads et du contenu publicitaire (Sponsored Content, Document Ads, Lead Gen Forms, Message Ads) pour des PME B2B en Suisse romande.
+
+---
+
+## 1. Quand LinkedIn Ads est pertinent
+
+**Contexte favorable :**
+- ACV (valeur contrat annuelle) > 5 000 CHF/an — seul contexte où le CPL élevé est justifiable
+- ICP clairement défini : titre de poste + secteur + taille d'entreprise
+- Budget minimum : 50€/jour pour sortir de la phase d'apprentissage
+- Cible impossible à atteindre efficacement sur Meta ou Google
+
+**Contexte défavorable :**
+- Petits contrats (ACV < 2 000 CHF) → le CPL LinkedIn ne sera jamais rentable
+- Cible trop large ou mal définie → budget brûlé sur des profils hors ICP
+- Pas de contenu ou d'offre à haute valeur perçue (guide, benchmark, audit, webinar)
+- Budget < 1 500€/mois → pas suffisant pour tester et optimiser
+
+**Avantage absolu de LinkedIn :** ciblage simultané par titre de poste, séniorité, taille d'entreprise, secteur et compétences. CPC 3 à 5x supérieur à Google Search, 5 à 10x supérieur à Meta — justifié uniquement par la précision du ciblage.
+
+---
+
+## 2. Logique stratégique fondamentale 2026
+
+LinkedIn performe en B2B selon une séquence en 3 temps :
+1. **Notoriété** : Thought Leader Ads ou Document éducatif sur audiences froides
+2. **Nurturing** : Lead Gen Form sur ceux qui ont engagé (retargeting)
+3. **ABM** : Message Ads sur les comptes les plus chauds
+
+**60% des campagnes performantes 2026 combinent Matched Audiences + ciblage par attributs.**
+
+Ciblage recommandé : Fonction + Séniorité + Taille d'entreprise. Affiner par secteur après les premiers résultats. Ne pas surcibler dès le départ → audience trop petite = apprentissage bloqué (minimum 50 000 membres).
+
+---
+
+## 3. Formats par objectif
+
+| Format | Usage | Performance clé |
+|--------|-------|----------------|
+| Thought Leader Ad | Notoriété, engagement | CTR 2–5x supérieur au Sponsored Content de marque |
+| Document Ad | Mid-funnel, livre blanc, guide | CPL 30–40% inférieur, CTR médian 0,62% |
+| Sponsored Content image | Toutes étapes du funnel | CTR médian 0,50%, CPC 6–10 CHF |
+| Lead Gen Form | Capture de leads | CVR 6,1% vs 1,2% landing page externe |
+| Message Ad | ABM, audiences petites et qualifiées | Open rate 25–50%, uniquement sur listes très ciblées |
+| Carousel | Storytelling, démonstration étape par étape | CTR médian 0,55% |
+
+**Lead Gen Form à privilégier systématiquement** pour la capture de leads. CVR 5x supérieur à une landing page externe.
+
+---
+
+## 4. Structure d'un post Sponsored Content performant
+
+1. **Hook (lignes 1–2)** : seules lignes visibles avant "voir plus"
+   - Chiffre fort, affirmation contre-intuitive, question directe, problème reconnaissable
+2. **Corps** : 3–5 points ou narration courte
+3. **Preuve** : donnée chiffrée, témoignage, résultat client
+4. **CTA** : une seule action claire
+
+---
+
+## 5. Règles de copywriting LinkedIn
+
+- LinkedIn accepte le contenu long et les insights sectoriels : ne pas raccourcir artificiellement
+- Commencer par la valeur, jamais par le produit
+- Nommer explicitement la cible : "Si vous gérez une équipe marketing de 5 à 20 personnes..."
+- Thought Leader Ads : contenu natif obligatoire, pas du brand content rebrandé
+- Ton expert > ton commercial
+
+**Ce qui ne fonctionne pas :**
+- Visuels trop "publicitaires" (stock photos, fonds corporate)
+- Texte trop court et trop promotionnel
+- Absence de hook dans les 2 premières lignes
+
+---
+
+## 6. ABM — la stratégie la plus puissante
+
+Cibler une liste précise de comptes stratégiques, pas une audience large.
+
+**Résultats typiques ABM vs cold targeting :**
+- CPL 40–60% inférieur
+- Taux de qualification des leads nettement supérieur
+- Cycle de vente plus court
+
+**Séquence ABM :**
+1. Upload liste de comptes cibles dans Campaign Manager → Matched Audiences
+2. Campagne Sponsored Content ultra-personnalisée sur ces comptes
+3. Combiné avec ciblage Fonction/Séniorité pour toucher les bons interlocuteurs
+4. Relance en Message Ad sur les comptes les plus engagés
+
+---
+
+## 7. Erreurs stratégiques à éviter
+
+| Erreur | Pourquoi c'est un problème | Correction |
+|--------|---------------------------|------------|
+| Lancer LinkedIn avec ACV < 2 000 CHF | CPL jamais rentable | Meta ou Google Search à la place |
+| Audience < 50 000 membres | Apprentissage bloqué, diffusion limitée | Élargir le ciblage ou combiner Matched Audiences |
+| Landing page externe au lieu de Lead Gen Form | CVR 5x inférieur | Toujours tester Lead Gen Form en premier |
+| Tout mettre dans une seule campagne | Impossible d'optimiser par objectif | 1 campagne = 1 objectif |
+| Même créatif > 4 semaines sur même audience | Fatigue créative, fréquence trop haute | Rafraîchir à fréquence > 4 |
+| Budget < 30€/jour par campagne | Phase d'apprentissage permanente | Consolider sur moins de campagnes |
+| Mesurer en last-click | Sous-estimer LinkedIn (souvent first-touch) | Attribution multi-touch |
+| Ignorer le retargeting | CPL 2x plus cher en cold only | Allouer 20–30% du budget au retargeting |
+
+---
+
+## 8. Benchmarks de référence
+
+| Métrique | Valeur |
+|----------|--------|
+| CPC Sponsored Content | 5–9 CHF |
+| CPC Document Ads | 4,50–8 CHF |
+| CPM médian | 31$ |
+| CTR Sponsored Content | 0,50% (médiane) |
+| CTR Thought Leader Ads | 2–5x supérieur au Sponsored Content |
+| CVR Lead Gen Form | 6,1% |
+| CVR landing page externe | 1,2–2% |
+| CPL gated content | 45–65 CHF |
+| CPL demo request | 115–200 CHF |
+| Budget minimum/jour | 50€ (phase apprentissage) |
+| Budget minimum mensuel | 1 500 CHF |
+| ROAS médian B2B | 3–6x |
