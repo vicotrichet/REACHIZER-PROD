@@ -1,0 +1,350 @@
+# Meta Ads — Bonnes pratiques 2026
+> Fichier de référence injecté par l'orchestrateur Reachizer dans les sous-agents Meta Ads.
+> Dernière mise à jour : juin 2026
+
+---
+
+## 1. Le changement fondamental 2026 : le créatif EST le ciblage
+
+L'algorithme Meta (moteur Andromeda, déployé globalement en 2026) gère désormais le ciblage, les placements et les enchères de façon autonome. Le rôle de l'annonceur : lui fournir des inputs de qualité.
+
+**Ce qui différencie deux annonceurs avec le même budget :**
+- La qualité et la diversité des créatifs
+- La qualité du signal de conversion (CAPI)
+- La structure du compte (moins de campagnes, plus de données par entité)
+
+**Ce qui ne différencie plus :**
+- La finesse du ciblage par intérêts (dégradé par iOS et la suppression des cookies)
+- La multiplication des ensembles de publicités
+- Les enchères manuelles
+
+---
+
+## 2. Foundation technique non négociable
+
+### Pixel + CAPI (Conversions API)
+La CAPI est obligatoire en 2026. Sans elle, l'algorithme apprend sur des données incomplètes.
+
+- **Pixel seul** : match rate 40–60%
+- **Pixel + CAPI** : match rate 80–95%
+- Configurer les deux simultanément avec des Event IDs pour la déduplication
+- Événements à tracker dans l'ordre de priorité : `Lead` → `CompleteRegistration` → `Purchase`
+- Vérifier régulièrement dans Events Manager : doublons, événements manquants, attribution fenêtre
+
+### Domaine vérifié
+Obligatoire pour la hiérarchie des événements et la mesure iOS.
+
+### Depuis mars 2026
+Meta exige une mention explicite quand un contenu est généré ou modifié par IA. À configurer avant publication.
+
+---
+
+## 3. Structure de compte optimale
+
+### Principe : consolidation, pas fragmentation
+Multiplier les ensembles crée de la concurrence interne, fragmente le budget, ralentit l'apprentissage.
+
+**Structure recommandée (3 campagnes max pour commencer) :**
+
+```
+Campagne 1 — Acquisition (Broad / Advantage+ Audience)
+  └── 1 ensemble de publicités
+      └── 5 à 10 créatifs variés
+
+Campagne 2 — Retargeting (audiences chaudes)
+  └── 1 à 2 ensembles (par niveau de chaleur)
+      └── Créatifs de conversion, preuves sociales, offres
+
+Campagne 3 — Tests créatifs
+  └── 1 ensemble
+      └── 5 à 10 nouveaux créatifs testés chaque semaine
+```
+
+### Phase d'apprentissage
+- L'algorithme a besoin de **50 conversions/semaine par ensemble** pour en sortir
+- En dessous : performances instables, campagne en apprentissage permanent
+- Ne jamais modifier une campagne pendant les 7 premiers jours après lancement ou édition
+- Augmenter le budget de **20% maximum par jour** pour ne pas réinitialiser l'apprentissage
+
+### Objectifs de campagne
+- **Lead gen B2B** : objectif `Leads` avec Instant Forms (CPL réduit de 40–60% vs landing page)
+- **Conversion e-commerce** : objectif `Sales`
+- **Notoriété** : objectif `Awareness` ou `Reach`
+- ❌ Éviter l'objectif `Traffic` pour la performance : Meta optimise les clics, pas les conversions
+
+---
+
+## 4. Ciblage et audiences
+
+### Advantage+ Audience (recommandé par défaut)
+L'IA trouve les meilleurs profils automatiquement à partir des signaux de conversion.
+Fonctionne mieux quand le compte a un historique de conversions propre.
+
+**Quand utiliser le ciblage manuel :**
+- Niche B2B très étroite (audience < 50 000 personnes)
+- Budget < 30€/jour (l'algo n'a pas assez de données pour explorer)
+- Marché géographique très restreint
+
+### Audiences froides (prospection)
+- **Broad** : âge + genre + géo uniquement. Contre-intuitif mais souvent le plus efficace avec Advantage+
+- **Intérêts** : à combiner depuis des sources différentes (ex: "outils SaaS" + "publications sectorielles" + "entrepreneuriat") plutôt que d'empiler dans une même catégorie
+- **Lookalike** : seedé sur liste clients fermés (CRM), pas sur visiteurs site. Taille recommandée : 1–3%
+
+### Audiences chaudes (retargeting)
+Retargeting = 3 à 5x moins cher en CPL que la prospection froide.
+
+Segmenter par niveau d'intention :
+- Visiteurs homepage (30 jours) — intention faible
+- Visiteurs pages produit/service (14 jours) — intention moyenne
+- Abandonnistes formulaire ou panier (7 jours) — intention forte
+- Engagés Instagram/Facebook (60 jours)
+- Vues vidéo > 50% (30 jours)
+
+### Custom Audiences depuis CRM
+- Upload liste emails/téléphones → match rate B2B : 25–40% (emails pro ≠ emails Meta perso)
+- Mieux : passer par CAPI avec les données CRM pour un signal plus propre
+- Exclure les clients récents si objectif "new customers"
+
+### B2B spécifiquement
+- Ciblage par titre de poste, taille d'entreprise, secteur via les données employer Meta
+- ❌ L'interest targeting B2B pur brûle 40–70% du budget (étudiants, bots, comptes inactifs)
+- ✅ Stratégie "Search-to-Social" : retargeter sur Meta les visiteurs venus de Google Search (intention déclarée + CPM 80% moins cher que LinkedIn)
+- Le rôle principal de Meta en B2B : retargeting et accélération du comité d'achat (6,8 décideurs en moyenne, cycle 272 jours)
+
+---
+
+## 5. Formats et placements
+
+### Formats par ordre de performance 2026
+
+| Format | Placement | Performance |
+|--------|-----------|-------------|
+| Vidéo verticale 9:16 | Reels | CPM 20–35% moins cher que Feed, engagement 2–3x supérieur |
+| Vidéo carrée 1:1 | Feed | Bonne performance desktop et feed mobile |
+| Carrousel | Feed | Idéal pour storytelling multi-produits, before/after |
+| Image statique | Feed | Toujours efficace si visuel fort et texte court |
+| Story 9:16 | Stories | CTR fort, format éphémère |
+
+**Règle prioritaire : format 9:16 en premier.** Si un seul format, c'est celui-là.
+
+### Spécifications créatives
+- **Vidéo Reels** : 9:16, 15–30 secondes pour cold traffic, jusqu'à 60s pour warm
+- **Feed vidéo** : 4:5 ou 1:1, son activé (70–80% des Reels écoutés avec son)
+- **Image Feed** : 1080x1080 (1:1) ou 1080x1350 (4:5)
+- **Story/Reels** : 1080x1920 (9:16), laisser 250px en haut et bas sans texte clé
+- Texte sur visuel : < 20% de la surface (au-delà, portée réduite automatiquement)
+
+### Placements
+Laisser Meta gérer les placements automatiquement (Advantage+ Placements) dans la majorité des cas.
+Exception : exclure le réseau Audience Network si qualité des leads trop faible.
+
+**Meilleurs placements B2B** : Facebook Feed + Stories
+**Meilleur CPM** : Reels (Facebook et Instagram)
+
+---
+
+## 6. Stratégie créative
+
+### Principe fondamental
+Le créatif est le principal levier de performance. Deux annonceurs avec le même budget et le même ciblage auront des résultats radicalement différents selon la qualité de leurs créatifs.
+
+### Volume requis
+- **Minimum** : 5 créatifs actifs par campagne
+- **Optimal** : 15 à 50 créatifs actifs (pour que Advantage+ optimise correctement)
+- **Cadence de test** : 5 à 10 nouveaux créatifs par semaine pour les comptes à budget significatif
+
+### Structure d'un créatif performant
+
+**Le Hook (3 premières secondes en vidéo / première ligne en texte)**
+Seul moment qui compte pour décider si l'utilisateur continue. Modèle efficace :
+- Question directe : "Vous perdez encore du temps à faire X ?"
+- Affirmation décalée : "La plupart des équipes marketing font cette erreur."
+- Chiffre fort : "47% de nos clients ont réduit leur CPL en 30 jours."
+- Situation reconnaissable : "Vous avez relancé ce prospect 4 fois sans réponse ?"
+
+**Structure narrative vidéo : Hook → Hold → Reward**
+1. Hook : accrocher en < 3 secondes
+2. Hold : maintenir l'attention (problème, contexte, tension)
+3. Reward : récompenser (solution, preuve, CTA clair)
+
+**Copywriting texte**
+- Seuls les 125 premiers caractères s'affichent avant "Voir plus" → hook dans la première phrase
+- Pain point > feature : parler du problème client, pas des caractéristiques du produit
+- Un seul CTA par annonce
+
+### Types de créatifs par température d'audience
+
+| Audience | Type de créatif recommandé |
+|----------|--------------------------|
+| Froide | UGC, vidéo native, hook problème, contenu éducatif |
+| Tiède | Témoignages, études de cas, démo produit, before/after |
+| Chaude | Urgence, offre limitée, rappel de l'intérêt, social proof fort |
+
+### UGC vs Production professionnelle
+- **UGC** (contenu authentique, style "filmé par un vrai utilisateur") : surperforme la production polie de 25–40% sur la majorité des contextes
+- **Production pro recommandée** : marques luxe, B2B services premium, secteurs où la crédibilité = esthétique
+
+**Pour B2B SaaS :**
+- Screen recording + voix off : "Voici comment on a résolu X"
+- Founder talking-head : authenticité > production
+- Vidéos < 20 secondes pour cold traffic
+
+### Fatigues créative
+- Quand le CTR baisse de 20%+ par rapport à la baseline → rafraîchir
+- Quand la fréquence dépasse 3,5 sur audiences froides → rafraîchir
+- Méthode la plus rapide : même vidéo, nouveau hook (premiers 3 secondes)
+
+### Diversité créative requise par l'algorithme Andromeda
+L'algo pénalise les comptes avec des créatifs trop similaires (hausse des CPM).
+Varier sur :
+- Format : vidéo, image, carrousel, GIF
+- Longueur du texte : très court / moyen / long
+- Angle psychologique : douleur / plaisir / curiosité / social proof / urgence
+- Style visuel : pro / UGC / texte seul / produit / visage humain
+
+---
+
+## 7. Recommandations de mise en place selon l'objectif
+
+### Objectif : Génération de leads B2B
+
+**Configuration recommandée :**
+- Objectif de campagne : `Leads`
+- Format : Instant Forms (réduire les frictions, pré-remplissage Meta)
+- Ajouter une logique conditionnelle dans le formulaire pour filtrer les non-qualifiés
+- Connecter directement au CRM via intégration native (HubSpot, Salesforce, Pipedrive) ou Zapier
+- Répondre au lead dans les 5 minutes → +78% de taux de qualification
+
+**Audiences recommandées :**
+1. Prospection : Broad ou Advantage+ avec créatifs très ciblés sur le pain point
+2. Retargeting : visiteurs pages clés (14 jours) + engagés vidéo > 50% (30 jours)
+3. Lookalike 1% sur liste clients fermés
+
+**Budgets minimum :**
+- 50€/jour minimum pour que l'algo ait assez de données
+- Budget mensuel recommandé pour PME B2B : 1 500–3 000€/mois
+
+**Benchmarks B2B SaaS 2026 :**
+- CPL Instant Forms : 80–220€ (top quartile : 50–90€)
+- CPL landing page : 120–380€
+- CPC moyen B2B : 2,52€
+- CPM B2B SaaS : ~4€
+- CTR cold : 0,6–1,0% / CTR retargeting : 1,2–1,8%
+
+---
+
+### Objectif : Notoriété de marque (Awareness)
+
+**Configuration recommandée :**
+- Objectif : `Awareness` ou `Reach`
+- Placement : Reels en priorité (CPM le plus bas)
+- Format : vidéo 9:16, 15–30 secondes, fortement brandée dans les 3 premières secondes
+- Audience : Broad géographique + exclusion clients existants
+
+**Indicateurs à suivre :**
+- CPM, fréquence (cible : 3–5 sur 30 jours)
+- Taux de complétion vidéo à 25%, 50%, 75%
+- Brand recall lift (disponible via Meta Brand Survey pour les gros budgets)
+
+---
+
+### Objectif : Conversion / Ventes e-commerce
+
+**Configuration recommandée :**
+- Type de campagne : Advantage+ Shopping Campaigns (ASC)
+- Prérequis ASC : catalogue propre (titres, images, prix, variantes), 15+ créatifs, historique de conversion suffisant
+- ASC délivre en moyenne 17% de CPA en moins vs campagnes manuelles
+- Exclure les clients récents si objectif "new customers only"
+
+**Structure funnel e-commerce :**
+1. Acquisition ASC (broad, catalogue + créatifs dédiés)
+2. Retargeting dynamique (DPA : Dynamic Product Ads sur visiteurs produit + abandonnistes)
+3. Fidélisation (audience clients, offre dédiée)
+
+**Benchmarks e-commerce 2026 :**
+- CPM moyen : 16,80€ (+18% vs 2024)
+- ROAS moyen toutes industries : 6:1 (e-commerce : 7,5:1)
+- CPA lifestyle/boutique : ~30€ / électronique : ~50€
+- Q4 : CPM +35–50% (anticiper en augmentant le budget créatif en amont)
+
+---
+
+### Objectif : Retargeting (toutes industries)
+
+**Règle d'or : le retargeting délivre 3 à 5x moins cher en CPL/CPA que la prospection.**
+
+**Segmentation par urgence :**
+- J-7 abandonnistes formulaire/panier → offre directe, urgence
+- J-14 visiteurs pages produit → preuve sociale, témoignage
+- J-30 visiteurs homepage → éducation, problem awareness
+- 60 jours engagés → rappel de valeur, contenu
+
+**Exclure systématiquement** : clients récents (< 30 jours post-achat), leads déjà convertis
+
+---
+
+## 8. Budget et répartition
+
+### Règle de répartition funnel recommandée
+- Acquisition (cold) : 60–70% du budget
+- Retargeting : 20–30% du budget
+- Tests créatifs : 10% du budget
+
+### Scaling
+- Ne jamais augmenter un budget de plus de 20%/jour → risque de réinitialiser l'apprentissage
+- Passer en CBO (Campaign Budget Optimization) pour laisser Meta répartir entre ensembles
+- Dédupliquer les audiences régulièrement (overlap > 20% = cannibalisation)
+
+### ROAS minimum
+- Formule : ROAS minimum = 1 / marge brute
+- Exemple : 50% de marge → ROAS minimum 2,0x pour être rentable avant frais fixes
+
+---
+
+## 9. Mesure et pilotage
+
+### KPIs principaux par objectif
+
+| Objectif | KPI principal | KPI secondaires |
+|----------|---------------|-----------------|
+| Lead gen | CPL (coût par lead) | Taux de qualification, cost per SQL |
+| E-commerce | ROAS / CPA | CVR, panier moyen, new customer CPA |
+| Notoriété | CPM, fréquence | Taux de complétion vidéo |
+| Retargeting | ROAS ou CPL | Fréquence, taux de conversion |
+
+**Métriques Advantage+ à privilégier** : CPA, ROAS, CVR par créatif → CTR et CPM sont moins pertinents car Meta gère reach et fréquence comme variables.
+
+### Attribution
+- Fenêtre standard : 7 jours clic / 1 jour vue
+- ROAS réel souvent 20–40% supérieur au ROAS reporté par Meta post-iOS 14 (modélisation)
+- Croiser avec les données CRM pour valider la qualité réelle des leads
+
+### Audit trimestriel recommandé
+- Chevauchement des audiences (overlap)
+- Fatigue créative (CTR baseline vs actuel)
+- Attribution windows
+- Qualité des leads (taux de qualification CRM vs leads Meta)
+- Structure de compte (trop de campagnes/ensembles ?)
+
+---
+
+## 10. Erreurs fréquentes à éviter
+
+| Erreur | Impact | Correction |
+|--------|--------|-----------|
+| Trop d'ensembles de publicités | Cannibalisation, apprentissage fragmenté | Max 2–3 ensembles par campagne |
+| Modifier une campagne en phase d'apprentissage | Réinitialisation, perfs instables | Attendre 7 jours avant tout changement |
+| Objectif Traffic au lieu de Leads/Sales | Optimisation sur clics, pas conversions | Toujours choisir l'événement le plus proche de l'objectif business |
+| CAPI non configurée | Signal dégradé, algo qui apprend mal | Priorité absolue avant tout lancement |
+| Interest targeting B2B pur | 40–70% de budget gaspillé | Custom audiences CRM + retargeting Search-to-Social |
+| Budget trop faible (< 50€/j) | Jamais de sortie de la phase d'apprentissage | Consolider le budget sur moins de campagnes |
+| Créatifs trop homogènes | Pénalité Andromeda, hausse CPM | Varier format, angle, style, longueur |
+| Augmenter le budget trop vite | Réinitialisation de l'apprentissage | Max +20%/jour |
+
+---
+
+## Sources
+- Meta for Business (2026)
+- WordStream / AdEspresso benchmarks (fév. 2026)
+- Flighted, OptiFOX, GrowthSpree, Adac Média, Panja.io (2026)
+- Dreamdata B2B Institute (2026) — données cycle d'achat B2B
