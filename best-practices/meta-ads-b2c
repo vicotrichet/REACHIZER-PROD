@@ -1,0 +1,167 @@
+# Meta Ads — Référence consultant B2C 2026
+> Fichier de référence injecté par l'orchestrateur Reachizer dans le sous-agent Meta Ads (contexte B2C).
+
+---
+
+## Rôle de ce sous-agent
+Produire des recommandations stratégiques Meta Ads et du contenu publicitaire (textes, briefs créatifs, structures de campagne) pour des entreprises B2C : e-commerce, retail, services grand public, abonnements.
+
+---
+
+## 1. Quand Meta Ads est pertinent en B2C
+
+**Contexte favorable :**
+- E-commerce ou service à l'achat impulsif ou émotionnel
+- Panier moyen entre 20CHF et 500CHF (au-delà, cycle d'achat plus long → funnel plus travaillé)
+- Audience large et définissable par centres d'intérêt, comportements, démographie
+- Budget ≥ 30CHF/jour minimum (50CHF/jour recommandé pour sortir de l'apprentissage)
+- Catalogue produit structuré → Dynamic Product Ads très efficaces
+
+**Contexte défavorable :**
+- Produit très niche sans volume d'audience suffisant → Google Search plus adapté
+- Panier moyen < 15CHF → le CPL/CPA sera difficile à rentabiliser
+- Secteurs réglementés (crédit, santé, politique) → restrictions Meta sévères
+
+---
+
+## 2. Logique stratégique fondamentale B2C
+
+En B2C, Meta est souvent **le canal principal d'acquisition**, pas un canal de support comme en B2B. L'achat est émotionnel et rapide — le créatif doit déclencher le désir immédiatement.
+
+**Ce qui drive la performance B2C sur Meta :**
+- La qualité du créatif (UGC, vidéo authentique, preuve sociale)
+- La fluidité du tunnel (landing page ou fiche produit → checkout en 2 clics max)
+- Le retargeting dynamique (DPA) sur les visiteurs produit et abandonnistes
+- Le volume de données de conversion (achat, ajout panier) pour alimenter l'algo
+
+**Différence clé vs B2B :** pas de comité d'achat, pas de cycle long. L'objectif est de déclencher l'achat ou la capture de lead en une seule session.
+
+---
+
+## 3. Structure de campagne recommandée B2C
+
+```
+Campagne 1 — Acquisition ASC (Advantage+ Shopping)
+  └── Catalogue produit + 15+ créatifs variés
+  └── Objectif : Sales / Purchase
+
+Campagne 2 — Retargeting dynamique (DPA)
+  └── Visiteurs fiches produit (14 jours)
+  └── Abandonnistes panier (7 jours)
+
+Campagne 3 — Fidélisation / Upsell
+  └── Audiences clients existants
+  └── Offre dédiée, cross-sell
+```
+
+**Advantage+ Shopping Campaigns (ASC) :** format privilégié en e-commerce B2C. Délivre en moyenne 17% de CPA en moins vs campagnes manuelles. Nécessite un catalogue propre et 15+ créatifs.
+
+**Répartition budget recommandée :**
+- Acquisition froide : 60–70%
+- Retargeting dynamique : 20–30%
+- Fidélisation : 10%
+
+---
+
+## 4. Formats et specs
+
+| Format | Usage | Specs |
+|--------|-------|-------|
+| Vidéo 9:16 | Cold traffic — priorité absolue | 15–30s, son activé, produit visible < 3s |
+| Image 4:5 | Feed mobile, produit mis en scène | 1080x1350px |
+| Carrousel | Multi-produits, before/after, storytelling | 3–5 slides, chaque slide = un bénéfice |
+| Dynamic Product Ads | Retargeting automatique sur catalogue | Nécessite catalogue Merchant Center |
+| Story 9:16 | Retargeting chaud, offre limitée | 1080x1920px, 250px libres haut/bas |
+
+---
+
+## 5. Structure d'une annonce performante B2C
+
+### Hook (3 premières secondes / première ligne)
+- Produit en action immédiatement (pas de logo, pas d'intro)
+- Situation reconnaissable : "Vous cherchez encore X sans résultat ?"
+- Preuve sociale directe : "23 000 clients satisfaits en Suisse"
+- Offre claire : "-30% aujourd'hui seulement"
+- UGC : vraie personne qui utilise le produit, ton authentique
+
+### Structure narrative : Hook → Désir → Preuve → CTA
+1. Hook : déclencher l'émotion ou la reconnaissance en < 3 secondes
+2. Désir : montrer le bénéfice vécu (pas la feature)
+3. Preuve : avis client, note, résultat chiffré
+4. CTA : une action claire et sans friction ("Acheter", "Découvrir", "Profiter de l'offre")
+
+### Texte annonce
+- Seuls les 125 premiers caractères s'affichent avant "Voir plus" → hook en premier
+- Bénéfice vécu > caractéristique produit : "Dormez enfin 8h d'affilée" > "Matelas à mémoire de forme"
+- Un seul CTA par annonce
+- Urgence et rareté si justifiées : "Stock limité", "Offre valable jusqu'au [date]"
+
+---
+
+## 6. Règles créatives par audience
+
+| Audience | Type de contenu recommandé |
+|----------|---------------------------|
+| Froide | UGC authentique, hook émotionnel, avant/après, témoignage |
+| Tiède | Avis clients, démonstration produit, preuve sociale chiffrée |
+| Chaude (abandonnistes) | Urgence, offre de réassurance, rappel du produit vu |
+
+**UGC en B2C :** surperforme systématiquement la production professionnelle. Le consommateur fait confiance à un vrai utilisateur, pas à une pub léchée. Priorité absolue pour le cold traffic.
+
+**Fatigue créative :**
+- CTR qui baisse de 20%+ → rafraîchir les créatifs
+- Fréquence > 3,5 sur audiences froides → changer de créatif
+- Méthode rapide : même vidéo, nouveau hook (premiers 3 secondes)
+
+---
+
+## 7. Retargeting dynamique — règles B2C
+
+Le DPA (Dynamic Product Ads) est le levier de retargeting le plus puissant en e-commerce. Meta affiche automatiquement les produits vus par chaque utilisateur.
+
+| Segment | Délai | Message |
+|---------|-------|---------|
+| Abandonnistes panier | J-7 | Urgence, offre de réassurance, livraison gratuite |
+| Visiteurs fiche produit | J-14 | Preuve sociale, avis, best-seller |
+| Visiteurs homepage | J-30 | Découverte catalogue, nouveautés |
+| Clients récents | J+30 | Cross-sell, programme fidélité |
+
+**Toujours exclure** les clients récents (< 30 jours post-achat) des campagnes d'acquisition.
+
+---
+
+## 8. Saisonnalité et budget B2C
+
+- **Q4 (oct–déc) :** CPM +35–50% vs reste de l'année. Préparer les créatifs en avance, augmenter le budget créatif en septembre.
+- **Soldes, Black Friday, fêtes :** anticiper la hausse des CPM, lancer les campagnes 2 semaines avant le pic.
+- **Budget minimum e-commerce B2C :** 30CHF/jour (50CHF/jour recommandé pour performer réellement)
+
+---
+
+## 9. Erreurs stratégiques à éviter
+
+| Erreur | Pourquoi c'est un problème | Correction |
+|--------|---------------------------|------------|
+| Mettre en avant les features plutôt que le bénéfice vécu | Le consommateur achète une transformation, pas une spec | "Dormez mieux" > "Mousse haute densité 7 zones" |
+| Créatifs trop professionnels et léchés | Moins de confiance, moins d'engagement qu'un UGC authentique | Prioriser UGC et contenu natif |
+| Pas de retargeting dynamique (DPA) | Laisser partir les acheteurs prêts à convertir | Configurer DPA sur visiteurs produit + abandonnistes |
+| Objectif Traffic au lieu de Purchase/Sales | Meta optimise les clics, pas les achats | Toujours choisir l'événement le plus proche de l'achat |
+| Landing page lente ou mal optimisée mobile | CVR effondré même avec bonne pub | Tester PageSpeed, checkout en 2 clics max |
+| Ignorer la saisonnalité | Budget insuffisant pendant les pics | Anticiper Q4, soldes et fêtes |
+| Augmenter le budget trop vite | Réinitialisation de l'apprentissage | Max +20%/jour |
+| Exclure les clients existants des campagnes acquisition | Budget gaspillé sur des déjà-convertis | Exclure systématiquement les acheteurs récents |
+
+---
+
+## 10. Benchmarks de référence B2C
+
+| Métrique | Valeur |
+|----------|--------|
+| CPM moyen e-commerce | 16CHF (+18% vs 2024) |
+| CPA lifestyle/boutique | ~30CHF |
+| CPA électronique | ~50CHF |
+| ROAS moyen e-commerce | 7,5:1 |
+| ROAS minimum rentabilité | 1 / marge brute (ex: 50% marge → ROAS min 2x) |
+| CTR cold | 0,8–1,5% |
+| CTR retargeting | 1,5–3% |
+| Budget minimum e-commerce | 30–50CHF/jour |
