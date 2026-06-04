@@ -1,0 +1,152 @@
+# Meta Ads — Référence consultant 2026
+> Fichier de référence injecté par l'orchestrateur Reachizer dans le sous-agent Meta Ads.
+
+---
+
+## Rôle de ce sous-agent
+Produire des recommandations stratégiques Meta Ads et du contenu publicitaire (textes, briefs créatifs, structures de campagne) pour des PME B2B en Suisse romande.
+
+---
+
+## 1. Quand Meta Ads est pertinent
+
+**Contexte favorable :**
+- Budget ≥ 40 CHF/jour (en dessous, l'algo n'apprend jamais correctement)
+- Rôle principal en B2B : retargeting + accélération du comité d'achat (pas de l'acquisition froide pure)
+- Stratégie "Search-to-Social" : retargeter sur Meta les visiteurs venus de Google Search — intention déclarée + CPM 80% moins cher que LinkedIn
+- Notoriété de marque à construire sur une audience large
+
+**Contexte défavorable :**
+- Ciblage B2B ultra-niche (audience < 50 000) → LinkedIn plus adapté
+- Produit à très haute valeur (ACV > 20 000 CHF) → LinkedIn ou ABM direct
+- Pas de contenu ou d'offre à haute valeur perçue pour convertir
+
+---
+
+## 2. Logique stratégique fondamentale 2026
+
+L'algorithme Meta (Andromeda) gère le ciblage, les placements et les enchères de façon autonome. **Le créatif EST le ciblage.** Ce qui différencie deux annonceurs avec le même budget : la qualité et la diversité des créatifs.
+
+Ce qui ne fonctionne plus :
+- La finesse du ciblage par intérêts (dégradé post-iOS)
+- La multiplication des ensembles de publicités
+- L'interest targeting B2B pur → brûle 40–70% du budget sur des profils hors ICP
+
+Ce qui fonctionne :
+- Broad + Advantage+ Audience avec créatifs très ciblés sur le pain point
+- Custom audiences CRM + retargeting Search-to-Social
+- Consolidation : moins de campagnes, plus de données par entité
+
+---
+
+## 3. Structure de campagne recommandée
+
+```
+Campagne 1 — Acquisition (Broad / Advantage+ Audience)
+  └── 1 ensemble · 5 à 10 créatifs variés
+
+Campagne 2 — Retargeting (audiences chaudes)
+  └── Segmenté par niveau d'intention (J-7 / J-14 / J-30)
+
+Campagne 3 — Tests créatifs
+  └── 5 à 10 nouveaux créatifs testés chaque semaine
+```
+
+**Répartition budget recommandée :**
+- Acquisition froide : 60–70%
+- Retargeting : 20–30%
+- Tests créatifs : 10%
+
+---
+
+## 4. Formats et specs
+
+| Format | Usage | Specs |
+|--------|-------|-------|
+| Vidéo 9:16 | Cold traffic — priorité absolue | 15–30s cold, jusqu'à 60s warm |
+| Image 4:5 | Feed mobile | 1080x1350px |
+| Carrousel | Storytelling, before/after | 3–5 slides |
+| Story 9:16 | Retargeting chaud | 1080x1920px, 250px libres haut/bas |
+| Instant Forms | Lead gen B2B | Pré-rempli, réduit les frictions |
+
+**Règle :** si un seul format, c'est la vidéo 9:16. CPM 20–35% moins cher que le Feed, engagement 2–3x supérieur.
+
+---
+
+## 5. Structure d'une annonce performante
+
+### Hook (3 premières secondes / première ligne)
+- Question directe : "Vous perdez encore du temps à faire X ?"
+- Affirmation décalée : "La plupart des équipes marketing font cette erreur."
+- Chiffre fort : "47% de nos clients ont réduit leur CPL en 30 jours."
+- Situation reconnaissable : "Vous avez relancé ce prospect 4 fois sans réponse ?"
+
+### Structure vidéo : Hook → Hold → Reward
+1. Hook : accrocher en < 3 secondes
+2. Hold : problème, contexte, tension
+3. Reward : solution + CTA clair
+
+### Texte annonce
+- Seuls les 125 premiers caractères s'affichent avant "Voir plus" → hook en premier
+- Pain point > feature : parler du problème, pas du produit
+- Un seul CTA par annonce
+
+---
+
+## 6. Règles créatives par audience
+
+| Audience | Type de contenu recommandé |
+|----------|---------------------------|
+| Froide | UGC, vidéo native, hook problème, éducatif |
+| Tiède | Témoignages, études de cas, démo, before/after |
+| Chaude | Urgence, offre limitée, social proof fort |
+
+**UGC vs production pro :**
+- UGC surperforme la production polie de 25–40% dans la majorité des contextes B2B
+- Pour B2B SaaS : screen recording + voix off, founder talking-head, vidéos < 20s cold traffic
+- Production pro justifiée uniquement pour secteurs premium où crédibilité = esthétique
+
+**Diversité créative obligatoire :** varier format, angle psychologique (douleur / plaisir / curiosité / social proof / urgence), style visuel, longueur du texte. L'algo pénalise les créatifs trop homogènes.
+
+---
+
+## 7. Retargeting — règles de segmentation
+
+Retargeting = 3 à 5x moins cher en CPL que la prospection froide. Toujours allouer 20–30% du budget.
+
+| Segment | Intention | Contenu adapté |
+|---------|-----------|---------------|
+| J-7 abandonnistes formulaire | Forte | Offre directe, urgence |
+| J-14 visiteurs pages produit | Moyenne | Preuve sociale, témoignage |
+| J-30 visiteurs homepage | Faible | Éducation, problem awareness |
+| 60j engagés Instagram/Facebook | Variable | Rappel de valeur, contenu |
+
+---
+
+## 8. Erreurs stratégiques à éviter
+
+| Erreur | Pourquoi c'est un problème | Correction |
+|--------|---------------------------|------------|
+| Interest targeting B2B pur | 40–70% du budget gaspillé sur étudiants, bots, hors ICP | Custom audiences CRM + Search-to-Social |
+| Objectif Traffic au lieu de Leads | Meta optimise les clics, pas les conversions | Toujours choisir l'événement le plus proche de l'objectif business |
+| Budget < 50€/jour | Jamais de sortie de phase d'apprentissage | Consolider sur moins de campagnes |
+| Trop d'ensembles de publicités | Données fragmentées, algos sous-alimentés | Max 2–3 ensembles par campagne |
+| Créatifs trop homogènes | Pénalité Andromeda, hausse CPM | Varier format, angle, style |
+| Augmenter le budget trop vite | Réinitialisation de l'apprentissage | Max +20%/jour |
+| Ignorer le retargeting | CPL 3–5x plus cher en cold only | Allouer 20–30% du budget systématiquement |
+
+---
+
+## 9. Benchmarks de référence
+
+| Métrique | Valeur |
+|----------|--------|
+| CPL Instant Forms B2B | 80–220 CHF (top quartile : 50–90€) |
+| CPL landing page B2B | 120–380 CHF |
+| CPC moyen B2B | 2,52 CHF |
+| CPM B2B SaaS | ~4 CHF |
+| CTR cold | 0,6–1,0% |
+| CTR retargeting | 1,2–1,8% |
+| ROAS moyen toutes industries | 6:1 |
+| Budget minimum PME B2B | 1 500–3 000 CHF/mois |
+| Réponse au lead en < 5 min | +78% de taux de qualification |
