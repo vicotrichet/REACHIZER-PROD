@@ -1,0 +1,160 @@
+# Google Ads — Référence consultant B2C 2026
+> Fichier de référence injecté par l'orchestrateur Reachizer dans le sous-agent Google Ads (contexte B2C).
+
+---
+
+## Rôle de ce sous-agent
+Produire des recommandations stratégiques Google Ads et du contenu publicitaire (annonces RSA, extensions, textes landing page, structure de campagne) pour des entreprises B2C : e-commerce, retail, services grand public.
+
+---
+
+## 1. Quand Google Ads est pertinent en B2C
+
+**Contexte favorable :**
+- Intention de recherche existante (les consommateurs cherchent activement le produit ou service)
+- E-commerce avec catalogue produit structuré → Shopping + PMax très efficaces
+- Services locaux (plombier, coiffeur, restaurant) → Search local + Local Campaigns
+- Budget ≥ 20CHF/jour minimum pour Search, 30CHF/jour pour PMax
+
+**Contexte défavorable :**
+- Produit à achat impulsif sans recherche active → Meta Ads plus adapté pour créer la demande
+- Panier moyen < 15CHF → CPC difficile à rentabiliser sur Search
+- Catalogue non structuré (titres, images, prix manquants) → Shopping et PMax sous-performants
+
+---
+
+## 2. Logique stratégique fondamentale B2C
+
+En B2C, Google capte la **demande existante** (intention déclarée via la recherche). Meta crée la demande. Les deux sont complémentaires : Google convertit les prospects chauds, Meta les fait entrer dans le funnel.
+
+**Ce qui drive la performance B2C sur Google :**
+- Qualité du feed produit (Shopping) : titres, images, prix, disponibilité
+- Pertinence des annonces Search vs intention de recherche
+- Fluidité du tunnel : landing page ou fiche produit → achat en 2 clics max
+- Signal de conversion propre : achat tracké avec Enhanced Conversions
+
+**Différence clé vs B2B :** pas de tCPA élevé à justifier, cycle court, achat souvent en 1 session. L'objectif est de capter l'intention au bon moment avec le bon message.
+
+---
+
+## 3. Structure de campagne recommandée B2C
+
+**E-commerce avec historique :**
+```
+Campagne 1 — Brand Search (exact, protéger la marque)
+Campagne 2 — Shopping / PMax meilleurs produits (haute marge, ROAS ambitieux)
+Campagne 3 — PMax catalogue complet (Smart Bidding + signaux audience CRM)
+Campagne 4 — Search acquisition (mots-clés transactionnels par catégorie)
+```
+
+**Services B2C locaux :**
+```
+Campagne 1 — Brand Search
+Campagne 2 — Search intention forte + géo ciblée
+Campagne 3 — Local Campaigns (Google Maps, affichage local)
+```
+
+**Budget < 1 000CHF/mois :** Search uniquement sur les mots-clés les plus transactionnels. PMax sans historique de conversion = budget gaspillé.
+
+---
+
+## 4. Shopping et PMax — le cœur du B2C e-commerce
+
+### Performance Max (PMax)
+Format multi-placements (Search, Shopping, Display, YouTube, Discover, Gmail, Maps) piloté par l'algo.
+
+**Quand l'utiliser en B2C :**
+- Catalogue structuré dans Merchant Center (titres optimisés, images propres, prix à jour)
+- Historique de conversion suffisant : 30+ achats/mois minimum
+- Budget ≥ 30CHF/jour
+
+**Inputs obligatoires pour performer :**
+- 15 titres, 5 descriptions, images variées (paysage + carré + portrait)
+- Au moins 1 vidéo (sinon Google génère une vidéo automatique souvent médiocre)
+- Customer Match : upload liste clients CRM
+- URL d'exclusion : pages non commerciales (blog, CGV, connexion)
+
+### Feed produit — règles de qualité
+Le feed est le créatif du Shopping. Un mauvais feed = mauvaises perfs même avec bon budget.
+- **Titre produit :** [Marque] + [Modèle] + [Couleur/Taille] + [Matière] + [Cas d'usage]
+  - ✅ "Nike Air Max 90 Blanc Homme Taille 42"
+  - ❌ "Chaussure de sport confortable"
+- **Images :** fond blanc pour Shopping, lifestyle pour PMax
+- **Prix à jour :** décalage prix = suspension du feed
+
+---
+
+## 5. Annonces Search RSA — structure B2C
+
+**15 titres + 4 descriptions. Ad Strength cible : "Good" ou "Excellent".**
+
+Angles à couvrir dans les titres :
+- Bénéfice principal : "Livraison gratuite dès 50CHF"
+- Urgence / offre : "-20% sur votre première commande"
+- Preuve sociale : "4,8★ · 12 000 avis vérifiés"
+- Mot-clé transactionnel : "Acheter [produit] en ligne"
+- Réassurance : "Retours gratuits 30 jours"
+- Géo si pertinent : "Livraison en Suisse en 24h"
+
+Descriptions (90 caractères max) :
+- Bénéfice vécu > caractéristique : "Recevez votre commande demain" > "Livraison express disponible"
+- Lever les freins à l'achat : garantie, retour, paiement sécurisé
+- CTA clair : "Commander maintenant", "Découvrir la collection"
+
+---
+
+## 6. Mots-clés B2C — logique de ciblage
+
+**Intention forte (priorité) :** "acheter [produit]", "prix [produit]", "[produit] pas cher", "[produit] livraison rapide"
+
+**Intention commerciale :** "meilleur [produit]", "comparatif [produit]", "avis [produit]"
+
+**Négatifs systématiques :**
+- "gratuit", "occasion", "reconditionné" (sauf si vendu)
+- "comment faire", "tutoriel", "bricolage" (informationnels)
+- Marque propre (campagne Brand séparée)
+
+**Longue traîne locale :** "[produit] Genève", "[service] Lausanne", "[produit] livraison Suisse" → moins compétitif, intention forte.
+
+---
+
+## 7. Extensions — prioritaires en B2C
+
+| Extension | Ce qu'il faut produire |
+|-----------|----------------------|
+| Sitelinks (4 min) | Catégories phares, promotions, nouveautés, contact |
+| Callouts | "Livraison gratuite", "Retours 30j", "Paiement sécurisé", "En stock" |
+| Structured Snippets | Marques disponibles, catégories, services |
+| Promotion | Offre en cours : "-20% avec le code BIENVENUE" |
+| Prix | Liste de produits avec prix directement dans l'annonce |
+| Image | Visuel produit affiché à côté de l'annonce |
+
+---
+
+## 8. Erreurs stratégiques à éviter
+
+| Erreur | Pourquoi c'est un problème | Correction |
+|--------|---------------------------|------------|
+| Feed produit de mauvaise qualité | Shopping et PMax sous-performants | Optimiser titres, images, prix avant tout lancement |
+| Lancer PMax sans historique de conversion | Budget brûlé, algo sans signal | Attendre 30 achats/mois ou commencer Search uniquement |
+| Envoyer tout le trafic vers la homepage | Taux de conversion effondré | Landing page ou fiche produit dédiée par intention |
+| Broad Match sans négatifs solides | Budget gaspillé sur requêtes hors sujet | Construire la liste de négatifs avant le lancement |
+| Objectif Trafic au lieu de Purchase | Meta optimise les clics, pas les achats | Toujours choisir l'événement le plus proche de l'achat |
+| Ignorer la saisonnalité | Budget insuffisant pendant les pics | Anticiper Q4, soldes, fêtes — augmenter budget 2 semaines avant |
+| PMax qui cannibalise la campagne Brand | Budget marque gaspillé | Exclure les mots-clés marque de PMax |
+| tROAS trop ambitieux dès le départ | Campagne en sous-diffusion | Partir d'un ROAS réaliste, monter progressivement |
+
+---
+
+## 9. Benchmarks de référence B2C
+
+| Métrique | Valeur |
+|----------|--------|
+| CPC moyen Search e-commerce | 0,50–3CHF |
+| CVR landing page optimisée | 2–5% |
+| ROAS moyen e-commerce Google | 3,5–6x |
+| ROAS minimum rentabilité | 1 / marge brute (ex: 40% marge → ROAS min 2,5x) |
+| Budget minimum Search B2C | 20CHF/jour |
+| Budget minimum PMax | 30CHF/jour + 30 achats/mois |
+| Quality Score cible | 7+ |
+| Q4 : hausse CPM anticipée | +35–50% vs reste de l'année |
