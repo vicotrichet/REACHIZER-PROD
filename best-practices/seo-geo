@@ -1,0 +1,317 @@
+# SEO / GEO — Bonnes pratiques 2026
+> Fichier de référence injecté par l'orchestrateur Reachizer dans les sous-agents Organique (article de blog, page produit).
+> Dernière mise à jour : juin 2026
+
+---
+
+## 1. Le changement fondamental 2026 : deux moteurs à alimenter
+
+En 2026, la visibilité organique ne se joue plus uniquement sur Google. Une part croissante des recherches passe par des moteurs génératifs (ChatGPT, Perplexity, Gemini, Google AI Overviews) qui ne renvoient plus une liste de liens — ils synthétisent une réponse directe.
+
+**Deux disciplines complémentaires, pas opposées :**
+
+| SEO | GEO |
+|-----|-----|
+| Optimiser pour être *trouvé* par Google | Optimiser pour être *cité* par les IA |
+| Objectif : apparaître dans les 10 résultats | Objectif : être la source extraite dans la réponse |
+| Signaux : backlinks, Core Web Vitals, structure | Signaux : densité factuelle, autorité d'auteur, structure citable |
+
+**Règle fondamentale : pas de GEO sans SEO sain.** Un site techniquement cassé ne sera ni bien classé ni cité. Le SEO reste la fondation.
+
+**Ce qui a changé :** Le contenu "correct" ne suffit plus. Il faut être la meilleure réponse disponible — pour Google ET pour les IA.
+
+---
+
+## 2. SEO technique — la fondation non négociable
+
+### Core Web Vitals (facteur de classement Google)
+Google mesure l'expérience utilisateur réelle via 3 métriques :
+
+| Métrique | Seuil cible | Ce que ça mesure |
+|----------|-------------|-----------------|
+| LCP (Largest Contentful Paint) | < 2,5 secondes | Vitesse de chargement du contenu principal |
+| INP (Interaction to Next Paint) | < 200 ms | Réactivité aux interactions utilisateur |
+| CLS (Cumulative Layout Shift) | < 0,1 | Stabilité visuelle (éléments qui bougent) |
+| VSI (Visual Stability Index) | Nouveau 2026 | Stabilité sur toute la session (scroll, interactions) |
+
+**Outils de mesure :** Google Search Console (données terrain réelles), PageSpeed Insights, Lighthouse.
+Les améliorations deviennent visibles dans les classements sous 4 à 8 semaines (fenêtre de données de 28 jours).
+
+### Mobile-First Indexing
+Google indexe et classe la version mobile en priorité. 60%+ des recherches se font sur mobile.
+- Tester avec l'outil "Test d'optimisation mobile" de Google Search Console
+- Vérifier que le contenu et les balises sont identiques en mobile et desktop
+
+### Indexation et crawlabilité
+- Sitemap XML à jour, soumis dans Search Console
+- Robots.txt correct (ne pas bloquer accidentellement les pages clés)
+- Pas de contenu dupliqué → balises canonical
+- Résoudre les erreurs 404 et redirections en chaîne
+- Crawl budget : ne pas gaspiller sur des pages sans valeur (pages de filtre, pagination infinie)
+
+### Données structurées (Schema.org)
+Obligatoires pour le SEO ET le GEO. Permettent aux moteurs de comprendre et extraire le contenu.
+
+Schémas prioritaires :
+- `Article` : titre, auteur, date, image → signal E-E-A-T fort
+- `FAQPage` : paires question/réponse extractibles directement par les IA
+- `Organization` : nom, logo, URL, réseaux sociaux
+- `BreadcrumbList` : navigation structurée
+- `Product` / `Service` : pour les pages produit et service
+
+**Valider avec :** Rich Results Test (Google) + Schema Markup Validator
+Un schema mal formé est pire qu'aucun schema.
+
+---
+
+## 3. Stratégie de contenu SEO
+
+### Intention de recherche avant tout
+Chaque page = une intention précise. Quatre types d'intentions :
+- **Informationnelle** : "comment fonctionne X" → article de blog, guide
+- **Navigationnelle** : "site de X" → page d'accueil, page marque
+- **Commerciale** : "meilleur X pour Y" → page comparatif, cas d'usage
+- **Transactionnelle** : "acheter X", "prix X" → page produit, landing page
+
+Ne jamais mettre deux intentions différentes sur la même page.
+
+### Architecture en clusters thématiques (Topic Clusters)
+Organiser le contenu autour de pages piliers reliées à des articles satellites.
+
+```
+Page pilier : "Marketing automation pour PME"
+  ├── Article : "Comment automatiser ses emails B2B"
+  ├── Article : "Les meilleurs outils de marketing automation"
+  ├── Article : "Coût d'une solution de marketing automation"
+  └── Article : "Marketing automation vs CRM : quelle différence ?"
+```
+
+Chaque article satellite renforce la page pilier via le maillage interne. Google et les IA perçoivent la couverture thématique exhaustive comme un signal d'autorité.
+
+### Maillage interne
+- Lier systématiquement les articles satellites vers la page pilier (et entre eux)
+- Ancres de lien descriptives et naturelles (pas "cliquez ici")
+- Profondeur de clic : les pages importantes doivent être accessibles en 3 clics max depuis la homepage
+- Vérifier régulièrement les liens cassés
+
+### Longueur et profondeur du contenu
+- Les contenus longs et spécialisés génèrent plus de backlinks naturels et de citations IA
+- Pas de longueur cible arbitraire : être plus complet que les concurrents positionnés
+- Inclure ce que seul un expert praticien peut apporter : pièges réels, cas limites, données terrain
+
+### Fraîcheur du contenu
+- Mettre à jour les articles existants avec de nouvelles données (plus efficace que d'en créer de nouveaux)
+- Indiquer la date de mise à jour → signal de fraîcheur pour Google et les IA
+- Contenus datés de 2025/2026 avec sources → beaucoup plus citables
+
+---
+
+## 4. E-E-A-T — signal de qualité Google ET GEO
+
+E-E-A-T (Expérience, Expertise, Autorité, Fiabilité) est le filtre de qualité principal de Google et des LLM. Un contenu sans signaux d'expertise réels sera défavorisé dans les deux systèmes.
+
+### Comment signaler l'E-E-A-T concrètement
+
+**Expérience :**
+- Exemples concrets nommés avec dates et résultats
+- Données issues d'usage réel ("testé sur 50 campagnes entre janvier et mars 2026")
+- Erreurs documentées avec cause et correction
+
+**Expertise :**
+- Précision terminologique (termes exacts, pas d'approximations)
+- Couverture des cas limites et exceptions
+- Références à des sources primaires (études, documentation officielle)
+- FAQ qui traite les questions avancées, pas les questions basiques
+
+**Autorité :**
+- Page auteur complète avec photo, biographie, liens profils LinkedIn
+- Schema.org `Person` ou `Organization` sur chaque page
+- Mentions dans des médias tiers, publications sectorielles
+- Backlinks depuis des sites reconnus du secteur
+
+**Fiabilité :**
+- Sources citées et linkées (études, statistiques avec date et origine)
+- Données chiffrées vérifiables
+- Page "À propos" détaillée, mentions légales, CGU claires
+- HTTPS, politique de confidentialité conforme RGPD
+
+---
+
+## 5. GEO — optimiser pour être cité par les IA
+
+### Comment les LLM sélectionnent leurs sources
+Les moteurs génératifs cherchent le passage le plus dense qui répond à la question. Ils privilégient :
+1. Les sources avec un bon SEO classique (indexées, classées)
+2. Les contenus structurés (headings clairs, FAQ, listes)
+3. Les affirmations factuelles, datées, sourcées
+4. Les sources avec signaux E-E-A-T visibles
+5. Les marques cohérentes et présentes sur plusieurs canaux
+
+### Contenu "citable" — les règles
+
+**Principe BLUF (Bottom Line Up Front) :**
+La réponse à la question doit être dans la première phrase. Pas de mise en contexte de 3 paragraphes avant d'arriver au sujet.
+
+❌ Mauvais : "Depuis plusieurs années, les entreprises cherchent des solutions pour optimiser leur présence en ligne..."
+✅ Bon : "Le GEO (Generative Engine Optimization) est l'ensemble des techniques qui optimisent un contenu pour être cité par les moteurs IA comme ChatGPT ou Perplexity."
+
+**Chunks citables :**
+Un passage de 40 à 80 mots contenant :
+- Une affirmation nette
+- Un chiffre ou une date
+- Une source ou un contexte identifiable
+→ infiniment plus citable qu'un paragraphe descriptif de 200 mots sans ancre factuelle.
+
+**Ce qui rend un contenu citable :**
+- Chiffres sourcés et datés : "En 2026, 68% des PME..."
+- Listes structurées : les IA extraient facilement les informations hiérarchisées
+- Tableaux comparatifs : format nativement lisible par les LLM
+- Définitions claires en début de section
+- FAQ structurée (schema FAQPage) : format question/réponse = format natif des LLM
+
+### Fichier llms.txt
+Nouveau standard 2026 (inspiré de robots.txt) pour indiquer aux LLM quelles pages crawler et citer.
+Placer à la racine du site : `https://monsite.com/llms.txt`
+Contenu : liste des pages importantes, descriptions, instructions pour les crawlers IA.
+
+### Présence multicanale
+Distribuer son contenu sur plusieurs canaux (LinkedIn, newsletters sectorielles, presse spécialisée) augmente les citations IA jusqu'à 325% par rapport à publier uniquement sur son site. Les LLM perçoivent la cohérence d'entité multi-source comme un signal d'autorité fort.
+
+### Robots.txt IA-friendly
+Vérifier que les crawlers des LLM (GPTBot, ClaudeBot, PerplexityBot) ne sont pas bloqués dans le robots.txt — sauf si volonté délibérée de ne pas être indexé par les IA.
+
+---
+
+## 6. Backlinks et autorité de domaine
+
+Le netlinking reste le signal de confiance le plus puissant pour Google en 2026.
+
+### Approche qualité vs quantité
+- 1 lien depuis un site sectoriel reconnu > 100 liens depuis des annuaires génériques
+- Liens éditoriaux (cités dans un article de fond) > liens de footer ou sidebar
+
+### Comment obtenir des backlinks naturels
+- Contenu "linkable" : études originales, données exclusives, outils gratuits, guides exhaustifs
+- Guest posting sur des publications sectorielles (avec vraie valeur editoriale)
+- Relations presse digitale : être cité comme expert dans des articles de médias
+- Partenariats de contenu avec des acteurs complémentaires
+- Témoignages et études de cas chez des partenaires/fournisseurs
+
+### Ce qu'il faut éviter
+- Achats de liens (pénalité Google)
+- Échanges massifs de liens
+- Liens depuis des sites sans rapport thématique
+
+---
+
+## 7. Mesure et pilotage SEO/GEO
+
+### Outils indispensables
+- **Google Search Console** : gratuit, indispensable. Impressions, clics, positions, problèmes d'indexation, Core Web Vitals terrain
+- **Google Analytics 4** : trafic organique, comportement, conversions
+- **PageSpeed Insights / Lighthouse** : Core Web Vitals par page
+- **Ahrefs ou Semrush** : suivi de positions, analyse de backlinks, opportunités de mots-clés
+
+### Suivi GEO — mesure manuelle
+Aucun outil ne mesure parfaitement la visibilité dans les LLM. Méthode recommandée :
+1. Définir 10 questions clés que vos prospects posent dans votre secteur
+2. Les poser une fois par mois dans ChatGPT, Perplexity et Google AI Overviews
+3. Noter si votre marque/site est cité, et dans quel contexte
+4. Objectif : passer de 0/10 à 5/10 citations sur 6 mois
+
+### KPIs SEO à suivre
+
+| KPI | Outil | Fréquence |
+|-----|-------|-----------|
+| Positions sur mots-clés cibles | Search Console / Ahrefs | Hebdomadaire |
+| Trafic organique | GA4 | Hebdomadaire |
+| Core Web Vitals | Search Console | Mensuelle |
+| Taux de clics (CTR) moyen | Search Console | Mensuelle |
+| Pages indexées | Search Console | Mensuelle |
+| Profil de backlinks | Ahrefs / Semrush | Mensuelle |
+| Citations IA (GEO) | Test manuel | Mensuelle |
+
+---
+
+## 8. Recommandations de mise en place selon l'objectif
+
+### Objectif : Article de blog SEO + GEO optimisé
+
+**Structure recommandée :**
+1. Titre H1 : inclure le mot-clé principal + une formulation question ou bénéfice
+2. Introduction : répondre directement à la question principale en 2-3 phrases (BLUF)
+3. Sommaire avec ancres internes (signal de structure pour les LLM)
+4. Corps : H2 par sous-thème, H3 pour les détails. Alterner paragraphes courts, listes, tableaux
+5. FAQ structurée en fin d'article (schema FAQPage) : 3 à 5 questions que les prospects posent vraiment
+6. Sources citées et linkées
+7. Schema `Article` avec auteur, date, image
+
+**Checklist avant publication :**
+- [ ] L'intention de recherche est identifiée et respectée
+- [ ] La réponse principale est dans les 100 premiers mots
+- [ ] Au moins un chiffre daté et sourcé par section
+- [ ] Schema Article + FAQPage implémentés
+- [ ] Maillage interne vers la page pilier et 2-3 articles connexes
+- [ ] Meta title (< 60 caractères) et meta description (< 155 caractères) rédigés
+- [ ] Images optimisées (format WebP, alt text descriptif)
+- [ ] Score Core Web Vitals en vert sur mobile
+
+---
+
+### Objectif : Page produit / service SEO
+
+**Structure recommandée :**
+1. H1 : bénéfice principal + mot-clé (pas juste le nom du produit)
+2. Description courte : ce que c'est, pour qui, résultat obtenu
+3. Preuves : chiffres, témoignages clients, logos, études de cas
+4. Détails fonctionnels : liste des fonctionnalités avec bénéfices associés
+5. FAQ sur les objections courantes (schema FAQPage)
+6. CTA clair et répété
+
+**Signaux E-E-A-T sur une page produit :**
+- Nombre de clients, pays, années d'existence
+- Avis vérifiés avec noms et entreprises
+- Certifications, partenariats, intégrations connues
+
+---
+
+## 9. Contenu IA — règles de publication
+
+Le contenu généré par IA doit être validé et enrichi par un expert humain avant publication. Google détecte et pénalise le contenu IA brut sans valeur ajoutée.
+
+**Ce qu'il faut ajouter sur un contenu généré par IA :**
+- Des données terrain que seul un praticien peut apporter
+- Des exemples concrets nommés avec dates et résultats
+- Un angle ou une opinion experte qui ne se trouve pas ailleurs
+- Une relecture pour supprimer les formulations génériques et les tournures IA typiques
+
+**Ce qui reste proscrit :**
+- Contenu IA publié sans relecture
+- Remplissage de mots-clés (keyword stuffing)
+- Copie ou paraphrase d'articles existants
+
+---
+
+## 10. Erreurs fréquentes à éviter
+
+| Erreur | Impact | Correction |
+|--------|--------|-----------|
+| Pas de schema.org | Non citable par les LLM, moins de rich snippets Google | Implémenter Article + FAQPage en priorité |
+| Page d'accueil comme cible de tous les liens | Autorité mal distribuée, pages profondes sous-classées | Maillage interne thématique vers les pages clés |
+| Contenu sans intention claire | Google ne sait pas qui classer → mauvaise position | Une page = une intention = un mot-clé principal |
+| Ignorer le mobile | Classement dégradé (mobile-first indexing) | Tester et corriger systématiquement sur mobile |
+| Bloquer GPTBot / ClaudeBot dans robots.txt | Invisible pour les LLM | Vérifier et autoriser les crawlers IA |
+| Contenu IA brut publié sans enrichissement | Pénalité algorithmique Google, non citable | Validation + enrichissement expert obligatoire |
+| Mettre à jour les positions mais pas le contenu | Contenu qui vieillit, perd en autorité GEO | Audit contenu trimestriel + mise à jour des données |
+| Pas de page auteur | Signal E-E-A-T manquant → moins cité par les IA | Page auteur + schema Person sur chaque article |
+| Cibler des mots-clés sans volume sur un site neuf | Aucun trafic malgré les efforts | Commencer par la longue traîne, puis monter en compétitivité |
+| Aucune présence externe (presse, LinkedIn, newsletter) | Autorité GEO limitée au seul site | Distribuer le contenu sur d'autres canaux |
+
+---
+
+## Sources
+- Google Search Central — Guide d'optimisation IA (mai 2026)
+- Yvarn.fr — Guide GEO complet (2026)
+- Ceres.agency, LLMoptimisation.fr, EtcDigital.fr (2026)
+- May 2026 Core Update — analyses terrain
+- Digitiz.fr, Le Labo SEO, EpickOne (2026)
