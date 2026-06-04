@@ -1,0 +1,310 @@
+# Google Ads — Bonnes pratiques 2026
+> Fichier de référence injecté par l'orchestrateur Reachizer dans les sous-agents Google Ads.
+> Dernière mise à jour : juin 2026
+
+---
+
+## 1. Le changement fondamental 2026 : l'IA gère, tu alimentes
+
+Google Ads en 2026 est une plateforme d'automatisation pilotée par le signal. L'algo (Smart Bidding, PMax, AI Max) prend les décisions d'enchères, de ciblage et de diffusion. Le rôle de l'annonceur : lui fournir les bons inputs.
+
+**Ce qui détermine la performance :**
+- Qualité du tracking de conversion (signal propre = algo qui apprend bien)
+- Données first-party (Customer Match, Enhanced Conversions)
+- Qualité et diversité des créatifs (assets RSA, vidéos, images)
+- Structure de compte lisible par l'algo (consolidation, pas fragmentation)
+- Mots-clés négatifs (seul levier de contrôle qui reste critique)
+
+**Ce qui ne fonctionne plus comme avant :**
+- La segmentation ultra-fine par mots-clés exacts
+- Les enchères manuelles CPC (Enhanced CPC supprimé pour Search/Display depuis mars 2025)
+- Le contrôle manuel placement par placement
+- Les comptes avec 20+ campagnes fragmentées sur petit budget
+
+---
+
+## 2. Tracking de conversion — la priorité absolue
+
+Sans tracking propre, tout le reste ne sert à rien. L'algo optimise sur les données qu'il reçoit.
+
+### Configuration recommandée
+- **Tag Google Ads natif** via Google Tag Manager (pas GA4 importé — délais de reporting différents, signal moins bon pour le Smart Bidding)
+- **Enhanced Conversions** : envoie les données first-party hachées (email, téléphone) au moment de la conversion → récupère les conversions perdues (iOS, bloqueurs, cookies)
+- Pour le lead gen : Enhanced Conversions for Leads (import CRM des leads qualifiés fermés)
+
+### Pourquoi ne pas utiliser GA4 comme source principale
+GA4 utilise un modèle d'attribution différent et a des délais de reporting plus longs. Google Ads voit moins de conversions et enchérit moins agressivement. Toujours utiliser le tag natif Google Ads comme source primaire.
+
+### Événements à tracker dans l'ordre de priorité
+1. Conversion primaire (achat, formulaire soumis, démo réservée) → utilisée par Smart Bidding
+2. Micro-conversions (clic CTA, scroll, vidéo vue 50%) → utilisées comme signal secondaire
+3. Import conversions offline (appels qualifiés, contrats signés) → pour fermer la boucle CRM
+
+### Règle critique
+Ne jamais compter deux fois la même conversion (doublons entre tag GA4 + tag Google Ads sur le même événement). Vérifier dans le rapport de conversion de Google Ads.
+
+---
+
+## 3. Structure de compte
+
+### Principe : consolider pour que l'algo apprend vite
+
+Un budget fragmenté sur 10 campagnes = 10 algos sous-alimentés. Un budget consolidé sur 3 campagnes = des algos qui atteignent les seuils de données suffisants.
+
+**Seuil critique : 30 à 50 conversions/mois par campagne** pour que Smart Bidding soit stable.
+
+### Structure recommandée par type de business
+
+**E-commerce avec historique :**
+```
+Campagne 1 — Brand Search (exact, ROAS cible conservateur)
+Campagne 2 — Shopping / PMax meilleurs produits (haute marge, ROAS ambitieux)
+Campagne 3 — PMax catalogue complet (Smart Bidding + signaux audience)
+Campagne 4 — Search acquisition (mots-clés transactionnels, thèmes par catégorie)
+```
+
+**B2B Lead Gen :**
+```
+Campagne 1 — Brand Search (exact, protéger la marque)
+Campagne 2 — Search intention forte (mots-clés transactionnels, tCPA)
+Campagne 3 — PMax (15–25% du budget total, signaux audience CRM)
+[Optionnel] Campagne 4 — Remarketing Search (RLSA sur visiteurs clés)
+```
+
+**Budget < 2 000€/mois :**
+Pas de PMax. Se concentrer sur Search uniquement avec 1 à 2 campagnes max. PMax a besoin de volume de conversion pour performer — en dessous du seuil, il gaspille.
+
+### Groupes d'annonces
+- 7 à 10 groupes max par campagne Search
+- Chaque groupe = une intention précise (pas un mix de 30 mots-clés différents)
+- 1 RSA minimum par groupe avec Ad Strength "Good" ou "Excellent"
+- Trop de mots-clés par groupe → Ad Relevance faible → Quality Score bas → CPC élevé
+
+---
+
+## 4. Mots-clés et types de correspondance
+
+### La règle 2026 : Large Match + Smart Bidding + Négatifs solides
+
+Le Broad Match (large) avec Smart Bidding est souvent le type de correspondance le plus performant en 2026 — à condition d'avoir des négatifs bien gérés. Google a officiellement supprimé l'Enhanced CPC pour Search.
+
+**Quand utiliser quoi :**
+
+| Type | Usage recommandé |
+|------|-----------------|
+| Exact Match | Mots-clés marque, termes ultra-haute valeur, contrôle message |
+| Phrase Match | Termes spécifiques avec variation acceptable |
+| Broad Match | Avec Smart Bidding actif + historique de conversion + négatifs solides |
+
+### Mots-clés négatifs — levier de contrôle principal
+C'est le seul vrai moyen de contrôler ce que Google fait avec le broad match.
+
+**Listes à construire dès le lancement :**
+- Termes informationnels : "gratuit", "comment", "tuto", "formation", "avis", "wikipedia"
+- Termes emploi : "stage", "emploi", "recrutement", "offre d'emploi"
+- Concurrents (sauf si stratégie volontaire)
+- Marque propre (pour éviter la cannibalisation avec la campagne Brand)
+
+**En B2B :** ajouter "salaire", "formation", "exemple", "template", "définition"
+
+**Fréquence d'audit des termes de recherche :** hebdomadaire les 4 premières semaines, puis mensuelle.
+
+**Nouveauté 2026 :** Les listes de négatifs sont désormais applicables au niveau du compte (pas seulement campagne) — utiliser pour les exclusions universelles.
+
+### Mots-clés longue traîne pour les petits budgets
+Un petit compte ne peut pas se battre sur "logiciel CRM". Il peut dominer "logiciel CRM PME immobilier Suisse romande". Hypersegmenter sur l'intention + la géo + le secteur.
+
+---
+
+## 5. Smart Bidding — quelle stratégie selon le contexte
+
+### Les 4 stratégies Smart Bidding disponibles
+1. **Maximize Conversions** : volume max pour un budget donné, sans cible
+2. **Maximize Conversion Value** : valeur totale max (pour e-commerce avec valeurs différentes)
+3. **Target CPA (tCPA)** : viser un coût par conversion moyen
+4. **Target ROAS (tROAS)** : viser un retour sur investissement publicitaire
+
+### Quelle stratégie selon la maturité du compte
+
+| Situation | Stratégie recommandée |
+|-----------|----------------------|
+| Compte neuf, < 30 conversions/mois | Maximize Conversions sans cible (ou CPC manuel si budget < 30€/j) |
+| 30–50 conversions/mois | Maximize Conversions → passer à tCPA dès stabilisation |
+| 50+ conversions/mois | tCPA ou tROAS avec cible réaliste |
+| E-commerce avec valeurs variées | tROAS ou Maximize Conversion Value |
+
+### Règles critiques
+- Ne pas fixer une cible tCPA/tROAS trop agressive au départ → l'algo se bloque
+- Partir d'une cible proche du CPA actuel, puis descendre progressivement (-10% toutes les 2 semaines)
+- Attendre 30 conversions minimum avant d'évaluer une stratégie Smart Bidding
+- Ne pas modifier les paramètres pendant la phase d'apprentissage (2–4 semaines)
+- Augmenter le budget de max 20%/semaine pour ne pas déstabiliser l'apprentissage
+
+---
+
+## 6. Performance Max (PMax)
+
+### Ce que c'est
+Campagne multi-placements (Search, Shopping, Display, YouTube, Discover, Gmail, Maps) pilotée entièrement par l'algo. Fonctionne sur la base d'asset groups (groupes d'assets créatifs + signaux d'audience).
+
+### Quand l'utiliser
+- E-commerce avec catalogue produit → PMax + Shopping combinés
+- Lead gen B2B avec historique de conversion (50+ conversions/mois) → 15–25% du budget total
+- ❌ Pas de PMax sur petit budget ou compte sans historique de conversion propre
+
+### Configuration correcte
+**Inputs obligatoires pour performer :**
+- Customer Match : upload liste clients CRM (signal d'audience essentiel)
+- Assets : 15 titres, 5 descriptions, images variées (paysage + carré + portrait), **au moins 1 vidéo** (sinon Google génère une vidéo automatique souvent médiocre)
+- Search themes : indiquer les intentions de recherche pour guider PMax sur Search
+- URL d'exclusion : exclure pages non commerciales (blog, CGV, mentions légales, connexion)
+
+**Exclusions critiques :**
+- Exclure les mots-clés de marque → sinon PMax cannibalise la campagne Brand Search
+- Exclure les audiences déjà converties si objectif "new customers only"
+
+### PMax vs Search : comment les faire cohabiter
+PMax et Search se disputent le même trafic. Sans gestion, PMax "vole" les conversions Search.
+- Toujours garder une campagne Brand Search séparée (exact match)
+- Monitorer le rapport de termes de recherche PMax (disponible depuis 2025)
+- Si PMax capte du trafic marque → créer une liste de négatifs marque dans PMax
+
+### Phase d'apprentissage PMax
+- 6 à 8 semaines minimum avant d'évaluer
+- Pas de modification structurelle pendant cette période (reset de l'apprentissage)
+- Vidéos : rafraîchir périodiquement pour éviter la fatigue
+
+---
+
+## 7. Annonces Search (RSA) et Quality Score
+
+### Responsive Search Ads (RSA) — le seul format Search disponible
+Google combine automatiquement titres et descriptions pour trouver les meilleures combinaisons.
+
+**Configuration optimale :**
+- 15 titres + 4 descriptions par RSA (maximum exploité)
+- Ad Strength cible : "Good" ou "Excellent"
+- Varier les angles : pain point / preuve sociale / bénéfice / offre / CTA
+- Inclure le mot-clé principal dans au moins 1 titre
+- Ne pas tout pinner (limiter à 1–2 titres clés pinnés max) → sinon l'algo ne peut pas tester
+
+**Structure de titre recommandée en B2B :**
+- Titre 1 (pinné) : Le pain point principal → "Budget pub gaspillé sur des leads non qualifiés ?"
+- Titre 2 (pinné) : La preuve → "4,8★ · 500+ équipes B2B satisfaites"
+- Titre 3 (libre) : CTA clair → "Demandez un audit gratuit"
+
+### Quality Score — ce qui le compose
+Le Quality Score (1–10 par mot-clé) influence directement le CPC et la position.
+
+| Composante | Poids | Comment l'améliorer |
+|-----------|-------|---------------------|
+| Expected CTR | Fort | Titres accrocheurs, pertinents, testés |
+| Ad Relevance | Moyen | Groupes thématiques étroits, mot-clé dans le titre |
+| Landing Page Experience | Fort | Vitesse, pertinence contenu, message match |
+
+**QS 7+ = objectif minimum.** En dessous de 5 : CPC majoré, position dégradée.
+
+**Règle d'or :** Chaque groupe d'annonces = une page de destination dédiée. Envoyer du trafic vers la homepage = QS faible systématique + taux de conversion effondré.
+
+---
+
+## 8. Extensions (Assets) — obligatoires
+
+Les extensions augmentent la surface de l'annonce et le CTR sans coût supplémentaire. Google les sert automatiquement si pertinentes.
+
+**Extensions prioritaires à configurer :**
+
+| Extension | Usage |
+|-----------|-------|
+| Sitelinks (4 minimum) | Pages clés du site : offres, témoignages, tarifs, contact |
+| Callouts | Avantages courts : "Sans engagement", "Réponse en 24h", "Certifié Google Partner" |
+| Structured Snippets | Lister les services ou produits |
+| Call (téléphone) | Si le téléphone est un canal de conversion |
+| Lead Form (formulaire) | Capture de leads directement dans l'annonce (sans quitter Google) |
+| Image | Visuel produit ou service affiché à côté de l'annonce |
+
+**En B2B :** les Lead Form Extensions permettent de capturer des leads à très haute intention sans landing page — CPL souvent inférieur au trafic vers le site.
+
+---
+
+## 9. Recommandations de mise en place selon l'objectif
+
+### Objectif : Lead Gen B2B
+
+**Configuration recommandée :**
+- Campaign Search intention forte : mots-clés "achat", "solution", "logiciel [secteur]", "prix [service]"
+- Types de correspondance : Exact sur les termes à fort enjeu + Broad avec négatifs solides
+- Enchères : Maximize Conversions pour démarrer → tCPA dès 30 conversions/mois
+- Landing page dédiée par thème de mot-clé (pas de homepage)
+- Lead Form Extensions pour capter les leads haute intention sans friction
+- Enhanced Conversions for Leads + import CRM pour fermer la boucle
+
+**Budget minimum :** 30€/jour pour alimenter correctement l'algo (en dessous → apprentissage permanent)
+
+**Benchmarks B2B Google Search 2026 :**
+- CPC moyen B2B : 5–12€ (secteurs compétitifs jusqu'à 20€+)
+- CVR bonne landing page B2B : 3–6%
+- Taux de conversion bon compte : > 4%
+- QS cible : 7+
+
+---
+
+### Objectif : E-commerce / Ventes en ligne
+
+**Configuration recommandée :**
+- Structure : Brand Search + PMax meilleurs produits + Shopping + Search acquisition
+- PMax : catalogue Merchant Center propre (titres, images, prix, disponibilité)
+- tROAS comme stratégie d'enchères dès que 50 conversions/mois atteintes
+- Dynamic Remarketing (Shopping dynamique) sur visiteurs produit
+
+**Benchmarks e-commerce Google 2026 :**
+- ROAS moyen : 3,5–6x selon secteur
+- CVR Search : 3–5% (bonne landing page)
+- Formule ROAS minimum : 1 / marge brute (ex : 40% de marge → ROAS min 2,5x)
+
+---
+
+### Objectif : Notoriété / Top of Funnel
+
+- YouTube (via PMax ou campagne vidéo dédiée) : format 6s bumper (non skippable) ou 15–30s skippable
+- Demand Gen : remplace Discovery, ciblage par intérêt + custom audiences, idéal pour réchauffer des audiences froides avant de les cibler en Search
+- Display : remarketing uniquement (les audiences froides en Display convertissent peu)
+
+---
+
+## 10. Erreurs fréquentes à éviter
+
+| Erreur | Impact | Correction |
+|--------|--------|-----------|
+| Utiliser GA4 comme source de conversion principale | Signal dégradé, Smart Bidding sous-optimisé | Tag natif Google Ads + Enhanced Conversions |
+| Lancer PMax sans historique ni Customer Match | Budget brûlé, algo sans signal | Attendre 50 conv/mois ou commencer Search uniquement |
+| Broad Match sans liste de négatifs | 40%+ du budget sur requêtes non pertinentes | Construire la liste de négatifs avant le lancement |
+| Trop de groupes d'annonces / trop de campagnes | Données fragmentées, algo qui apprend mal | Consolidation : 7–10 groupes max, 3–4 campagnes max |
+| tCPA/tROAS trop agressif dès le départ | Campagne en sous-diffusion permanente | Partir d'une cible réaliste, baisser progressivement |
+| Envoyer tout le trafic vers la homepage | QS faible, CVR effondré | Landing page dédiée par intention |
+| PMax qui cannibalise la campagne Brand | Budget marque gaspillé | Exclure les mots-clés marque de PMax |
+| Ne pas configurer d'extensions | CTR réduit, surface d'annonce plus petite | Sitelinks + callouts minimum sur toutes les campagnes |
+| Modifier les campagnes en phase d'apprentissage | Reset de l'algo, instabilité prolongée | Attendre 30 conversions ou 4 semaines avant toute modification |
+| Budget < 30€/jour avec Smart Bidding | Apprentissage permanent, perfs instables | CPC manuel ou consolider sur moins de campagnes |
+
+---
+
+## Benchmarks de référence Google Ads 2026
+
+| Métrique | B2B Services | E-commerce | Agence / Conseil |
+|----------|-------------|------------|-----------------|
+| CPC moyen Search | 5–12€ | 0,50–3€ | 5–12€ |
+| CVR landing page optimisée | 3–6% | 2–5% | 3–6% |
+| Quality Score cible | 7+ | 7+ | 7+ |
+| Taux de conversion bon compte | > 4% | > 3% | > 4% |
+| ROAS minimum rentabilité | LTV / CPA | 1 / marge brute | Variable |
+| Budget minimum PMax | 50€/j | 30€/j | 50€/j |
+
+---
+
+## Sources
+- Google Ads Help Center officiel (2026)
+- WordStream, Directive Consulting, GrowthSpree (2026)
+- Decodeur Marketing, Make Sense, Adac Média (2026)
+- Groas.com Google Ads Account Structure Guide (2026)
+- Omologist PMax Best Practices (juin 2026)
