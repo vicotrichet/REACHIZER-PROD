@@ -1,0 +1,214 @@
+{
+  "name": "🎨 Visuels",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Titre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\nVision créative : {{ $('Code in JavaScript').item.json.vision_visuelle }}\nGénère les prompts visuels.",
+        "options": {
+          "systemMessage": "=# Rôle\nTu es un expert en direction artistique et génération de prompts visuels \npour l'IA générative Nano Banana.\nTu génères des prompts ultra-détaillés en anglais pour créer des visuels \nphoto-réalistes haute définition, adaptés aux formats marketing standards.\n\n# Contexte entreprise\n{{ $('Code in JavaScript').item.json.contexte_client }}\n\n# Brief\nTitre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\n\n# Vision créative de l'utilisateur\n{{ $('Code in JavaScript').item.json.vision_visuelle }}\n\n# Ce que tu dois produire\nUn prompt par format, toujours ces 4 formats :\n\n1. LinkedIn / Feed horizontal (1.91:1)\n2. Feed carré Meta (1:1)\n3. Feed portrait Meta (4:5)\n4. Story / Reels (9:16)\n\n# Structure de chaque prompt\n[SUJET PRINCIPAL] : ce qu'on voit au premier plan\n[CONTEXTE/DÉCOR] : environnement, lieu, ambiance\n[STYLE] : photo-réaliste, ultra HD, 8K, lumière naturelle/studio\n[COMPOSITION] : cadrage, angle, profondeur de champ\n[PALETTE] : couleurs dominantes cohérentes avec la marque\n[MOOD] : émotion, atmosphère\n[TECHNIQUE] : appareil photo simulé, objectif, rendu\n[RATIO] : ratio exact du format\n\n# Règles absolues\n- Prompts en anglais\n- Minimum 80 mots par prompt\n- Photo-réaliste uniquement, jamais illustratif ou cartoon\n- Cohérent avec le secteur et le ton de l'entreprise\n- Pas de visages reconnaissables de personnes réelles\n- Pas de texte intégré dans le visuel\n- Intégrer la vision créative de l'utilisateur dans chaque prompt\n\n# Format de sortie\n{\n  \"linkedin_horizontal\": \"prompt...\",\n  \"feed_carre\": \"prompt...\",\n  \"feed_portrait\": \"prompt...\",\n  \"story_reels\": \"prompt...\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        560,
+        0
+      ],
+      "id": "2e24f7f4-cc30-4c14-b026-367c8b489104",
+      "name": "AI Agent",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "310726be-1c19-4ccd-9d4e-453fd72e15dc",
+              "name": "response",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        912,
+        -96
+      ],
+      "id": "477d1019-0dce-489f-a57d-7e7cc5093d9a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "60f31b6e-63a9-47af-8ac8-c0e98ef80ee8",
+              "name": "response",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        912,
+        96
+      ],
+      "id": "a0d97225-a047-4747-a0fd-e4635eebb2e8",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-6",
+          "cachedResultName": "Claude Sonnet 4.6"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.5,
+      "position": [
+        448,
+        192
+      ],
+      "id": "ef30f884-13f5-455a-915c-8f10ad2969ee",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "phuAfGgGXNfHOuKy",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\nconst parsed = typeof body === 'string' ? JSON.parse(body) : body;\nreturn [{ json: parsed }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        0
+      ],
+      "id": "f51af8ea-effa-468a-84f2-28cc15b350bf",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "4f3ac35d-7df7-4ece-96e8-d1927312a2a7",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        96,
+        0
+      ],
+      "id": "d4ecba1f-01ae-438a-93b4-138a6ce1a024",
+      "name": "Webhook",
+      "webhookId": "4f3ac35d-7df7-4ece-96e8-d1927312a2a7"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1120,
+        -96
+      ],
+      "id": "de0a4096-5f55-4bc1-b8df-cfde07dac7fd",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "fdad8270-133e-45ad-9bb5-8293610f5124",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "385d652a9e2e6c38ac36e5858ffa49a5ab4cfb4bd84591d3f8ebf3c6d13a6477"
+  },
+  "id": "bkwNNw6S2fyVtHK5",
+  "tags": []
+}
