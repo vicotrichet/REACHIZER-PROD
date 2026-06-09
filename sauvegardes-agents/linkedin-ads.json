@@ -1,0 +1,239 @@
+{
+  "name": "💼 LinkedIn Ads",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Titre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\nBudget : {{ $('Code in JavaScript').item.json.budget_ads }} CHF\nGénère les outputs LinkedIn Ads.",
+        "options": {
+          "systemMessage": "=# Rôle\nTu es un expert LinkedIn Ads B2B avec une maîtrise des meilleures pratiques 2026.\nTu génères des textes d'annonces LinkedIn Ads prêts à utiliser, adaptés au contexte client et au brief fourni.\n\n# Contexte entreprise\n{{ $('Code in JavaScript').item.json.contexte_client }}\n\n# Bonnes pratiques LinkedIn Ads 2026\n{{ $('GitHub — LinkedIn Ads').item.json.data }}\n\n# Brief\nTitre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\nBudget Ads : {{ $('Code in JavaScript').item.json.budget_ads }} CHF\n\n# Ce que tu dois produire\n1. Sponsored Content — 3 variantes\n   - Hook fort en première ligne (chiffre, contradiction, tension)\n   - Corps 150-300 caractères incluant le CTA en dernière ligne — pas de champ CTA séparé\n   - Ciblage recommandé intégré comme note après le corps : Fonction + Séniorité + Taille entreprise + Localisation\n\n2. Lead Gen Form\n   - 3 titres de formulaire (60 caractères max)\n   - 3 descriptions de formulaire (160 caractères max)\n   - 3 questions de qualification avec options de réponse\n\n3. Budget canal\n   - Budget/jour recommandé sur LinkedIn Ads\n   - CPL cible estimé\n   - 2 signaux d'alerte avec seuils et actions\n\n# Règles copywriting\n- Hook dans la première ligne : douleur client ou insight fort\n- Nommer explicitement la cible dans le texte\n- Valeur avant produit\n- CTA direct et unique\n- Adapté au contexte entreprise fourni\n- Toujours en français\n\n# Format de sortie\nRetourne un JSON structuré :\n{\n  \"sponsored_content\": [\n    {\n      \"variante\": 1,\n      \"hook\": \"...\",\n      \"corps\": \"... [corps complet avec CTA intégré en dernière ligne]\",\n      \"ciblage\": \"Fonction : ... | Séniorité : ... | Taille : ... | Localisation : ...\"\n    }\n  ],\n  \"lead_gen_form\": {\n    \"titres\": [\"...\", \"...\", \"...\"],\n    \"descriptions\": [\"...\", \"...\", \"...\"],\n    \"questions\": [\n      {\n        \"question\": \"...\",\n        \"options\": [\"...\", \"...\", \"...\"]\n      }\n    ]\n  },\n  \"budget_canal\": {\n    \"budget_jour_chf\": 0,\n    \"cpl_cible\": \"...\",\n    \"signaux_alerte\": [\n      { \"signal\": \"...\", \"seuil\": \"...\", \"action\": \"...\" }\n    ]\n  }\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "13457b23-31de-4745-9663-3e06d1c78100",
+      "name": "AI Agent",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-6",
+          "cachedResultName": "Claude Sonnet 4.6"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.5,
+      "position": [
+        496,
+        208
+      ],
+      "id": "223290d6-0be3-4fb5-a6a0-e01c6fa3b274",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "phuAfGgGXNfHOuKy",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5d008142-3e50-4bac-9b9f-d73f299aab3e",
+              "name": "response",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        -96
+      ],
+      "id": "05e24fb5-3b97-41c6-ac70-368f2d520398",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "513f5622-357b-4b38-ac1d-b8e2d7afb9d5",
+              "name": "response",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        96
+      ],
+      "id": "9a294788-de6e-42f5-a55a-39864897a4bf",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/vicotrichet/REACHIZER-PROD/refs/heads/main/best-practices/linkedin-ads-b2b",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "9646f2b0-c54f-4ee1-86a3-a9cd5a73da39",
+      "name": "GitHub — LinkedIn Ads"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\nconst parsed = typeof body === 'string' ? JSON.parse(body) : body;\nreturn [{ json: parsed }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "6a0c1e2c-9287-4b3f-bd30-381eb0c64959",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ea1d1b49-24c1-47ed-8c89-455a935c716a",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "30482e87-d446-4784-9e54-c5c77abe4525",
+      "name": "Webhook",
+      "webhookId": "ea1d1b49-24c1-47ed-8c89-455a935c716a"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1184,
+        -96
+      ],
+      "id": "6e7ed319-eb46-4741-aaa4-3951bba8a8e2",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitHub — LinkedIn Ads": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "GitHub — LinkedIn Ads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "b9abbf24-a01a-4b9c-ac9b-7501b5ff0eb9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "385d652a9e2e6c38ac36e5858ffa49a5ab4cfb4bd84591d3f8ebf3c6d13a6477"
+  },
+  "id": "kWkWSifFzHOW1g75",
+  "tags": []
+}
