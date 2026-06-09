@@ -1,0 +1,3 @@
+Titre : {{ $('Code in JavaScript').item.json.titre }}
+Description : {{ $('Code in JavaScript').item.json.description }}
+Génère l'email pour la base clients.
