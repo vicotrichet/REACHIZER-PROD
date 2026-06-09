@@ -1,0 +1,215 @@
+{
+  "name": "💼 LinkedIn organique",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Titre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\nGénère les posts LinkedIn organiques.",
+        "options": {
+          "systemMessage": "=# Rôle\nTu es un expert en création de contenu organique LinkedIn B2B.\nTu génères des posts prêts à publier, optimisés pour l'algorithme LinkedIn 2026,\nadaptés au contexte entreprise et au brief fourni.\n\n# Contexte entreprise\n{{ $('Code in JavaScript').item.json.contexte_client }}\n\n# Brief\nTitre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\n\n# Ce que tu dois produire\n\n1. Post LinkedIn entreprise\n   - 1200-1500 caractères\n   - Hook sur les 3 premières lignes : donnée chiffrée, contradiction ou tension\n   - La promesse du hook doit être tenue dans le post\n   - Structure : Hook → Développement → Preuve → CTA\n   - 3-5 hashtags pertinents\n\n2. Post LinkedIn personnel (pour dirigeant ou expert)\n   - 800-1200 caractères\n   - Ton humain et authentique, première personne\n   - Mêmes règles de hook\n   - Angle vécu, pas institutionnel\n   - Suggestion de DM court à envoyer en complément\n   - 2-3 hashtags\n\n# Règles absolues\n- Toujours en français\n- Hook percutant — jamais une introduction générale\n- Pas de superlatifs vides\n- Chiffres dans le flux, pas en liste\n- Ne jamais mentionner un concurrent\n- Adapté au ton et au secteur de l'entreprise\n\n# Format de sortie\n{\n  \"post_entreprise\": \"texte complet du post avec les hashtags intégrés en dernière ligne\",\n  \"post_personnel\": {\n    \"contenu\": \"texte complet du post avec les hashtags intégrés en dernière ligne\",\n    \"suggestion_dm\": \"texte court du DM à envoyer en complément\"\n  }\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "2519d778-95dc-4ee2-93c2-ca3cae18d93c",
+      "name": "AI Agent",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-6",
+          "cachedResultName": "Claude Sonnet 4.6"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.5,
+      "position": [
+        528,
+        192
+      ],
+      "id": "580932dd-d14e-4e40-94aa-c6e1a41a53bf",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "phuAfGgGXNfHOuKy",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fa247829-a6d0-46c6-a341-26d10183d2fb",
+              "name": "response",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        -96
+      ],
+      "id": "de097a50-c6c0-4588-b6bc-5c85809ff825",
+      "name": "Success"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00f317e5-ba3a-4988-8821-17b5a0d91203",
+              "name": "response",
+              "value": "{{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        96
+      ],
+      "id": "5af7dd8b-5d34-4a6d-9cd7-e011d046085e",
+      "name": "Error"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\nconst parsed = typeof body === 'string' ? JSON.parse(body) : body;\nreturn [{ json: parsed }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        0
+      ],
+      "id": "6ad3a18a-af06-42df-9099-27e25ce46d42",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cca0022a-928d-4dff-ad28-0ceaff6aa50a",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        176,
+        0
+      ],
+      "id": "0b40f36d-f90c-4a1b-8d9f-f2c6515190e2",
+      "name": "Webhook",
+      "webhookId": "cca0022a-928d-4dff-ad28-0ceaff6aa50a"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1184,
+        -96
+      ],
+      "id": "dc8c9b8b-99c3-4cd1-b901-a9e013c9845f",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Success": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "ccccd204-e84a-49f4-88a1-535aa8379c92",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "385d652a9e2e6c38ac36e5858ffa49a5ab4cfb4bd84591d3f8ebf3c6d13a6477"
+  },
+  "id": "G1oRT0P2nPteaeH8",
+  "tags": []
+}
