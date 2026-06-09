@@ -1,0 +1,4 @@
+Titre : {{ $('Code in JavaScript').item.json.titre }}
+Description : {{ $('Code in JavaScript').item.json.description }}
+Vision créative : {{ $('Code in JavaScript').item.json.vision_visuelle }}
+Génère les prompts visuels.
