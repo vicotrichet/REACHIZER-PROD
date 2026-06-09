@@ -1,0 +1,4 @@
+Titre : {{ $('Code in JavaScript').item.json.titre }}
+Description : {{ $('Code in JavaScript').item.json.description }}
+Budget : {{ $('Code in JavaScript').item.json.budget_ads }} CHF
+Génère les outputs Google Ads.
