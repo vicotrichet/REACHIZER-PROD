@@ -1,0 +1,215 @@
+{
+  "name": "📱 Meta organique",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Titre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\nGénère les posts Meta organiques.",
+        "options": {
+          "systemMessage": "=# Rôle\nTu es un expert en création de contenu organique pour Meta (Facebook et Instagram).\nTu génères des posts prêts à publier, adaptés aux codes de chaque plateforme, \noptimisés pour l'algorithme 2026.\n\n# Contexte entreprise\n{{ $('Code in JavaScript').item.json.contexte_client }}\n\n# Brief\nTitre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\n\n# Ce que tu dois produire\n\n1. Post Facebook\n   - 300-500 caractères\n   - Hook en première ligne : question ancrée, chiffre fort ou tension\n   - Storytelling court\n   - Un seul CTA en fin de post\n\n2. Caption Instagram\n   - 150-300 caractères\n   - Hook 0-3 secondes : question, révélation avant/après, hook visuel\n   - Donner envie de partager en DM\n   - 5-10 hashtags pertinents\n\n3. Script Instagram Story (2-3 slides)\n   - Slide 1 : hook immédiat\n   - Slide 2 : développement ou tension\n   - Slide 3 : réponse ou CTA\n\n# Règles absolues\n- Toujours en français\n- Hook dans la première ligne — douleur client, chiffre fort ou situation reconnaissable\n- Pas de superlatifs vides\n- Chiffres et preuves concrètes quand disponibles dans le brief\n- Ne jamais mentionner un concurrent\n- Adapté au ton et au secteur de l'entreprise\n\n# Format de sortie\n{\n  \"facebook\": \"texte complet du post incluant le CTA en dernière ligne\",\n  \"instagram\": {\n    \"caption\": \"texte complet incluant le CTA\",\n    \"hashtags\": \"#tag1 #tag2 #tag3\"\n  },\n  \"story\": [\n    { \"slide\": 1, \"contenu\": \"...\" },\n    { \"slide\": 2, \"contenu\": \"...\" },\n    { \"slide\": 3, \"contenu\": \"...\" }\n  ]\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "80b10010-50e6-4d61-b984-3c83908b127a",
+      "name": "AI Agent",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-6",
+          "cachedResultName": "Claude Sonnet 4.6"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.5,
+      "position": [
+        528,
+        192
+      ],
+      "id": "67244d62-86bf-4934-b8c5-de800b4e8304",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "phuAfGgGXNfHOuKy",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fa247829-a6d0-46c6-a341-26d10183d2fb",
+              "name": "response",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        -96
+      ],
+      "id": "c171c471-ebaa-4a82-94ee-710beed1ac42",
+      "name": "Success"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00f317e5-ba3a-4988-8821-17b5a0d91203",
+              "name": "response",
+              "value": "{{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        96
+      ],
+      "id": "a6caa2a0-1d49-42f9-841e-d6e0877440b0",
+      "name": "Error"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\nconst parsed = typeof body === 'string' ? JSON.parse(body) : body;\nreturn [{ json: parsed }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        0
+      ],
+      "id": "2629d367-84bf-4215-acfd-858f801cf0d7",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ec5eff15-f87d-4c2f-beec-0b6f726f02f5",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        176,
+        0
+      ],
+      "id": "d27f89a3-f8a1-4526-ba2a-614a59f7c549",
+      "name": "Webhook",
+      "webhookId": "ec5eff15-f87d-4c2f-beec-0b6f726f02f5"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1184,
+        -96
+      ],
+      "id": "e29b5ad3-82d1-472a-ad50-a2b00a12086a",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Success": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "2fdc54a2-0ef7-4f9e-94fc-725be070555a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "385d652a9e2e6c38ac36e5858ffa49a5ab4cfb4bd84591d3f8ebf3c6d13a6477"
+  },
+  "id": "414n6n7qmYXKMiBM",
+  "tags": []
+}
