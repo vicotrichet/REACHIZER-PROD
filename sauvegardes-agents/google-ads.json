@@ -1,0 +1,174 @@
+	
+name	"🔍 Google Ads"
+nodes	
+0	
+parameters	
+promptType	"define"
+text	"=Titre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\nBudget : {{ $('Code in JavaScript').item.json.budget_ads }} CHF\nGénère les outputs Google Ads."
+options	
+systemMessage	`=# Rôle\nTu es un expert Google Ads B2B et B2C avec une maîtrise des meilleures pratiques 2026.\nTu génères des annonces Search RSA complètes, des extensions et une recommandation budget canal, adaptés au contexte client et au brief fourni.\n\n# Contexte entreprise\n{{ $('Code in JavaScript').item.json.contexte_client }}\n\n# Bonnes pratiques Google Ads 2026\n{{ $('GitHub — Google Ads').item.json.data }}\n\n# Brief\nTitre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\nBudget Ads : {{ $('Code in JavaScript').item.json.budget_ads }} CHF\n\n# Ce que tu dois produire\n1. Annonces RSA Search\n   - 15 titres (30 caractères max chacun) — angles variés : pain point / preuve / bénéfice / CTA / géo\n   - 4 descriptions (90 caractères max chacune)\n   - Mot-clé principal dans au moins 3 titres\n   - Pas de répétition entre les titres\n\n2. Extensions\n   - 4 Sitelinks (texte court + description 2 lignes)\n   - 4 Callouts (avantages courts)\n   - 1 Structured Snippet (liste services ou produits)\n\n3. Mots-clés négatifs\n   - 10 négatifs prioritaires adaptés au contexte\n\n4. Budget canal\n   - Budget/jour recommandé sur Google Ads\n   - CPL cible estimé\n   - 2 signaux d'alerte avec seuils et actions\n\n# Règles absolues\n- Toujours en français\n- Basé sur les bonnes pratiques 2026 fournies\n- Jamais de recommandation générique non adaptée au contexte\n\n# Format de sortie\nRetourne un JSON structuré :\n{\n  "rsa": {\n    "titres": ["...", "..."],\n    "descriptions": ["...", "...", "...", "..."]\n  },\n  "extensions": {\n    "sitelinks": [\n      { "texte": "...", "description": "..." }\n    ],\n    "callouts": ["...", "...", "...", "..."],\n    "structured_snippet": "..."\n  },\n  "negatifs": ["...", "..."],\n  "budget_canal": {\n    "budget_jour_chf": ...,\n    "cpl_cible": "...",\n    "signaux_alerte": [\n      { "signal": "...", "seuil": "...", "action": "..." }\n    ]\n  }\n}`
+type	"@n8n/n8n-nodes-langchain.agent"
+typeVersion	3.1
+position	
+0	624
+1	0
+id	"9cc3f8d5-a497-4c15-9a61-8c573c58210b"
+name	"AI Agent"
+onError	"continueErrorOutput"
+1	
+parameters	
+model	
+__rl	true
+mode	"list"
+value	"claude-sonnet-4-6"
+cachedResultName	"Claude Sonnet 4.6"
+options	{}
+type	"@n8n/n8n-nodes-langchain.lmChatAnthropic"
+typeVersion	1.5
+position	
+0	480
+1	224
+id	"293cb5e3-3b7e-46ce-877e-c2a78bdeb849"
+name	"Anthropic Chat Model"
+credentials	
+anthropicApi	
+id	"phuAfGgGXNfHOuKy"
+name	"Anthropic account"
+2	
+parameters	
+assignments	
+assignments	
+0	
+id	"96fd1d10-4530-4642-8b96-b71c48e24b37"
+name	"response"
+value	"={{ $json.output }}"
+type	"string"
+options	{}
+type	"n8n-nodes-base.set"
+typeVersion	3.4
+position	
+0	976
+1	-96
+id	"00087e2c-fd2a-4903-a566-1e7b297e9086"
+name	"Edit Fields"
+3	
+parameters	
+assignments	
+assignments	
+0	
+id	"6320e067-4966-4585-8594-14b7d29e21c7"
+name	"=response"
+value	"={{ $json.output }}"
+type	"string"
+options	{}
+type	"n8n-nodes-base.set"
+typeVersion	3.4
+position	
+0	976
+1	96
+id	"1b235b77-fad9-4bff-ad74-113379ebcd3a"
+name	"Edit Fields1"
+4	
+parameters	
+url	"https://raw.githubusercontent.com/vicotrichet/REACHIZER-PROD/refs/heads/main/best-practices/google-ads-b2b"
+options	{}
+type	"n8n-nodes-base.httpRequest"
+typeVersion	4.4
+position	
+0	416
+1	0
+id	"69fbe821-b86a-4d3d-b907-debb77e5bdbf"
+name	"GitHub — Google Ads"
+5	
+parameters	
+jsCode	"const body = $input.first().json.body;\nconst parsed = typeof body === 'string' ? JSON.parse(body) : body;\nreturn [{ json: parsed }];"
+type	"n8n-nodes-base.code"
+typeVersion	2
+position	
+0	208
+1	0
+id	"6ae084e9-6885-42e9-9eeb-cec1cf478cec"
+name	"Code in JavaScript"
+6	
+parameters	
+httpMethod	"POST"
+path	"9d6d3128-91c1-4a49-8479-6ce7976df514"
+responseMode	"responseNode"
+options	{}
+type	"n8n-nodes-base.webhook"
+typeVersion	2.1
+position	
+0	0
+1	0
+id	"70c732d1-8eef-48eb-9dd1-e5139979b7b6"
+name	"Webhook"
+webhookId	"9d6d3128-91c1-4a49-8479-6ce7976df514"
+7	
+parameters	
+options	{}
+type	"n8n-nodes-base.respondToWebhook"
+typeVersion	1.5
+position	
+0	1184
+1	-96
+id	"5570079f-fb68-484b-90c3-830ff0f7802a"
+name	"Respond to Webhook"
+pinData	{}
+connections	
+Anthropic Chat Model	
+ai_languageModel	
+0	
+0	
+node	"AI Agent"
+type	"ai_languageModel"
+index	0
+AI Agent	
+main	
+0	
+0	
+node	"Edit Fields"
+type	"main"
+index	0
+1	
+0	
+node	"Edit Fields1"
+type	"main"
+index	0
+GitHub — Google Ads	
+main	
+0	
+0	
+node	"AI Agent"
+type	"main"
+index	0
+Code in JavaScript	
+main	
+0	
+0	
+node	"GitHub — Google Ads"
+type	"main"
+index	0
+Webhook	
+main	
+0	
+0	
+node	"Code in JavaScript"
+type	"main"
+index	0
+Edit Fields	
+main	
+0	
+0	
+node	"Respond to Webhook"
+type	"main"
+index	0
+active	true
+settings	
+executionOrder	"v1"
+binaryMode	"separate"
+versionId	"77ff8c36-91dc-471a-b5b2-49e05fb106fa"
+meta	
+templateCredsSetupCompleted	true
+instanceId	"385d652a9e2e6c38ac36e5858ffa49a5ab4cfb4bd84591d3f8ebf3c6d13a6477"
+id	"EZZbqnERw8kPexzF"
+tags	[]
