@@ -5,220 +5,305 @@ Last updated: June 2026
 1. The 2026 Fundamental Shift: Two Engines to Feed
 In 2026, organic visibility is no longer played out solely on Google. A growing share of searches goes through generative engines (ChatGPT, Perplexity, Gemini, Google AI Overviews) which no longer return a list of links — they synthesize a direct answer.
 Two complementary disciplines, not opposing ones:
-SEO	GEO
-Optimize to be found by Google	Optimize to be cited by AIs
-Objective: appear in the top 10 results	Objective: be the source extracted in the response
-Signals: backlinks, Core Web Vitals, structure	Signals: factual density, author authority, citable structure
+SEO (Search Engine Optimization)
+Approach: Optimize to be found by Google.
+Objective: Appear in the top 10 results.
+Signals: Backlinks, Core Web Vitals, structure.
+GEO (Generative Engine Optimization)
+Approach: Optimize to be cited by AIs.
+Objective: Be the source extracted in the response.
+Signals: Factual density, author authority, citable structure.
 Fundamental rule: no GEO without healthy SEO. A technically broken site will neither rank well nor be cited. SEO remains the foundation.
 What has changed: "Good enough" content is no longer sufficient. You must be the best answer available — for Google AND for AIs.
 
 2. Technical SEO — The Non-Negotiable Foundation
 Core Web Vitals (Google Ranking Factor)
-Google measures real user experience via 3 metrics:
-Metric	Target Threshold	What It Measures
-LCP (Largest Contentful Paint)	< 2.5 seconds	Loading speed of main content
-INP (Interaction to Next Paint)	< 200 ms	Responsiveness to user interactions
-CLS (Cumulative Layout Shift)	< 0.1	Visual stability (moving elements)
-VSI (Visual Stability Index)	New 2026	Stability across the entire session (scroll, interactions)
+Google measures real user experience via 4 metrics:
+LCP (Largest Contentful Paint)
+Target Threshold: < 2.5 seconds
+What It Measures: Loading speed of main content
+INP (Interaction to Next Paint)
+Target Threshold: < 200 ms
+What It Measures: Responsiveness to user interactions
+CLS (Cumulative Layout Shift)
+Target Threshold: < 0.1
+What It Measures: Visual stability (moving elements)
+VSI (Visual Stability Index) — New 2026
+Target Threshold: Specific to session length
+What It Measures: Stability across the entire session (scroll, interactions)
 Measurement tools: Google Search Console (real field data), PageSpeed Insights, Lighthouse.
 Improvements become visible in rankings within 4 to 8 weeks (28-day data window).
+
 Mobile-First Indexing
 Google indexes and ranks the mobile version with priority. 60%+ of searches are done on mobile.
-* Test with the "Mobile-Friendly Test" tool in Google Search Console
-* Verify that content and tags are identical on mobile and desktop
+Test with the "Mobile-Friendly Test" tool in Google Search Console
+Verify that content and tags are identical on mobile and desktop
+
 Indexing and Crawlability
-* Up-to-date XML Sitemap, submitted in Search Console
-* Correct Robots.txt (do not accidentally block key pages)
-* No duplicate content → canonical tags
-* Resolve 404 errors and redirect chains
-* Crawl budget: do not waste it on low-value pages (filter pages, infinite pagination)
+Up-to-date XML Sitemap, submitted in Search Console
+Correct Robots.txt (do not accidentally block key pages)
+No duplicate content → canonical tags
+Resolve 404 errors and redirect chains
+Crawl budget: do not waste it on low-value pages (filter pages, infinite pagination)
+
 Structured Data (Schema.org)
 Mandatory for both SEO AND GEO. Allows engines to understand and extract content.
 Priority schemas:
-* Article: title, author, date, image → strong E-E-A-T signal
-* FAQPage: question/answer pairs directly extractable by AIs
-* Organization: name, logo, URL, social networks
-* BreadcrumbList: structured navigation
-* Product / Service: for product and service pages
+Article: title, author, date, image → strong E-E-A-T signal
+FAQPage: question/answer pairs directly extractable by AIs
+Organization: name, logo, URL, social networks
+BreadcrumbList: structured navigation
+Product / Service: for product and service pages
 Validate with: Rich Results Test (Google) + Schema Markup Validator
 A poorly formed schema is worse than no schema at all.
 
 3. SEO Content Strategy
 Search Intent Above All
 Each page = one specific intent. Four types of intent:
-* Informational: "how X works" → blog article, guide
-* Navigational: "X website" → homepage, brand page
-* Commercial: "best X for Y" → comparison page, use case
-* Transactional: "buy X", "X price" → product page, landing page
+Informational: "how X works" → blog article, guide
+Navigational: "X website" → homepage, brand page
+Commercial: "best X for Y" → comparison page, use case
+Transactional: "buy X", "X price" → product page, landing page
 Never target two different intents on the same page.
+
 Topic Cluster Architecture
 Organize content around pillar pages linked to satellite articles.
+
 Pillar page: "Marketing automation for SMEs"
   ├── Article: "How to automate B2B emails"
   ├── Article: "The best marketing automation tools"
   ├── Article: "Cost of a marketing automation solution"
   └── Article: "Marketing automation vs CRM: what is the difference?"
 Each satellite article reinforces the pillar page through internal linking. Google and AIs perceive exhaustive topical coverage as an authority signal.
+
 Internal Linking
-* Systematically link satellite articles back to the pillar page (and to each other)
-* Descriptive and natural anchor text (not "click here")
-* Click depth: important pages must be accessible in a maximum of 3 clicks from the homepage
-* Regularly check for broken links
+Systematically link satellite articles back to the pillar page (and to each other)
+Descriptive and natural anchor text (not "click here")
+Click depth: important pages must be accessible in a maximum of 3 clicks from the homepage
+Regularly check for broken links
+
 Content Length and Depth
-* Long-form and specialized content generates more natural backlinks and AI citations
-* No arbitrary target length: be more complete than the positioned competitors
-* Include what only a practicing expert can bring: real pitfalls, edge cases, field data
+Long-form and specialized content generates more natural backlinks and AI citations
+No arbitrary target length: be more complete than the positioned competitors
+Include what only a practicing expert can bring: real pitfalls, edge cases, field data
+
 Content Freshness
-* Update existing articles with new data (more effective than creating new ones)
-* Indicate the update date → freshness signal for Google and AIs
-* 2025/2026 dated content with sources → much more citable
+Update existing articles with new data (more effective than creating new ones)
+Indicate the update date → freshness signal for Google and AIs
+2025/2026 dated content with sources → much more citable
+
 4. E-E-A-T — Quality Signal for Google AND GEO
 E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) is the primary quality filter for Google and LLMs. Content without real expertise signals will be disadvantaged in both systems.
+
 How to signal E-E-A-T concretely
 Experience:
-* Concrete examples named with dates and results
-* Data from real usage ("tested on 50 campaigns between January and March 2026")
-* Documented errors with cause and correction
+Concrete examples named with dates and results
+Data from real usage ("tested on 50 campaigns between January and March 2026")
+Documented errors with cause and correction
+
 Expertise:
-* Terminological precision (exact terms, no approximations)
-* Coverage of edge cases and exceptions
-* References to primary sources (studies, official documentation)
-* FAQ addressing advanced questions, not basic ones
+Terminological precision (exact terms, no approximations)
+Coverage of edge cases and exceptions
+References to primary sources (studies, official documentation)
+FAQ addressing advanced questions, not basic ones
+
 Authoritativeness:
-* Complete author page with photo, biography, LinkedIn profile links
-* Schema.org Person or Organization on each page
-* Mentions in third-party media, industry publications
-* Backlinks from recognized sites in the industry
+Complete author page with photo, biography, LinkedIn profile links
+Schema.org Person or Organization on each page
+Mentions in third-party media, industry publications
+Backlinks from recognized sites in the industry
+
 Trustworthiness:
-* Cited and linked sources (studies, statistics with date and origin)
-* Verifiable figures and data
-* Detailed "About Us" page, legal notices, clear T&Cs
-* HTTPS, GDPR-compliant privacy policy
+Cited and linked sources (studies, statistics with date and origin)
+Verifiable figures and data
+Detailed "About Us" page, legal notices, clear T&Cs
+HTTPS, GDPR-compliant privacy policy
+
 5. GEO — Optimizing to be Cited by AIs
 How LLMs Select Their Sources
 Generative engines look for the densest passage that answers the question. They favor:
-1. Sources with good classic SEO (indexed, ranked)
-2. Structured content (clear headings, FAQs, lists)
-3. Factual, dated, and sourced statements
-4. Sources with visible E-E-A-T signals
-5. Consistent brands present across multiple channels
+
+Sources with good classic SEO (indexed, ranked)
+
+Structured content (clear headings, FAQs, lists)
+
+Factual, dated, and sourced statements
+
+Sources with visible E-E-A-T signals
+
+Consistent brands present across multiple channels
+
 "Citable" Content — The Rules
 BLUF Principle (Bottom Line Up Front):
 The answer to the question must be in the very first sentence. No 3-paragraph context-setting before getting to the point.
+
 ❌ Bad: "For several years, companies have been looking for solutions to optimize their online presence..."
 ✅ Good: "GEO (Generative Engine Optimization) is the set of techniques that optimize content to be cited by AI engines like ChatGPT or Perplexity."
+
 Citable Chunks:
 A passage of 40 to 80 words containing:
-* A clear statement
-* A number or a date
-* An identifiable source or context → infinitely more citable than a 200-word descriptive paragraph without a factual anchor.
+A clear statement
+A number or a date
+An identifiable source or context
+→ infinitely more citable than a 200-word descriptive paragraph without a factual anchor.
+
 What makes content citable:
-* Sourced and dated figures: "In 2026, 68% of SMEs..."
-* Structured lists: AIs easily extract hierarchical information
-* Comparison tables: format natively readable by LLMs
-* Clear definitions at the beginning of a section
-* Structured FAQ (FAQPage schema): question/answer format = native LLM format
+Sourced and dated figures: "In 2026, 68% of SMEs..."
+Structured lists: AIs easily extract hierarchical information
+Comparison lists and breakdowns: format natively readable by LLMs
+Clear definitions at the beginning of a section
+Structured FAQ (FAQPage schema): question/answer format = native LLM format
+
 llms.txt File
 New 2026 standard (inspired by robots.txt) to indicate to LLMs which pages to crawl and cite.
 Place at the root of the site: [https://mysite.com/llms.txt](https://mysite.com/llms.txt)
 Content: list of important pages, descriptions, instructions for AI crawlers.
+
 Multichannel Presence
 Distributing your content across multiple channels (LinkedIn, industry newsletters, specialized press) increases AI citations by up to 325% compared to publishing solely on your site. LLMs perceive multi-source entity consistency as a strong authority signal.
+
 AI-Friendly Robots.txt
 Verify that LLM crawlers (GPTBot, ClaudeBot, PerplexityBot) are not blocked in robots.txt — unless there is a deliberate desire not to be indexed by AIs.
+
 6. Backlinks and Domain Authority
 Netlinking remains the most powerful trust signal for Google in 2026.
+
 Quality vs. Quantity Approach
-* 1 link from a recognized industry site > 100 links from generic directories
-* Editorial links (cited within a core article) > footer or sidebar links
+1 link from a recognized industry site > 100 links from generic directories
+Editorial links (cited within a core article) > footer or sidebar links
 How to Obtain Natural Backlinks
-* "Linkable" content: original studies, exclusive data, free tools, comprehensive guides
-* Guest posting on industry publications (with real editorial value)
-* Digital PR: being cited as an expert in media articles
-* Content partnerships with complementary players
-* Testimonials and case studies on partner/supplier sites
+"Linkable" content: original studies, exclusive data, free tools, comprehensive guides
+Guest posting on industry publications (with real editorial value)
+Digital PR: being cited as an expert in media articles
+Content partnerships with complementary players
+Testimonials and case studies on partner/supplier sites
+
 What to Avoid
-* Buying links (Google penalty)
-* Massive link exchanges
-* Links from topically unrelated sites
+Buying links (Google penalty)
+Massive link exchanges
+Links from topically unrelated sites
+
 7. Measuring and Steering SEO/GEO
 Essential Tools
-* Google Search Console: free, indispensable. Impressions, clicks, positions, indexing issues, field Core Web Vitals
-* Google Analytics 4: organic traffic, behavior, conversions
-* PageSpeed Insights / Lighthouse: Core Web Vitals per page
-* Ahrefs or Semrush: position tracking, backlink analysis, keyword opportunities
+Google Search Console: free, indispensable. Impressions, clics, positions, indexing issues, field Core Web Vitals
+Google Analytics 4: organic traffic, behavior, conversions
+PageSpeed Insights / Lighthouse: Core Web Vitals per page
+Ahrefs or Semrush: position tracking, backlink analysis, keyword opportunities
 GEO Tracking — Manual Measurement
 No tool measures visibility in LLMs perfectly. Recommended method:
-1. Define 10 key questions your prospects ask in your industry
-2. Ask them once a month in ChatGPT, Perplexity, and Google AI Overviews
-3. Note if your brand/site is cited, and in what context
-4. Objective: go from 0/10 to 5/10 citations over 6 months
+Define 10 key questions your prospects ask in your industry
+Ask them once a month in ChatGPT, Perplexity, and Google AI Overviews
+Note if your brand/site is cited, and in what context
+Objective: go from 0/10 to 5/10 citations over 6 months
+
 SEO KPIs to Track
-KPI	Tool	Frequency
-Rankings on target keywords	Search Console / Ahrefs	Weekly
-Organic traffic	GA4	Weekly
-Core Web Vitals	Search Console	Monthly
-Average Click-Through Rate (CTR)	Search Console	Monthly
-Indexed pages	Search Console	Monthly
-Backlink profile	Ahrefs / Semrush	Monthly
-AI Citations (GEO)	Manual test	Monthly
+Rankings on target keywords
+Tool: Search Console / Ahrefs
+Frequency: Weekly
+Organic traffic
+Tool: GA4
+Frequency: Weekly
+Core Web Vitals
+Tool: Search Console
+Frequency: Monthly
+Average Click-Through Rate (CTR)
+Tool: Search Console
+Frequency: Monthly
+Indexed pages
+Tool: Search Console
+Frequency: Monthly
+Backlink profile
+Tool: Ahrefs / Semrush
+Frequency: Monthly
+
+AI Citations (GEO)
+Tool: Manual test
+Frequency: Monthly
+
 8. Implementation Recommendations According to the Objective
 Objective: Optimized SEO + GEO Blog Post
 Recommended Structure:
-1. H1 Title: include the main keyword + a question or benefit formulation
-2. Introduction: answer the main question directly in 2-3 sentences (BLUF)
-3. Table of contents with internal anchors (structure signal for LLMs)
-4. Body: H2 per sub-theme, H3 for details. Alternate short paragraphs, lists, tables
-5. Structured FAQ at the end of the article (FAQPage schema): 3 to 5 questions that prospects actually ask
-6. Cited and linked sources
-7. Article Schema with author, date, image
+
+H1 Title: include the main keyword + a question or benefit formulation
+Introduction: answer the main question directly in 2-3 sentences (BLUF)
+Table of contents with internal anchors (structure signal for LLMs)
+Body: H2 per sub-theme, H3 for details. Alternate short paragraphs, lists, tables
+Structured FAQ at the end of the article (FAQPage schema): 3 to 5 questions that prospects actually ask
+Cited and linked sources
+Article Schema with author, date, image
+
 Checklist before publication:
-* [ ] Search intent is identified and respected
-* [ ] Main answer is in the first 100 words
-* [ ] At least one dated and sourced figure per section
-* [ ] Article + FAQPage schemas implemented
-* [ ] Internal linking to the pillar page and 2-3 related articles
-* [ ] Meta title (< 60 characters) and meta description (< 155 characters) written
-* [ ] Images optimized (WebP format, descriptive alt text)
-* [ ] Core Web Vitals score in the green on mobile
+[ ] Search intent is identified and respected
+[ ] Main answer is in the first 100 words
+[ ] At least one dated and sourced figure per section
+[ ] Article + FAQPage schemas implemented
+[ ] Internal linking to the pillar page and 2-3 related articles
+[ ] Meta title (< 60 characters) and meta description (< 155 characters) written
+[ ] Images optimized (WebP format, descriptive alt text)
+[ ] Core Web Vitals score in the green on mobile
+
 Objective: Product / Service SEO Page
 Recommended Structure:
-1. H1: main benefit + keyword (not just the product name)
-2. Short description: what it is, who it is for, result obtained
-3. Proof: figures, customer testimonials, logos, case studies
-4. Functional details: list of features with associated benefits
-5. FAQ on common objections (FAQPage schema)
-6. Clear and repeated CTA
+H1: main benefit + keyword (not just the product name)
+Short description: what it is, who it is for, result obtained
+Proof: figures, customer testimonials, logos, case studies
+Functional details: list of features with associated benefits
+FAQ on common objections (FAQPage schema)
+Clear and repeated CTA
+
 E-E-A-T Signals on a Product Page:
-* Number of clients, countries, years of existence
-* Verified reviews with names and companies
-* Certifications, partnerships, known integrations
+Number of clients, countries, years of existence
+Verified reviews with names and companies
+Certifications, partnerships, known integrations
+
 9. AI Content — Publication Rules
 AI-generated content must be validated and enriched by a human expert before publication. Google detects and penalizes raw AI content without added value.
 What needs to be added to AI-generated content:
-* Field data that only a practitioner can provide
-* Concrete examples named with dates and results
-* An expert angle or opinion that cannot be found elsewhere
-* Proofreading to remove generic phrasing and typical AI turns of phrase
+Field data that only a practitioner can provide
+Concrete examples named with dates and results
+An expert angle or opinion that cannot be found elsewhere
+Proofreading to remove generic phrasing and typical AI turns of phrase
+
 What remains prohibited:
-* AI content published without proofreading
-* Keyword stuffing
-* Copying or paraphrasing existing articles
+AI content published without proofreading
+Keyword stuffing
+Copying or paraphrasing existing articles
+
 10. Common Errors to Avoid
-Error	Impact	Correction
-No schema.org	Not citable by LLMs, fewer Google rich snippets	Implement Article + FAQPage as a priority
-Homepage as the target for all links	Poorly distributed authority, deep pages under-ranked	Topical internal linking to key pages
-Content without clear intent	Google does not know who to rank → poor position	One page = one intent = one main keyword
-Ignoring mobile	Degraded ranking (mobile-first indexing)	Systematically test and correct on mobile
-Blocking GPTBot / ClaudeBot in robots.txt	Invisible to LLMs	Check and allow AI crawlers
-Raw AI content published without enrichment	Google algorithmic penalty, not citable	Mandatory validation + expert enrichment
-Updating positions but not the content	Content ages, loses GEO authority	Quarterly content audit + data update
-No author page	Missing E-E-A-T signal → less cited by AIs	Author page + Person schema on each article
-Targeting low-volume keywords on a new site	No traffic despite efforts	Start with the long tail, then move up in competitiveness
-No external presence (press, LinkedIn, newsletter)	GEO authority limited to the site alone	Distribute content on other channels
+Error: No schema.org
+Impact: Not citable by LLMs, fewer Google rich snippets.
+Correction: Implement Article + FAQPage as a priority.
+Error: Homepage as the target for all links
+Impact: Poorly distributed authority, deep pages under-ranked.
+Correction: Topical internal linking to key pages.
+Error: Content without clear intent
+Impact: Google does not know who to rank → poor position.
+Correction: One page = one intent = one main keyword.
+Error: Ignoring mobile
+Impact: Degraded ranking (mobile-first indexing).
+Correction: Systematically test and correct on mobile.
+Error: Blocking GPTBot / ClaudeBot in robots.txt
+Impact: Invisible to LLMs.
+Correction: Check and allow AI crawlers.
+Error: Raw AI content published without enrichment
+Impact: Google algorithmic penalty, not citable.
+Correction: Mandatory validation + expert enrichment.
+Error: Updating positions but not the content
+Impact: Content ages, loses GEO authority.
+Correction: Quarterly content audit + data update.
+Error: No author page
+Impact: Missing E-E-A-T signal → less cited by AIs.
+Correction: Author page + Person schema on each article.
+Error: Targeting low-volume keywords on a new site
+Impact: No traffic despite efforts.
+Correction: Start with the long tail, then move up in competitiveness.
+Error: No external presence (press, LinkedIn, newsletter)
+Impact: GEO authority limited to the site alone.
+Correction: Distribute content on other channels.
+
 Sources
-* Google Search Central — AI Optimization Guide (May 2026)
-* Yvarn.fr — Complete GEO Guide (2026)
-* Ceres.agency, LLMoptimisation.fr, EtcDigital.fr (2026)
-* May 2026 Core Update — field analyses
-* Digitiz.fr, Le Labo SEO, EpickOne (2026)
+Google Search Central — AI Optimization Guide (May 2026)
+Yvarn.fr — Complete GEO Guide (2026)
+Ceres.agency, LLMoptimisation.fr, EtcDigital.fr (2026)
+May 2026 Core Update — field analyses
+Digitiz.fr, Le Labo SEO, EpickOne (2026)
