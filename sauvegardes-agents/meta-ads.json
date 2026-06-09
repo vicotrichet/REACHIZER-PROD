@@ -1,0 +1,239 @@
+{
+  "name": "📱 Meta Ads",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Titre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\nBudget : {{ $('Code in JavaScript').item.json.budget_ads }} CHF\nGénère les outputs Meta Ads.",
+        "options": {
+          "systemMessage": "=# Rôle\nTu es un expert Meta Ads B2B et B2C avec une maîtrise des meilleures pratiques 2026.\nTu génères des textes d'annonces Meta Ads prêts à utiliser, adaptés au contexte client et au brief fourni.\n\n# Contexte entreprise\n{{ $('Code in JavaScript').item.json.contexte_client }}\n\n# Bonnes pratiques Meta Ads 2026\n{{ $('GitHub — Meta Ads').item.json.data }}\n\n# Brief\nTitre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\nBudget Ads : {{ $('Code in JavaScript').item.json.budget_ads }} CHF\n\n# Ce que tu dois produire\n1. Feed Image — 3 variantes\n   - Texte principal (125 caractères max)\n   - Titre (40 caractères max)\n   - Angle utilisé (douleur / preuve sociale / curiosité / urgence)\n\n2. Reels — 3 scripts\n   - Hook (3 secondes max)\n   - Corps (15 secondes max)\n   - CTA explicite\n\n3. Budget canal\n   - Budget/jour recommandé sur Meta\n   - Durée de campagne recommandée (en jours) et justification\n   - Répartition suggérée si budget partagé avec d'autres canaux\n   - CPL cible estimé\n   - 2 signaux d'alerte avec seuils et actions\n\n4. Ciblage recommandé\n   - Audiences principales (intérêts, comportements, titres de poste)\n   - Audiences d'exclusion\n   - Stratégie retargeting si pertinente\n\n# Règles copywriting\n- Hook en première phrase : douleur client, chiffre fort ou situation reconnaissable\n- Bénéfice vécu avant feature produit\n- Un seul message par annonce\n- CTA explicite et direct\n- Pas de superlatifs vides\n- Adapté au contexte entreprise fourni\n- Toujours en français\n\n# Format de sortie\nRetourne un JSON structuré :\n{\n  \"feed_image\": [\n    {\n      \"variante\": 1,\n      \"texte_principal\": \"...\",\n      \"titre\": \"...\",\n      \"angle\": \"...\"\n    }\n  ],\n  \"reels\": [\n    {\n      \"variante\": 1,\n      \"hook\": \"...\",\n      \"corps\": \"... [CTA intégré en dernière ligne]\"\n    }\n  ],\n  \"budget_canal\": {\n    \"budget_jour_chf\": 0,\n    \"duree_recommandee_jours\": 0,\n    \"justification_duree\": \"...\",\n    \"repartition_multi_canaux\": \"...\",\n    \"cpl_cible\": \"...\",\n    \"signaux_alerte\": [\n      { \"signal\": \"...\", \"seuil\": \"...\", \"action\": \"...\" }\n    ]\n  },\n  \"ciblage\": {\n    \"audiences_principales\": [\"...\"],\n    \"exclusions\": [\"...\"],\n    \"retargeting\": \"...\"\n  }\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "ca2a1539-4ce3-40f1-ab01-84368625495c",
+      "name": "AI Agent",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-6",
+          "cachedResultName": "Claude Sonnet 4.6"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.5,
+      "position": [
+        528,
+        208
+      ],
+      "id": "1ece2fd9-1f02-4f40-80b1-26efeda86992",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "phuAfGgGXNfHOuKy",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b99fb9ef-00f2-4c58-af44-4571afc63bbf",
+              "name": "response",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        -96
+      ],
+      "id": "f03ac765-55e8-42c2-9c29-bfe23e33899f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5c90aa77-f4c2-480c-b70c-7cb044fe4386",
+              "name": "response",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        96
+      ],
+      "id": "4c5d6c30-5b09-4332-88cc-5e2d18676323",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/vicotrichet/REACHIZER-PROD/refs/heads/main/best-practices/meta-ads-b2b",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "7aa06107-1b40-4a1a-b22c-debd9c3e727e",
+      "name": "GitHub — Meta Ads"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\nconst parsed = typeof body === 'string' ? JSON.parse(body) : body;\nreturn [{ json: parsed }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "694c6870-2381-4c37-8ef3-ee9ae7084435",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "3910a588-b23a-4e66-9118-a5673d37460e",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ba3854b4-91af-4721-b8cd-dabeccf6fb7d",
+      "name": "Webhook",
+      "webhookId": "3910a588-b23a-4e66-9118-a5673d37460e"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1184,
+        -96
+      ],
+      "id": "b031efe7-0655-47e9-add2-981b43d8cc6c",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitHub — Meta Ads": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "GitHub — Meta Ads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "60e8ad45-343f-4a55-b169-cd9f9fb0b615",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "385d652a9e2e6c38ac36e5858ffa49a5ab4cfb4bd84591d3f8ebf3c6d13a6477"
+  },
+  "id": "qxzvdo5yR5LBNbd1",
+  "tags": []
+}
