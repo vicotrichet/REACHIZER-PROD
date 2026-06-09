@@ -1,0 +1,214 @@
+{
+  "name": "💰 Budget",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Titre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\nBudget total : {{ $('Code in JavaScript').item.json.budget_ads }} CHF\nGénère la recommandation budgétaire.",
+        "options": {
+          "systemMessage": "=# Rôle\nTu es un expert en stratégie media buying B2B et B2C.\nTu génères une recommandation de répartition budgétaire complète entre les canaux Ads, basée sur le brief, le contexte entreprise et le budget disponible.\n\n# Contexte entreprise\n{{ $('Code in JavaScript').item.json.contexte_client }}\n\n# Brief\nTitre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\nBudget Ads total : {{ $('Code in JavaScript').item.json.budget_ads }} CHF\n\n# Ce que tu dois produire\n1. Analyse du contexte\n   - Quel(s) canal(aux) sont pertinents pour ce brief et pourquoi\n   - Quel(s) canal(aux) sont à éviter et pourquoi\n\n2. Répartition budgétaire recommandée\n   - Budget CHF + % + budget/jour par canal retenu\n   - Ordre de priorité des canaux\n\n3. Par canal retenu\n   - Objectif prioritaire\n   - CPL ou ROAS cible\n   - Durée minimale de test recommandée\n\n4. Ordre de lancement\n   - Quel canal lancer en premier et pourquoi\n\n5. Plan de test J1-J15\n   - Sur quoi tester, avec quel budget\n\n6. Signaux d'alerte\n   - 3 signaux avec seuil + action corrective\n\n# Règles absolues\n- Toujours en français\n- Chiffres réalistes et justifiés selon le contexte\n- Budgets minimum respectés : Meta 50 CHF/j · Google 30 CHF/j · LinkedIn 50 CHF/j\n- Si le budget est insuffisant pour activer un canal correctement, le dire explicitement et recommander de ne pas l'activer\n- Jamais de recommandation générique non adaptée au contexte\n\n# Format de sortie\nRetourne un JSON structuré :\n{\n  \"analyse_contexte\": {\n    \"canaux_recommandes\": [\"canal : justification courte\"],\n    \"canaux_a_eviter\": [\"canal : raison en une phrase\"]\n  },\n  \"repartition\": {\n    \"meta_ads\": { \"budget_chf\": 0, \"pourcentage\": 0, \"budget_jour\": 0, \"justification\": \"...\" },\n    \"google_ads\": { \"budget_chf\": 0, \"pourcentage\": 0, \"budget_jour\": 0, \"justification\": \"...\" },\n    \"linkedin_ads\": { \"budget_chf\": 0, \"pourcentage\": 0, \"budget_jour\": 0, \"justification\": \"...\" }\n  },\n  \"ordre_priorite\": [\n    \"1. Canal — justification courte\",\n    \"2. Canal — justification courte\",\n    \"3. Canal — justification courte\"\n  ],\n  \"ordre_lancement\": \"texte continu 3-4 lignes\",\n  \"plan_test_j1_j15\": \"texte continu structuré par étapes\",\n  \"signaux_alerte\": [\n    { \"signal\": \"...\", \"seuil\": \"...\", \"action\": \"...\" }\n  ]\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "e5daa5df-0022-4af7-92b6-ada629b63fdc",
+      "name": "AI Agent",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e5286598-758b-4c12-92d1-ab3d84a90bc2",
+              "name": "response",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        768,
+        -96
+      ],
+      "id": "7ea73c52-18bc-4106-821c-cd2252e7d353",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "90170f6e-91e3-496f-bf12-457c251f6499",
+              "name": "response",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        768,
+        96
+      ],
+      "id": "2473464c-e29d-4aab-9dcc-19522a7d9202",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-6",
+          "cachedResultName": "Claude Sonnet 4.6"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.5,
+      "position": [
+        80,
+        208
+      ],
+      "id": "274b5504-f558-4f31-abab-11a8e24d176a",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "phuAfGgGXNfHOuKy",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\nconst parsed = typeof body === 'string' ? JSON.parse(body) : body;\nreturn [{ json: parsed }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "69e745f8-939c-4728-b96a-8cfc9598bf25",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "d68f8b6b-3043-4b47-9791-49d257565d31",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3999317a-19dc-4661-83d4-6ce29fcc0fdc",
+      "name": "Webhook",
+      "webhookId": "d68f8b6b-3043-4b47-9791-49d257565d31"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        912,
+        -96
+      ],
+      "id": "9761f927-8a61-4fc3-823e-6b5785a5e5a7",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "fcafee7c-8fee-416b-9701-9ee1acbbd643",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "385d652a9e2e6c38ac36e5858ffa49a5ab4cfb4bd84591d3f8ebf3c6d13a6477"
+  },
+  "id": "NQXf42ySIbbBySY7",
+  "tags": []
+}
