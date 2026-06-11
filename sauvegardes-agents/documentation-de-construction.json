@@ -1,0 +1,264 @@
+# Reachizer Content Engine — Documentation de construction
+
+> Documentation de référence personnelle. Couvre l'ensemble de la méthode de construction, de l'infrastructure au déploiement, sans reproduire chaque commande ou prompt.
+> 
+
+---
+
+## Vue d'ensemble de l'architecture finale
+
+`Interface Lovable (cloud)
+        ↓
+   Bouton cliqué → appel direct au webhook du sous-agent correspondant
+        ↓
+   n8n sur VPS Hostinger (Docker)
+        ↓
+   Nœud Code JS → reformatage des données entrantes
+        ↓
+   Nœud GitHub → injection des bonnes pratiques du canal
+        ↓
+   AI Agent (Claude API ZDR) + contexte client injecté via Lovable
+        ↓
+   Réponse JSON → retour à l'interface Lovable
+        ↓
+   Supabase (via Lovable Cloud) → persistance briefs et contenus générés`
+
+**10 sous-agents indépendants**, chacun avec son propre webhook :
+
+1. SEO / GEO
+2. Facebook / Instagram organique
+3. LinkedIn organique
+4. Lead Magnet + séquence nurturing
+5. Email base clients existante
+6. Meta Ads
+7. Google Ads
+8. LinkedIn Ads
+9. Recommandation budget
+10. Prompts visuels (style Midjourney / Canva)
+
+---
+
+## Étape 1 — Infrastructure VPS Hostinger
+
+**Méthode suivie :** tutoriel Naiom (formation brAIn).
+
+### Ce qui a été fait
+
+1. Achat d'un VPS Hostinger (offre KVM 1 ou KVM 2), OS Ubuntu 22.04, image "OS Only".
+2. Connexion SSH depuis le terminal local : `ssh root@[IP_VPS]`
+3. Mise à jour du système, nettoyage des anciennes versions Docker, installation Docker via le script officiel.
+4. Création d'un dossier de travail `n8n-docker/`, avec deux fichiers de configuration :
+    - `docker-compose.yml` : définit les conteneurs n8n et Caddy, les volumes, les ports.
+    - `Caddyfile` : configure Caddy comme reverse proxy, fait pointer le domaine vers n8n sur le port 5678.
+5. Lancement des conteneurs : `docker compose up -d`
+6. Configuration DNS sur Hostinger : enregistrement de type A pointant vers l'IP du VPS.
+7. Accès à n8n confirmé via `https://[domaine]`.
+
+### Points clés retenus
+
+- L'indentation dans le fichier `docker-compose.yml` est critique (format YAML). Une erreur d'espace empêche le démarrage.
+- Caddy gère automatiquement le certificat SSL (HTTPS) sans configuration manuelle.
+- Les deux conteneurs (n8n + Caddy) ont été configurés en `restart: always` pour redémarrer automatiquement si le VPS reboot.
+
+---
+
+## Étape 2 — Stabilisation 24/24 avec ngrok
+
+### Pourquoi ngrok
+
+Lovable est hébergé dans le cloud. n8n tourne sur un VPS privé. Il faut un tunnel entre les deux pour que Lovable puisse appeler les webhooks n8n depuis l'extérieur.
+
+### Évolution de la configuration
+
+**Version initiale (instable) :** ngrok free tier lancé dans une session `screen` du terminal. Le tunnel se coupait à chaque fermeture de session.
+
+**Version finale (stable 24/24) :** ngrok plan Hobby ($10/mois), URL fixe permanente `pastor-virtuous-oaf.ngrok-free.dev`, configuré comme service système via `systemd`.
+
+### Ce que fait le service systemd
+
+Il fait tourner ngrok en arrière-plan, automatiquement, même si le VPS redémarre. Il n'est plus nécessaire d'ouvrir un terminal pour relancer le tunnel.
+
+### Problèmes rencontrés lors de la configuration systemd
+
+- Chemin ngrok incorrect : ngrok installé via snap, chemin réel `/snap/bin/ngrok` et non `/usr/local/bin/ngrok`.
+- Authtoken inaccessible au service système : résolu en ajoutant `Environment=HOME=/root` dans le fichier de service et en intégrant l'authtoken directement dans la commande de lancement.
+- Flag déprécié : `-domain` remplacé par `-url`.
+
+### Résultat
+
+Service ngrok actif en statut `active (running)`, URL fixe, redémarrage automatique. Interface Lovable accessible 24/24 via le lien partagé.
+
+---
+
+## Étape 3 — Construction des workflows n8n
+
+### Architecture initiale abandonnée
+
+**Problème :** un orchestrateur unique appelait les 9 sous-agents séquentiellement via des outils ("tools"). Durée d'exécution : 5 à 6 minutes. Timeouts fréquents.
+
+### Architecture finale retenue
+
+**Principe :** chaque bouton dans Lovable appelle directement le webhook de son sous-agent dédié. Pas d'orchestrateur central. Durée d'exécution : ~20 secondes par génération.
+
+**Configuration Docker ajoutée** pour éviter les timeouts résiduels :
+
+`N8N_WEBHOOK_TIMEOUT=600`
+
+Ajouté dans le fichier `docker-compose.yml`, section environnement de n8n.
+
+### Structure d'un sous-agent (identique pour les 10)
+
+`Webhook (POST)
+    ↓
+Code in JavaScript  →  reformate les données envoyées par Lovable
+    ↓
+GitHub HTTP Request  →  récupère le fichier de bonnes pratiques du canal
+    ↓
+AI Agent (Claude API ZDR)  →  génère le contenu en JSON
+    ↓
+Edit Fields (Success)  →  structure la réponse
+    ↓
+Respond to Webhook  →  retourne le JSON à Lovable`
+
+### Rôle du nœud Code JS
+
+Lovable envoie les données du brief sous forme de texte brut (string). L'AI Agent a besoin de données structurées (JSON). Ce nœud fait la conversion :
+
+javascript
+
+`const body = $input.first().json.body;
+const parsed = typeof body === 'string' ? JSON.parse(body) : body;
+return [{ json: parsed }];`
+
+**Ligne 1 :** récupère les données envoyées par Lovable.
+
+**Ligne 2 :** vérifie si c'est du texte brut, et si oui, le convertit en données structurées.
+
+**Ligne 3 :** envoie le résultat au nœud suivant dans le format standard n8n.
+
+### Rôle du nœud GitHub
+
+Chaque sous-agent récupère au moment de la génération le fichier de bonnes pratiques correspondant à son canal (ex : `meta-ads-b2c.md`, `google-ads-b2b.md`, `seo-geo-en.md`). Ce fichier est injecté dans le prompt système de l'AI Agent.
+
+**Avantage :** mettre à jour les bonnes pratiques sur GitHub met à jour instantanément le comportement de l'agent, sans toucher à n8n.
+
+### Contexte client dans les prompts
+
+Le `contexte_client` (description de l'entreprise, offres, ton, cibles) est injecté dans chaque appel webhook depuis Lovable. Il provient de la section "Gérer les clients" de l'interface.
+
+**Chaque prompt système reçoit donc :**
+
+- Les bonnes pratiques du canal (depuis GitHub)
+- Le contexte client (depuis Lovable / Supabase)
+- Les données du brief (titre, description, budget)
+
+---
+
+## Étape 4 — GitHub comme base de connaissances
+
+### Structure du repo `REACHIZER-PROD`
+
+`REACHIZER-PROD/
+├── best-practices/          ← fichiers utilisés par les sous-agents
+│   ├── google-ads-b2b
+│   ├── google-ads-b2c
+│   ├── linkedin-ads-b2b
+│   ├── meta-ads-b2b
+│   ├── meta-ads-b2c
+│   ├── seo-geo
+│   └── seo-geo-en
+├── clients/                 ← un fichier par client (non utilisé directement par les agents)
+├── sauvegardes-agents/      ← exports JSON des workflows n8n
+└── frontend-agents-lovable  ← code de l'interface Lovable`
+
+### Principe de fonctionnement
+
+Les sous-agents appellent les fichiers `best-practices/` via une requête HTTP GET vers `raw.githubusercontent.com`. Les fichiers sont en markdown, rédigés comme des références consultant (concis, stratégiques, pas pédagogiques).
+
+**Pour adapter l'outil à un nouveau client :** modifier uniquement le fichier client dans "Gérer les clients" de Lovable. Les bonnes pratiques GitHub restent universelles.
+
+---
+
+## Étape 5 — Interface Lovable
+
+### Structure de l'interface
+
+Trois vues principales :
+
+1. **Tableau de bord** : métriques (briefs créés, contenus générés, clients actifs, canal le plus utilisé).
+2. **Nouveau brief** : formulaire (titre de la spécialité, description, budget).
+3. **Vue production** : 10 cartes de génération, une par sous-agent.
+
+### Gestion des clients (contexte client)
+
+Accessible via "Gérer les clients" dans la barre latérale. Permet de :
+
+- Créer un client (nom + bloc de contexte en markdown)
+- Modifier le contexte d'un client existant
+- Le contexte est injecté automatiquement dans tous les appels webhook au moment de la génération
+
+### Persistance des données
+
+Supabase (géré automatiquement par Lovable Cloud, sans compte Supabase séparé). Trois tables : `clients`, `briefs`, `contenus`. Les briefs et les contenus générés persistent entre les sessions.
+
+### Pattern de déploiement par candidature
+
+Une application Lovable dédiée par candidature, dupliquée depuis la version de base, avec :
+
+- Les briefs du client cible pré-chargés
+- Le contexte client configuré
+- Accès public, sans authentification
+- Lien partageable directement dans l'email de candidature
+
+---
+
+## Étape 6 — Claude API (ZDR)
+
+### Endpoint utilisé
+
+Claude API avec endpoint ZDR (Zero Data Retention). Les données envoyées à Anthropic ne sont pas conservées au-delà de la transaction. Argument RGPD : les données ne transitent que pendant la génération.
+
+### Modèle utilisé
+
+Claude (via le nœud "Anthropic Chat Model" dans n8n, connecté à chaque AI Agent).
+
+### Coût de fonctionnement
+
+- ~0,20 CHF par génération complète (10 agents en parallèle)
+- ~80 CHF/mois d'infrastructure totale (VPS + ngrok + Claude API)
+
+---
+
+## Étape 7 — Sauvegardes
+
+Trois niveaux de sauvegarde :
+
+1. **GitHub** : exports JSON des workflows n8n (`sauvegardes-agents/`) + code Lovable + prompts.
+2. **Snapshot Hostinger** : image complète du VPS à un instant T. Permet de restaurer l'environnement entier en cas de problème.
+3. **ZIP local + cloud** : archive manuelle des fichiers clés.
+
+**Bonne pratique :** prendre un nouveau snapshot Hostinger après chaque stabilisation majeure.
+
+---
+
+## Décisions d'architecture clés
+
+| Décision | Raison |
+| --- | --- |
+| Pas d'orchestrateur central | Timeouts systématiques au-delà de 5-6 min |
+| Un webhook par sous-agent | Génération en ~20s, indépendance totale de chaque agent |
+| GitHub pour les bonnes pratiques | Mise à jour sans retoucher n8n |
+| Contexte client dans Lovable | Swap client = modifier un champ, pas un workflow |
+| Supabase via Lovable Cloud | Persistance sans infrastructure supplémentaire |
+| ngrok Hobby + systemd | URL fixe permanente, redémarrage automatique |
+| ZDR endpoint Claude | Argument RGPD recevable en entretien |
+| Une app Lovable par candidature | Démo live contextualisée, lien direct dans l'email |
+
+---
+
+## Vocabulaire entretien
+
+- "Système IA" ou "automatisation" de préférence à "agent" (évite le sur-promesse)
+- "Système Qualification Leads IA" et non "Agent Q"
+- RGPD : "conformité RGPD claimable" ≠ "confidentialité absolue des données"
+- Sur le rôle de salarié : documenter les flux de données, transmettre le DPA au DPO, définir la rétention à chaque étape, informer le DPO avant déploiement
