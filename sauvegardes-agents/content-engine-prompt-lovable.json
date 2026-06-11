@@ -1,0 +1,707 @@
+# Prompt pour Lovable
+
+Build a clean, modern web application called "Reachizer — Content Engine". ## Brand & Design - Primary color: #885ad8 (violet) - Secondary color: #6161eb (blue-violet) - Background: #ffffff (white) - Text: #000000 (black) - Style: minimalist, tech, professional. Clean cards with subtle borders (#f0f0f0). No gradients, no heavy shadows. - Font: Inter - Language: French (all UI labels in French) --- ## Database — Supabase Create the following tables: **Table: clients** - id (uuid, primary key) - nom (text) - contexte (text) — full client context, plain text - created_at (timestamp) **Table: briefs** - id (uuid, primary key) - client_id (uuid, foreign key → clients.id) - titre (text) - description (text) - budget_ads (integer, nullable) - created_at (timestamp) **Table: contenus** - id (uuid, primary key) - brief_id (uuid, foreign key → briefs.id) - canal (text) - contenu (text) - created_at (timestamp) --- ## App Layout **Fixed left sidebar (220px wide):** - Top: "Reachizer" logo + lightning bolt icon in #885ad8 - "+" New brief button (primary color) - List of recent briefs from Supabase, sorted by date desc, clickable - Each item: brief title + client name badge + date - Active brief highlighted with #885ad8 background + white text - Bottom: "Gérer les clients" link **Main content area:** renders the active view --- ## View 1 — Dashboard (default) Shown when no brief is selected. **4 metric cards in a row:** - "Briefs créés" — count of briefs table - "Contenus générés" — count of contenus table - "Clients actifs" — count of clients table - "Canal le plus utilisé" — most frequent canal in contenus table **Recent briefs table:** - Columns: Titre | Client | Date | Contenus générés | Action - "Reprendre" button per row → loads brief in Production view - "Nouveau brief" primary button top right --- ## View 2 — Nouveau brief Centered form: - Dropdown "Client" — loads all clients from Supabase (displays nom, stores id + contexte in state) - Field "Titre du brief" (text input, placeholder: "Ex: OneDoc rejoint Google Maps") - Field "Description" (large textarea, placeholder: "Décrivez le sujet, l'angle, les chiffres clés...") - Field "Budget Ads (CHF)" (number input, optional) - Primary button "Sauvegarder et générer" → saves to Supabase briefs table → navigates to Production view --- ## View 3 — Production **Top brief recap card:** - Client name badge + brief title bold + truncated description + "Modifier" link - "Contenus générés : X/9" counter **9 generation cards — full-width vertical list:** Each card: - Left: label bold + short description grey 13px - Right: "Générer" button (#885ad8) - Below (hidden until generated): result zone + "Copier" + "Régénérer" buttons - If already generated (loaded from Supabase): show existing result directly Card list in order: 1. "Générer stratégie SEO/GEO" | "Architecture de contenu : cocon sémantique, H1/H2/H3, mots-clés cibles" 2. "Générer posts Meta organiques" | "Posts prêts à publier pour Facebook et Instagram" 3. "Générer post LinkedIn organique" | "Post B2B optimisé pour l'algorithme LinkedIn 2026" 4. "Générer un email pour ma base" | "Email prêt à envoyer : objet, preheader, corps, CTA" 5. "Générer stratégie Meta Ads" | "Variantes Feed Image, scripts Reels, recommandation budget canal" 6. "Générer stratégie Google Ads" | "RSA 15 titres, 4 descriptions, extensions, mots-clés négatifs" 7. "Générer stratégie LinkedIn Ads" | "Sponsored Content, Lead Gen Form, recommandation budget canal" 8. "Avoir une recommandation de budget" | "Répartition globale des canaux, plan de test J1-J15, signaux d'alerte" 9. "Générer des prompts pour visuels" | textarea BEFORE button: placeholder "Décrivez votre vision : ambiance, personnages, décor..." + "Générer les prompts" button **Loading state:** - Button disabled + spinner + "Génération en cours..." in result zone - If API call > 30 seconds: "La génération prend plus de temps que prévu... merci de patienter" **Result zone:** - Parse and display "response" field from API JSON as readable formatted text - "Copier" button - "Régénérer" button - Auto-save to Supabase contenus table (brief_id + canal + contenu) --- ## API calls Each button sends POST to its webhook with: json { "titre": "[brief title]", "description": "[brief description]", "budget_ads": [budget or 0], "contexte_client": "[full contexte text from selected client in Supabase]" } Webhook URLs: 1. SEO/GEO → https://reachizer-n8n.com/webhook/9ed7f30d-1ed1-4134-8cbe-c67cfcc766cb 2. Meta organique → https://reachizer-n8n.com/webhook/ec5eff15-f87d-4c2f-beec-0b6f726f02f5 3. LinkedIn organique → https://reachizer-n8n.com/webhook/cca0022a-928d-4dff-ad28-0ceaff6aa50a 4. Email base clients → https://reachizer-n8n.com/webhook/b5e3d4c5-d270-46e0-964d-012186b4c98c 5. Meta Ads → https://reachizer-n8n.com/webhook/3910a588-b23a-4e66-9118-a5673d37460e 6. Google Ads → https://reachizer-n8n.com/webhook/9d6d3128-91c1-4a49-8479-6ce7976df514 7. LinkedIn Ads → https://reachizer-n8n.com/webhook/ea1d1b49-24c1-47ed-8c89-455a935c716a 8. Budget → https://reachizer-n8n.com/webhook/d68f8b6b-3043-4b47-9791-49d257565d31 9. Visuels → https://reachizer-n8n.com/webhook/4f3ac35d-7df7-4ece-96e8-d1927312a2a7 For button 9 add to JSON: json "vision_visuelle": "[value from textarea above the button]" --- ## View 4 — Gestion clients Accessible from sidebar bottom link. - List of existing clients: nom + date création + "Modifier" + "Supprimer" buttons - "Ajouter un client" button → form: - "Nom du client" (text input) - "Contexte client" (large textarea — paste markdown or plain text describing the company) - "Sauvegarder" → saves to Supabase clients table --- ## Key behaviors - Brief data + selected client context persist in app state across views during session - Loading an existing brief from sidebar → pre-fills form + loads already-generated contenus from Supabase in production view - All data persists in Supabase across sessions
+
+Améliore le design de l'application en restant minimaliste mais en ajoutant plus de personnalité :
+
+- Sidebar : fond noir (#000000), texte blanc, logo "Reachizer" en violet #885ad8, bouton "+ Nouveau brief" en dégradé de #885ad8 vers #6161eb
+- Header du dashboard : titre en noir bold, fond blanc avec une fine bordure bottom
+- Cards métriques : fond blanc avec bordure gauche épaisse (4px) en #885ad8, chiffre en gros en #885ad8
+- Boutons primaires : dégradé de gauche à droite #885ad8 → #6161eb, texte blanc, border-radius 8px
+- Table briefs récents : header de colonne en fond #f8f5ff (violet très clair), texte #885ad8
+- Fond général : #fafafa (blanc légèrement teinté, pas pur blanc)
+- Accents : utiliser #885ad8 et #6161eb sur les éléments interactifs (hover, focus, badges)
+- Sidebar active item : fond #885ad8, texte blanc, border-radius 6px
+
+Ajoute des effets de profondeur et d'interactivité :
+
+- Cards métriques : box-shadow légère (0 2px 8px rgba(136, 90, 216, 0.12)), au hover légère élévation (0 8px 24px rgba(136, 90, 216, 0.2)) + translateY(-2px), transition smooth 0.2s
+- Boutons primaires : box-shadow (0 4px 12px rgba(136, 90, 216, 0.35)), au hover (0 6px 20px rgba(136, 90, 216, 0.5)) + translateY(-1px), transition 0.2s
+- Cards de génération (Production view) : box-shadow subtle (0 1px 4px rgba(0,0,0,0.08)), au hover (0 4px 16px rgba(136, 90, 216, 0.15)) + légère élévation
+- Sidebar : box-shadow droite (2px 0 12px rgba(0,0,0,0.15)) pour effet de profondeur
+- Bouton "Régénérer" : style outline violet avec hover qui remplit en dégradé
+- Transitions globales : tous les éléments interactifs ont transition: all 0.2s ease
+
+Dans la vue Production, améliore l'affichage des résultats selon le type de contenu :
+
+Pour les boutons organiques (SEO/GEO, Posts Meta organiques, Post LinkedIn organique, Email pour ma base) :
+
+- Affiche directement le texte du contenu, propre et prêt à copier-coller
+- Pas de JSON visible, pas d'accolades, pas de guillemets
+- Si le résultat contient plusieurs sections (ex: Facebook + Instagram), sépare-les avec un titre de section en gras et une ligne de séparation
+
+Pour les boutons stratégiques (Meta Ads, Google Ads, LinkedIn Ads, Recommandation de budget, Prompts visuels) :
+
+- Parse le JSON et affiche chaque champ avec son label en gris (12px) et sa valeur en noir en dessous
+- Numérote les variantes clairement : "Variante 1", "Variante 2"...
+- Séparateur visuel entre chaque variante
+- Pas d'accolades, pas de guillemets, pas de backticks json visibles dans tous les cas
+
+Améliore l'affichage des résultats pour les contenus structurés (SEO/GEO, Meta Ads, Google Ads, LinkedIn Ads, Budget, Visuels) :
+
+- Ajouter un padding de 16px entre chaque section
+- Les labels (Mot Clé, Intention, Compétitivité, etc.) : couleur #885ad8, font-size 11px, uppercase, letter-spacing 0.5px, margin-bottom 4px
+- La valeur sous chaque label : couleur #000000, font-size 15px, line-height 1.6, margin-bottom 16px
+- Ajouter une ligne séparatrice légère (#f0f0f0, 1px) entre chaque bloc
+- Les titres de section principaux (Mot Clé Principal, Page Pilier, Articles Satellites...) : fond #f8f5ff, padding 10px 16px, border-radius 6px, font-size 14px bold, margin-top 24px margin-bottom 12px
+- Espacement global dans la zone de résultat : padding 20px
+
+Corrige et améliore les points suivants :
+
+1. BUG — Sidebar briefs récents : les nouveaux briefs ne s'affichent pas dans la sidebar après création. Forcer le rechargement de la liste des briefs depuis Supabase après chaque sauvegarde d'un nouveau brief.
+2. COMPTEUR — Le compteur "X/9" dans le récap du brief doit se mettre à jour en temps réel à chaque génération réussie, sans recharger la page.
+3. SIDEBAR — Quand un brief est actif, le mettre en surbrillance dans la sidebar (fond #885ad8, texte blanc, border-radius 6px). Actuellement rien n'indique quel brief est sélectionné.
+4. BOUTON GÉNÉRER — Une fois un contenu généré sur un bouton, changer l'apparence du bouton : passer de "Générer" (fond #885ad8) à "Régénérer" (outline violet) pour indiquer visuellement que ce canal a déjà été traité.
+5. BRIEF RECAP — Le titre du brief dans le récap en haut est tronqué trop vite. Afficher au moins 2 lignes avant de tronquer.
+
+BUG CRITIQUE à corriger : quand je génère un contenu sur un brief,
+
+les contenus des autres briefs se régénèrent aussi.
+
+Chaque génération doit être strictement isolée au brief actif uniquement.
+
+- Le brief actif est celui affiché dans le récap en haut de la vue Production
+- Les appels webhook ne doivent être déclenchés que par un clic utilisateur
+    
+    sur le bouton "Générer" du brief actif
+    
+- Les résultats des autres briefs (chargés depuis Supabase) ne doivent
+    
+    jamais être re-générés automatiquement
+    
+- Vérifier que l'état de chaque card (généré / non généré) est bien
+    
+    lié au brief_id actif et non global
+    
+
+Améliore le récap du brief en haut de la vue Production :
+
+1. Le récap est actuellement tronqué et non modifiable. Le transformer en bloc expansible :
+    - Par défaut : titre + description tronquée à 2 lignes + bouton "Voir plus"
+    - Au clic "Voir plus" : affiche la description complète + budget + nom du client + bouton "Voir moins"
+2. Ajouter un bouton "Modifier le brief" dans le récap (icône crayon, outline violet) :
+    - Au clic : ouvre un modal ou inline edit avec les champs pré-remplis (titre, description, budget)
+    - Bouton "Sauvegarder les modifications" → met à jour Supabase + recharge le récap
+    - Bouton "Annuler" → ferme sans sauvegarder
+    - Les contenus déjà générés restent affichés — la modification du brief n'efface pas les générations existantes
+
+Dans toute l'application, remplace systématiquement le symbole € par CHF.
+
+Aucune mention d'euros nulle part — ni dans les labels, ni dans les placeholders,
+
+ni dans les contenus générés affichés. Toujours CHF.
+
+Ajoute un lien "Tableau de bord" dans la sidebar, juste sous le logo Reachizer et au-dessus du bouton "+ Nouveau brief" :
+
+- Icône maison (home) à gauche
+- Texte "Tableau de bord"
+- Au clic : navigue vers le dashboard et désélectionne le brief actif
+- Style : même apparence que les briefs récents dans la sidebar, avec highlight #885ad8 quand on est sur le dashboard
+
+Pour le bouton "Générer stratégie SEO/GEO", réorganise complètement l'affichage du résultat :
+
+1. Section "Mot-clé principal" : une card avec 3 lignes — Mot-clé / Intention / Compétitivité. Labels en violet #885ad8 uppercase 11px, valeurs en noir 15px.
+2. Section "Page pilier" : une card avec H1 en grand (18px bold), puis Angle et GEO Friendly en paragraphes avec leurs labels.
+3. Section "Articles satellites" : pour chaque article, une card distincte avec :
+    - Numéro + H1 en header de card (fond #f8f5ff, padding 12px)
+    - Mot-clé cible + Intention en 2 lignes sous le header
+    - Arborescence H2/H3 affichée avec indentation : H2 en bold noir, H3 en gris 13px avec un tiret devant et une indentation de 16px
+    - Lien vers page pilier en italique violet en bas de card
+4. Section "Maillage interne" : un bloc texte simple avec label violet.
+5. Section "Meta données" : tableau 3 colonnes — Page / Meta Title / Meta Description. Compact, lisible.
+
+Supprimer tous les titres de section redondants qui s'affichent comme des blocs gris séparés (Structure, H2, H3, Lien Pilier affichés comme des cards vides). Ces éléments doivent être intégrés dans la hiérarchie visuelle, pas affichés comme des sections indépendantes.
+
+Pour les boutons organiques (Posts Meta organiques, Post LinkedIn organique, Email pour ma base), simplifie radicalement l'affichage :
+
+- Supprimer tous les titres de section intermédiaires (## CTA, ## Hashtags, ## Slide, ## Contenu, ## Post) — ils ne doivent pas apparaître comme des headers
+- Pour Meta organique : afficher 3 blocs distincts séparés par une ligne — "Facebook", "Instagram", "Story" — avec juste le texte brut en dessous, prêt à copier
+- Le CTA doit être intégré dans le corps du texte Facebook, pas affiché comme une section séparée
+- Les hashtags Instagram : affichés sur une seule ligne sous la caption, pas en liste
+- Les slides Story : numérotées simplement "Slide 1 / Slide 2 / Slide 3" avec le contenu dessous
+- Un bouton "Copier" par bloc (Facebook / Instagram / Story) — pas un seul bouton global
+
+Pour le bouton "Générer post LinkedIn organique", simplifie l'affichage :
+
+- Deux blocs distincts séparés par une ligne : "Post entreprise" et "Post personnel"
+- Pour chaque bloc : juste le texte brut du post, prêt à copier, avec les hashtags en dernière ligne
+- Un bouton "Copier" dédié par bloc
+- Sous le post personnel : la suggestion DM affichée en italique gris, précédée du label "💬 DM suggéré :"
+- Aucun titre de section intermédiaire, aucune accolade, aucun guillemet visible
+
+Pour le bouton "Générer un email pour ma base", simplifie l'affichage :
+
+- Un seul bloc de texte continu prêt à copier : Objet, Preheader, corps et CTA à la suite, séparés par des sauts de ligne naturels
+- Le format affiché doit ressembler exactement à un vrai email qu'on copie-colle dans Mailchimp ou Brevo
+- En dessous, un second bloc plus petit "Variante objet" avec l'objet alternatif + l'angle en italique gris
+- Un bouton "Copier l'email" pour le bloc principal, un bouton "Copier" pour la variante
+- Aucun titre ## visible, aucune accolade, aucun guillemet
+
+Pour le bouton "Générer stratégie Meta Ads", restructure l'affichage en 3 sections visuellement distinctes :
+
+SECTION 1 — "📸 Feed Image"
+
+Fond #f8f5ff, titre de section en violet bold. 3 cards côte à côte (ou empilées sur mobile), une par variante :
+
+- "Variante 1 / 2 / 3" en header de card
+- "Texte principal" : texte en noir, taille normale
+- "Titre" : texte en gris italique en dessous
+- Bouton "Copier" par card
+- Supprimer le champ "Angle" — ne pas l'afficher
+
+SECTION 2 — "🎬 Reels"
+
+Fond blanc, titre de section en noir bold. 3 cards empilées, une par variante :
+
+- "Variante 1 / 2 / 3" en header
+- "Hook" : texte en violet, légèrement plus grand
+- Corps : texte continu incluant le CTA, prêt à copier — pas de label "CTA" séparé
+- Bouton "Copier" par card
+
+SECTION 3 — "💰 Budget canal"
+
+Fond #f8f5ff, titre en violet bold. Affichage en 3 lignes :
+
+- Budget/jour recommandé
+- CPL cible
+- Signaux d'alerte : chaque signal sur une ligne, avec Seuil en gris et Action en noir dessous
+
+Ligne de séparation visible entre chaque section. Aucun label "Angle", "Variante:" (avec les deux points), aucune accolade visible.
+
+Pour le bouton "Générer stratégie Google Ads", restructure l'affichage en 4 sections visuellement distinctes :
+
+SECTION 1 — "🔤 Titres RSA"
+
+Fond #f8f5ff, titre de section en violet bold.
+
+Liste numérotée de 1 à 15, un titre par ligne, texte noir.
+
+SECTION 2 — "📝 Descriptions"
+
+Fond blanc, titre de section en noir bold.
+
+4 descriptions numérotées, chacune dans une card légère avec bouton "Copier" individuel.
+
+SECTION 3 — "🔗 Extensions"
+
+Fond #f8f5ff, titre de section en violet bold. 3 sous-sections :
+
+- Sitelinks : 4 cards avec Texte en bold + Description en gris dessous
+- Callouts : liste simple sur une ligne, séparés par des points médians ·
+- Structured Snippet : texte continu, une seule ligne
+
+Bouton "Copier les extensions" global en bas.
+
+SECTION 4 — "🚫 Mots-clés négatifs"
+
+Fond blanc. Liste des négatifs sur une seule ligne séparés par des virgules.
+
+Bouton "Copier" unique.
+
+SECTION 5 — "💰 Budget canal"
+
+Fond #f8f5ff, titre en violet bold. Même structure que Meta Ads :
+
+- Budget/jour
+- CPL cible
+- Signaux d'alerte avec Seuil en gris et Action en noir
+
+Ligne de séparation visible entre chaque section.
+
+Aucun label "Variante:" avec deux points, aucune accolade, aucun guillemet visible.
+
+Pour le bouton "Générer stratégie LinkedIn Ads", restructure l'affichage en 3 sections visuellement distinctes, cohérentes avec Meta Ads et Google Ads :
+
+SECTION 1 — "📢 Sponsored Content"
+
+Fond #f8f5ff, titre de section en violet bold.
+
+3 cards empilées, une par variante :
+
+- "Variante 1 / 2 / 3" en header de card
+- Hook : texte en violet, légèrement plus grand, bold
+- Corps : texte continu en noir — CTA intégré en dernière ligne, pas de label "CTA" séparé
+- Ciblage recommandé : texte en gris italique 12px sous le corps, précédé de "🎯 Ciblage :"
+- Bouton "Copier" par card
+
+SECTION 2 — "📋 Lead Gen Form"
+
+Fond blanc, titre de section en noir bold. 3 sous-sections :
+
+- Titres : liste numérotée 1 à 3
+- Descriptions : 3 blocs numérotés avec bouton "Copier" individuel
+- Questions de qualification : liste numérotée 1 à 3, chaque question avec les options de réponse en gris dessous
+
+Bouton "Copier le formulaire complet" en bas de section.
+
+SECTION 3 — "💰 Budget canal"
+
+Fond #f8f5ff, titre en violet bold. Même structure que Meta Ads et Google Ads :
+
+- Budget/jour
+- CPL cible
+- Signaux d'alerte : Signal en noir bold, Seuil en gris, Action en noir dessous
+
+Ligne de séparation visible entre chaque section.
+
+Aucun label "Variante:" avec deux points, aucune accolade, aucun guillemet visible.
+
+Cohérence visuelle totale avec les sections Meta Ads et Google Ads.
+
+Pour le bouton "Avoir une recommandation de budget", restructure l'affichage en sections claires :
+
+SECTION 1 — "📊 Analyse"
+
+Fond #f8f5ff, titre en violet bold.
+
+- "Canaux recommandés" : liste simple avec une puce verte ✅ par canal
+- "Canaux à éviter" : liste avec une puce rouge ❌ par canal + raison en gris italique sur une ligne (pas un bloc entier)
+
+SECTION 2 — "💰 Répartition budgétaire"
+
+Fond blanc, titre en noir bold.
+
+Tableau 4 colonnes : Canal | Budget CHF | % | Budget/jour
+
+Une ligne par canal. Compact et lisible.
+
+Justification en gris italique sous le tableau si budget = 0.
+
+SECTION 3 — "🎯 Ordre de priorité"
+
+Fond #f8f5ff, titre en violet bold.
+
+Liste numérotée 1 / 2 / 3 — canal + une phrase de justification en gris.
+
+SECTION 4 — "📅 Ordre de lancement"
+
+Fond blanc.
+
+Texte continu, 3-4 lignes max. Pas de liste à puces.
+
+SECTION 5 — "🧪 Plan de test J1-J15"
+
+Fond #f8f5ff.
+
+Texte continu structuré par étapes temporelles (J1-J3, J4, J5-J10...). Pas de liste à puces.
+
+SECTION 6 — "⚠️ Signaux d'alerte"
+
+Fond blanc.
+
+3 blocs compacts — un par signal :
+
+- Signal en noir bold
+- Seuil en gris italique
+- Action en noir normal dessous
+
+Pas de label "Variante 1 / 2 / 3" visible.
+
+Ligne de séparation entre chaque section.
+
+Cohérence visuelle totale avec Meta Ads, Google Ads et LinkedIn Ads.
+
+Supprimer tous les labels "Variante:", "Canal:", "Raison:" affichés comme des champs séparés.
+
+Ajoute une icône poubelle sur chaque brief dans la sidebar :
+
+- Icône 🗑️ ou icône trash (lucide-react) positionnée à droite de chaque brief dans la sidebar
+- Visible uniquement au hover du brief (opacity 0 par défaut, opacity 1 au hover) pour ne pas surcharger visuellement
+- Au clic : affiche une confirmation rapide "Supprimer ce brief ?" avec deux boutons "Confirmer" (rouge) et "Annuler" (gris)
+- Si confirmé : supprime le brief ET tous les contenus associés dans Supabase (cascade delete sur la table contenus via brief_id), puis retire le brief de la sidebar sans recharger la page
+- Si le brief supprimé était actif : retourner automatiquement sur le Dashboard
+
+Pour le bouton "Générer un email pour ma base", corrige l'affichage :
+
+Le résultat contient un objet JSON avec les champs : email.objet, email.preheader, email.corps, variante_objet.objet, variante_objet.angle.
+
+Affiche le bloc principal ainsi :
+
+Objet : [valeur de email.objet]
+
+Preheader : [valeur de email.preheader]
+
+[valeur de email.corps]
+
+Bouton "Copier l'email" qui copie les 3 champs à la suite.
+
+Bloc variante en dessous :
+
+Objet alternatif : [valeur de variante_objet.objet]
+
+[valeur de variante_objet.angle en italique gris]
+
+Bouton "Copier".
+
+Aucune accolade, aucun guillemet, aucun champ JSON brut visible.
+
+Sous le récap du brief (entre le bloc titre/description et la première card de génération), ajoute une grille horizontale compacte de 9 badges de statut :
+
+DISPOSITION :
+
+- Ligne 1 : 5 badges côte à côte (SEO/GEO · Meta organique · LinkedIn · Email · Meta Ads)
+- Ligne 2 : 4 badges côte à côte (Google Ads · LinkedIn Ads · Budget · Visuels)
+- Gap entre les badges : 8px
+- Largeur maximale : s'adapte au conteneur
+
+STYLE DES BADGES :
+
+- Taille fixe : environ 120px de large, 36px de hauteur
+- Border-radius : 8px
+- Font-size : 11px, centré
+- Non généré : fond blanc, bordure 1px solid #e0e0e0, texte #999
+- Généré : fond #f0fdf4, bordure 1px solid #86efac, texte #166534, avec ✓ devant le label
+- Transition smooth 0.3s sur le changement d'état
+
+HOVER :
+
+- Au survol : légère élévation (box-shadow 0 2px 8px rgba(0,0,0,0.1))
+- Apparition d'un mini CTA "Voir →" en remplacement du label (fade in 0.2s)
+- Curseur pointer
+
+COMPORTEMENT :
+
+- Clic → scroll smooth jusqu'à la card correspondante
+- Statut mis à jour en temps réel après chaque génération réussie
+- Briefs chargés depuis sidebar → badges déjà générés apparaissent en vert immédiatement
+
+ok tu peux centrer ces boutons par rapport au bloc au dessus plutôt que d'aligner à gauche ?
+
+Dans la sidebar, inverse les styles :
+
+- "+ Nouveau brief" : fond transparent, bordure 1px solid #ffffff40, texte blanc, border-radius 8px. Au hover : fond #ffffff15
+- Les éléments actifs (Tableau de bord quand on est sur le dashboard, brief sélectionné dans la liste) : fond #885ad8, texte blanc, border-radius 6px
+- Les éléments inactifs dans la liste des briefs : fond transparent, texte blanc/gris, sans bordure
+
+**DONNER LOGO REACHIZER**
+Dans la sidebar, remplace le header logo par cette combinaison de gauche à droite :
+
+- Logo Reachizer (Logo_Reachizer.png) en hauteur 28px, width auto, object-fit contain
+- Icône éclair ⚡ en violet #885ad8
+- Texte "Reachizer" en blanc bold
+
+Les 3 éléments alignés verticalement au centre, gap 6px entre chaque.
+
+Fond transparent, pas de background sur ce header.
+
+BUG à corriger sur les boutons "Générer posts Meta organiques" et "Générer post LinkedIn organique" :
+
+Le résultat s'affiche parfois en JSON brut avec accolades, guillemets et \n visibles au lieu du texte formaté.
+
+Le problème vient du parsing : le JSON reçu peut contenir des \n littéraux dans les valeurs string.
+
+Assure-toi que le parser :
+
+1. Parse d'abord le champ "response" de la réponse webhook
+2. Nettoie les \n littéraux (\n) en vrais sauts de ligne avant d'afficher
+3. Gère les cas où le JSON est imbriqué dans une string (double parsing si nécessaire)
+4. Affiche toujours le texte brut formaté — jamais les accolades ou guillemets JSON
+
+Ce fix doit s'appliquer de manière cohérente sur tous les briefs, pas uniquement le premier généré.
+
+BUG à corriger sur le bouton "Générer stratégie Google Ads" :
+
+Les sections "🔤 Titres RSA" et "📝 Descriptions" ne s'affichent pas — seules les Extensions, Mots-clés négatifs et Budget canal apparaissent.
+
+Le JSON reçu contient les champs rsa.titres (array de 15 strings) et rsa.descriptions (array de 4 strings).
+
+Assure-toi que :
+
+1. Le parser lit bien rsa.titres et rsa.descriptions depuis le JSON parsé
+2. La section Titres RSA affiche une liste numérotée 1 à 15
+3. La section Descriptions affiche 4 blocs numérotés avec bouton Copier individuel
+4. Ces deux sections apparaissent EN PREMIER avant les Extensions
+5. Le fix s'applique à tous les briefs de manière cohérente
+
+Rends l'interface entièrement responsive pour mobile et tablette. Règles à appliquer :
+
+Sidebar : masquée sur mobile, remplacée par un menu hamburger ou barre de navigation en bas
+
+Cards métriques : 2x2 sur mobile au lieu de 4 en ligne
+
+Tableau des briefs : scrollable horizontalement sur mobile ou transformé en cards empilées
+
+Boutons : pleine largeur sur mobile
+
+Typographie : tailles adaptées, rien ne doit déborder
+
+Breakpoints : mobile < 768px, tablette 768-1024px, desktop > 1024px Tester visuellement chaque vue : tableau de bord, nouveau brief, gestion clients.
+
+- 
+
+Les cards de génération affichent le JSON brut avec accolades et guillemets. Il faut parser ce JSON et afficher le contenu de façon lisible et structurée. Pour chaque canal :
+
+Meta Ads : afficher chaque variante avec son texte principal, titre et angle dans des blocs séparés
+
+Google Ads : afficher les titres en liste, les descriptions en liste, les mots-clés en tags
+
+Tous les canaux : zéro JSON visible, uniquement le contenu formaté, avec des séparateurs clairs entre les sections.
+
+Dans "nouveau brief", enlève l'exemple dans le titre du brief il ne faut pas mentionner le nom d'une entreprise ! Remplace "Produit historique rejoint Google Maps" par "Webinar à venir, nouvelle feature...”
+
+Effectue les modifications suivantes dans la Vue 3 — Production :
+
+1. Renomme les cartes existantes avec cet orthographe exact :
+
+"Générer la stratégie SEO/GEO" | "Architecture de contenu : cocon sémantique, H1/H2/H3, mots-clés cibles"
+
+"Générer les posts Facebook/Instagram organiques" | "Posts prêts à publier pour Facebook et Instagram"
+
+"Générer le post LinkedIn organique" | "Post B2B optimisé pour l'algorithme LinkedIn 2026"
+
+"Générer la stratégie Meta Ads" | "Variantes Feed Image, scripts Reels, recommandation budget canal"
+
+"Générer la stratégie Google Ads" | "RSA 15 titres, 4 descriptions, extensions, mots-clés négatifs"
+
+"Générer la stratégie LinkedIn Ads" | "Sponsored Content, Lead Gen Form, recommandation budget canal"
+
+"Générer un email pour ma base" | "Email prêt à envoyer : objet, preheader, corps, CTA"
+
+"Avoir une recommandation de répartition de budget" | "Répartition globale des canaux, plan de test J1-J15, signaux d'alerte"
+
+"Générer des prompts pour des visuels IA" | "Prompts prêts à utiliser pour Midjourney, DALL-E ou Firefly"
+
+1. Ajoute 2 nouvelles cartes et affiche toutes les cartes dans cet ordre final :
+- Générer la stratégie SEO/GEO
+- Générer les posts Facebook/Instagram organiques
+- Générer le post LinkedIn organique
+- (nouvelle) "Générer les lead magnets" | "3 formats recommandés avec structure complète, landing page et stratégie de distribution" — webhook : https://reachizer-n8n.com/webhook/ceedf2a3-9263-4d1c-9142-f02e74aa477a — canal Supabase : lead_magnet
+- Générer l'email pour ma base
+- (nouvelle) "Générer la séquence d'emails nurturing" | "Séquence 3 emails : éduquer → prouver → convertir + configuration scoring et alerte commerciale" — webhook : https://reachizer-n8n.com/webhook/9f97623d-cab5-4d90-9cf4-d501e5b0326d — canal Supabase : nurturing
+- Générer la stratégie Meta Ads
+- Générer la stratégie Google Ads
+- Générer la stratégie LinkedIn Ads
+- Avoir une recommandation de répartition de budget
+- Générer les prompts pour des visuels IA
+1. Le compteur passe de X/9 à X/11.
+
+Même comportement que les cartes existantes pour les deux nouvelles : POST avec titre, description, budget_ads, contexte_client — affichage du champ response — boutons Copier + Régénérer — sauvegarde Supabase.
+
+1. Ajoute des pills/badges de canal sous le compteur "Contenus générés : X/11", affichés en ligne, qui indiquent l'état de génération de chaque carte :
+
+Blanc (non généré) : fond blanc, bordure #f0f0f0, texte #000000
+
+Vert (généré) : fond #22c55e, texte blanc
+
+Labels dans l'ordre :
+
+- SEO/GEO
+- FB/Insta organique
+- LinkedIn organique
+- Lead magnets
+- Email
+- Séquence d'emails
+- Meta Ads
+- Google Ads
+- LinkedIn Ads
+- Reco de budget
+- Prompts visuels
+
+Chaque pill est cliquable et scrolle vers la carte correspondante
+
+Pour le bouton "Générer un lead magnet", réorganise complètement l'affichage du résultat :
+
+Section "Recommandations" : 3 cards distinctes côte à côte (ou empilées sur mobile), une par format recommandé. Chaque card contient :
+
+Header avec le rang (1, 2, 3) + nom du format en bold (fond #f8f5ff, padding 12px)
+
+Justification en italique gris 13px
+
+Titre du lead magnet en bold noir 16px
+
+Sous-titre en gris 14px
+
+Promesse en paragraphe noir 14px avec label "Promesse :" en violet #885ad8 uppercase 11px
+
+Section "Structure du contenu" (basée sur le format rang 1) :
+
+Introduction : bloc texte simple avec label violet "INTRODUCTION"
+
+Chaque section dans une card distincte avec :
+
+Numéro + titre en header de card (fond #f8f5ff, padding 12px)
+
+Points clés affichés avec un tiret devant, en noir 14px, indentation 16px
+
+Format recommandé en italique gris en bas de card, précédé du label "Format :" en violet
+
+Conclusion + CTA : bloc texte simple avec label violet "CONCLUSION & CTA"
+
+Section "Landing page" : une card avec :
+
+H1 en grand (18px bold)
+
+Sous-titre en gris 15px
+
+3 bénéfices affichés avec une coche ✓ devant, en noir 14px
+
+CTA bouton : affiché comme un vrai bouton violet #885ad8 avec le texte exact dedans
+
+Champs formulaire : affichés sur une ligne, séparés par des virgules, précédés du label "Formulaire :" en violet
+
+Section "Distribution" :
+
+Canal prioritaire : une ligne avec label "Canal prioritaire :" en violet + valeur en noir
+
+Angles par canal : chaque canal dans une ligne — nom du canal en bold + angle en gris italique
+
+Audiences cibles : affichées sur une ligne, séparées par des virgules
+
+Supprimer tous les titres de section redondants affichés comme des blocs gris séparés. Aucune accolade, aucun guillemet, aucun label ## visible. Les labels de section doivent être en violet #885ad8 uppercase 11px, intégrés dans la hiérarchie visuelle.
+
+Un seul bouton "Copier" global en bas du résultat complet.
+
+---
+
+Pour le bouton "Générer la séquence d'emails nurturing", réorganise complètement l'affichage du résultat :
+
+Section "Configuration CRM" : une card avec 4 lignes. Labels en violet #885ad8 uppercase 11px, valeurs en noir 14px :
+
+Trigger
+
+Segment cible
+
+Critère de sortie
+
+Durée totale
+
+Les 3 emails : chacun dans une card distincte avec :
+
+Header de card : "Email 1 — Éduquer / J0", "Email 2 — Prouver / J+3", "Email 3 — Convertir / J+7" (fond #f8f5ff, padding 12px, texte bold)
+
+Objet affiché sur une ligne : label "Objet :" en violet + valeur en noir bold
+
+Preheader affiché sur une ligne : label "Preheader :" en violet + valeur en gris italique
+
+Corps : texte brut continu, comme un vrai email, sans aucun titre intermédiaire
+
+Un bouton "Copier cet email" par card
+
+Section "Scoring" : une card avec :
+
+Tableau 2 colonnes — Action / Points. Compact, lisible.
+
+Seuil de qualification sur une ligne : label violet + valeur en noir
+
+Décroissance sur une ligne : label violet + valeur en noir
+
+Section "Alerte commerciale" : une card avec :
+
+Déclencheur sur une ligne : label violet + valeur en noir
+
+Contenu notification : texte brut en noir 14px
+
+Supprimer tous les labels intermédiaires affichés comme des sous-titres violet séparés (JOUR, OBJECTIF, OBJET, PREHEADER, CORPS affichés chacun sur leur propre ligne). Ces éléments doivent être intégrés dans la hiérarchie visuelle des cards, pas affichés comme des sections indépendantes. Aucune accolade, aucun guillemet visible.
+
+Un bouton "Copier tout" global en bas du résultat complet.
+
+Effectue les modifications suivantes :
+
+1. Supprime la carte "Générer une séquence d'emails nurturing" de la Vue 3 — Production. Le compteur passe de X/11 à X/10. Supprime aussi le pill "Séquence d'emails" de la barre de statut.
+2. Renomme la carte "Générer un lead magnet" :
+
+Nouveau label : "Générer un lead magnet + nurturing"
+
+Nouvelle description : "Format recommandé, structure complète, landing page, séquence 3 emails et stratégie de distribution"
+
+Mets à jour le pill correspondant dans la barre de statut : "Lead magnet"
+
+1. Réorganise l'affichage du résultat de cette carte comme suit :
+
+Bloc 1 — Lead magnet
+
+Header "Lead magnet" (fond #f8f5ff, padding 12px, bold)
+
+Format recommandé sur une ligne : label "FORMAT :" en violet #885ad8 uppercase 11px + valeur en noir
+
+Justification en italique gris 13px
+
+Titre en bold noir 18px
+
+Sous-titre en gris 15px
+
+Promesse avec label "PROMESSE :" en violet uppercase 11px + texte en noir 14px
+
+Bloc 2 — Structure du contenu
+
+Header "Structure du contenu" (fond #f8f5ff, padding 12px, bold)
+
+Introduction : label "INTRODUCTION :" en violet + texte en noir 14px
+
+Chaque section dans une card distincte :
+
+Numéro + titre en header (fond #f8f5ff, padding 12px, bold)
+
+Points clés avec tiret devant, noir 14px, indentation 16px
+
+Format recommandé en italique gris, précédé du label "Format :" en violet
+
+Conclusion + CTA : label "CONCLUSION & CTA :" en violet + texte en noir 14px
+
+Bloc 3 — Landing page
+
+Header "Landing page" (fond #f8f5ff, padding 12px, bold)
+
+H1 en bold noir 18px
+
+Sous-titre en gris 15px
+
+3 bénéfices avec coche ✓ devant, noir 14px
+
+CTA : affiché comme un vrai bouton violet #885ad8 avec le texte exact dedans
+
+Champs formulaire sur une ligne, séparés par des virgules, précédés du label "FORMULAIRE :" en violet
+
+Bloc 4 — Distribution
+
+Header "Distribution" (fond #f8f5ff, padding 12px, bold)
+
+Canal prioritaire : label "CANAL PRIORITAIRE :" en violet + valeur en noir
+
+Angles par canal : chaque canal sur une ligne — nom en bold + angle en gris italique
+
+Audiences cibles : une par ligne, précédées d'un tiret
+
+Bloc 5 — Séquence nurturing (3 emails)
+
+Header "Séquence nurturing" (fond #f8f5ff, padding 12px, bold)
+
+Configuration : une card avec 3 lignes — Trigger / Segment cible / Critère de sortie. Labels en violet uppercase 11px, valeurs en noir 14px.
+
+Les 3 emails chacun dans une card distincte :
+
+Header : "Email 1 — Éduquer / J0", "Email 2 — Prouver / J+3", "Email 3 — Convertir / J+7" (fond #f8f5ff, bold)
+
+Objet : label "Objet :" en violet + valeur en noir bold
+
+Preheader : label "Preheader :" en violet + valeur en gris italique
+
+Corps : texte brut continu, comme un vrai email, sans titre intermédiaire
+
+Bouton "Copier cet email" par card
+
+Aucune accolade, aucun guillemet, aucun label ## visible dans l'affichage final. Un bouton "Copier tout" global en bas du résultat complet.
+
+Pour la carte "Générer un lead magnet + nurturing" :
+
+Le bloc "Lead magnet" (format, justification, titre, sous-titre, promesse) n'apparaît pas. Il doit s'afficher en premier, avant "Structure du contenu". Vérifie que les champs lead_magnet.format, lead_magnet.justification, lead_magnet.titre, lead_magnet.sous_titre, lead_magnet.promesse sont bien rendus.
+
+Dans la structure du contenu, remplace les tirets longs "—" devant les points clés par des puces "•".
+
+Pour la carte "Générer un lead magnet + nurturing", les 3 emails de la séquence nurturing ne s'affichent pas. Après la configuration (trigger, segment cible, critère de sortie), affiche les 3 emails depuis les champs nurturing.email_1, nurturing.email_2, nurturing.email_3. Chaque email dans une card distincte :
+
+Header : "Email 1 — Éduquer / J0", "Email 2 — Prouver / J+3", "Email 3 — Convertir / J+7" (fond #f8f5ff, bold)
+
+Objet : label "Objet :" en violet + valeur en noir bold
+
+Preheader : label "Preheader :" en violet + valeur en gris italique
+
+Corps : texte brut continu avec sauts de ligne naturels, comme un vrai email
+
+Bouton "Copier cet email" par card
+
+Pour la carte "Générer un lead magnet + nurturing" :
+
+Dans la section Distribution, les angles par canal s'affichent avec "—" collé au nom du canal sans saut de ligne propre. Affiche chaque canal sur sa propre ligne avec le nom du canal en bold, suivi de l'angle en gris italique sur la ligne suivante.
+
+Dans les headers des emails, remplace "Email 1 — Éduquer / 0" par "Email 1 — Éduquer / J0", "Email 2 — Prouver / 3" par "Email 2 — Prouver / J+3", "Email 3 — Convertir / 7" par "Email 3 — Convertir / J+7".
