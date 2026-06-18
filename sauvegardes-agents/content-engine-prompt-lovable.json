@@ -705,3 +705,227 @@ Pour la carte "Générer un lead magnet + nurturing" :
 Dans la section Distribution, les angles par canal s'affichent avec "—" collé au nom du canal sans saut de ligne propre. Affiche chaque canal sur sa propre ligne avec le nom du canal en bold, suivi de l'angle en gris italique sur la ligne suivante.
 
 Dans les headers des emails, remplace "Email 1 — Éduquer / 0" par "Email 1 — Éduquer / J0", "Email 2 — Prouver / 3" par "Email 2 — Prouver / J+3", "Email 3 — Convertir / 7" par "Email 3 — Convertir / J+7".
+
+Dans l'encart "Générer un lead magnet + nurturing", ajoute un troisième bouton à côté de "Copier" et "Régénérer", intitulé "Rédiger le contenu complet".
+
+Style : fond en dégradé violet (#885ad8 → #6161eb), texte blanc, pour le distinguer des deux boutons existants qui restent neutres.
+
+Au clic :
+
+Envoie une requête POST vers https://reachizer-n8n.com/webhook/f5d01158-9aa9-4fcb-b58e-92450669766d
+
+Le corps de la requête contient :
+
+titre : le titre du brief actuel
+
+description : la description du brief actuel
+
+structure_existante : l'intégralité du JSON actuellement affiché dans cet encart (lead_magnet, structure, landing_page, distribution, nurturing)
+
+Pendant l'attente de la réponse, affiche un état de chargement sur le bouton (le bouton devient désactivé avec un indicateur de chargement)
+
+Une fois la réponse reçue, affiche le contenu rédigé (lead_magnet_redige : introduction, sections avec leur contenu_redige, conclusion_cta) dans un nouvel encart qui apparaît juste en dessous de l'encart actuel, sans remplacer ni masquer la structure existante
+
+Le nouvel encart a pour titre "Lead magnet — Contenu rédigé" et possède son propre bouton "Copier"
+
+Si la requête échoue ou prend plus de 30 secondes, affiche un message d'erreur clair sur le bouton plutôt qu'un blocage silencieux
+
+Dans l'encart "Générer un lead magnet + nurturing", augmente le timeout du bouton "Rédiger le contenu complet" de 30 secondes à 5 minutes (300 secondes). L'état de chargement doit rester actif pendant toute cette durée, avec un indicateur visuel clair que la génération est en cours (pas seulement "chargement" mais quelque chose qui montre que c'est normal que ça prenne du temps, par exemple "Rédaction en cours, cela peut prendre quelques minutes...").
+
+Dans l'encart "Générer un lead magnet + nurturing", sous le bloc "Lead magnet — Contenu rédigé" (et seulement quand ce bloc existe, donc seulement après que le contenu rédigé a été généré), ajoute trois petits boutons drapeaux côte à côte : Allemand 🇩🇪, Italien 🇮🇹, Anglais 🇬🇧.
+
+Au clic sur un drapeau :
+
+Envoie une requête POST vers https://reachizer-n8n.com/webhook/9aefc9d2-4849-41f2-a373-cbf73038964d
+
+Le corps de la requête contient :
+
+contenu : l'intégralité du JSON "lead_magnet_redige" actuellement affiché dans le bloc "Contenu rédigé"
+
+langue_cible : "allemand", "italien" ou "anglais" selon le drapeau cliqué
+
+Affiche un état de chargement sur le drapeau cliqué pendant l'attente, avec un timeout de 5 minutes (300 secondes) et un message "Traduction en cours..."
+
+Une fois la réponse reçue, affiche le contenu traduit dans un nouveau bloc juste en dessous, avec en en-tête le drapeau du pays correspondant + le mot "Allemand"/"Italien"/"Anglais", suivi du contenu traduit (introduction, sections avec leur contenu_redige, conclusion_cta) dans la même mise en forme que le bloc français
+
+Le bloc français original reste affiché avec un petit drapeau français 🇫🇷 ajouté à côté de son titre "Lead magnet — Contenu rédigé", pour le distinguer visuellement
+
+Chaque bloc de traduction a son propre bouton "Copier"
+
+Si une langue a déjà été traduite et qu'on reclique sur son drapeau, ça relance une nouvelle traduction et remplace le bloc existant plutôt que d'en créer un deuxième
+
+Dans l'encart "Générer un lead magnet + nurturing", modifie l'appel au bouton "Rédiger le contenu complet" : au lieu d'envoyer l'intégralité du JSON affiché dans l'encart sous le champ "structure_existante", n'envoie désormais que les deux blocs "lead_magnet" et "structure" (sans "landing_page", "distribution", ni "nurturing"). Le reste du comportement du bouton ne change pas.
+
+Dans l'interface, ajoute le même système de traduction qu'on a déjà mis en place sur l'encart "Générer un lead magnet + nurturing", sur les 9 autres encarts de génération : SEO/GEO, Facebook/Instagram organique, LinkedIn organique, Email pour la base, Meta Ads, Google Ads, LinkedIn Ads, Recommandation de budget, Prompts visuels.
+
+Pour chacun de ces 9 encarts, une fois que le contenu a été généré (après clic sur "Générer"), applique le même comportement :
+
+Ajoute un petit drapeau français 🇫🇷 à côté du titre du bloc de contenu généré, pour le distinguer visuellement (comme sur l'encart Lead Magnet).
+
+Sous le bloc de contenu généré, ajoute trois boutons drapeaux côte à côte : Allemand 🇩🇪, Italien 🇮🇹, Anglais 🇬🇧.
+
+Au clic sur un drapeau :
+
+Envoie une requête POST vers https://reachizer-n8n.com/webhook/9aefc9d2-4849-41f2-a373-cbf73038964d
+
+Le corps de la requête contient :
+
+contenu : l'intégralité du JSON actuellement affiché dans ce bloc précis (le contenu généré de cet encart, avec sa structure complète telle quelle, pas de simplification)
+
+langue_cible : "allemand", "italien" ou "anglais" selon le drapeau cliqué
+
+Affiche un état de chargement sur le drapeau cliqué pendant l'attente, avec un timeout de 5 minutes (300 secondes) et un message "Traduction en cours..."
+
+Une fois la réponse reçue, affiche le contenu traduit dans un nouveau bloc juste en dessous, avec en en-tête le drapeau du pays correspondant + le mot "Allemand"/"Italien"/"Anglais", suivi du contenu traduit dans la même mise en forme que le bloc français d'origine (même structure, mêmes sous-titres, même mise en page)
+
+Le nouveau bloc de traduction a son propre bouton "Copier"
+
+Si une langue a déjà été traduite pour cet encart et qu'on reclique sur son drapeau, ça relance une nouvelle traduction et remplace le bloc existant plutôt que d'en créer un deuxième
+
+Ce comportement doit être identique sur les 9 encarts, chacun traduisant uniquement son propre contenu généré, indépendamment des autres encarts.
+
+Dans l'interface Content Engine, sur la page d'un brief (où s'affichent les 10 encarts de génération), apporte les modifications suivantes :
+
+ÉLARGISSEMENT ET SOMMAIRE DE NAVIGATION
+Élargis le bloc central (qui contient le résumé du brief et les 10 encarts de génération) pour qu'il occupe davantage l'espace horizontal disponible, en réduisant la bande blanche actuellement vide à droite.
+
+Ajoute un sommaire de navigation dans la bande actuellement vide à gauche. Ce sommaire doit :
+
+Lister les 10 encarts dans l'ordre où ils apparaissent (SEO/GEO, FB/Instagram organique, LinkedIn organique, Lead magnet, Email, Meta Ads, Google Ads, LinkedIn Ads, Reco de budget, Prompts visuels)
+
+Rester visible en permanence pendant le scroll (position fixe ou sticky)
+
+Au clic sur un élément du sommaire, faire défiler la page directement jusqu'à l'encart correspondant
+
+Indiquer visuellement (coche ou couleur différente) quels encarts ont déjà été générés, en cohérence avec les pastilles vertes "✓" déjà utilisées en haut de la page
+
+Mettre en évidence (surlignage ou changement de couleur) l'encart actuellement visible à l'écran pendant le scroll
+
+BOUTON "COPIER TOUT"
+En haut de la page d'un brief, à côté ou proche du résumé du brief, ajoute un bouton "Copier tout le contenu généré". Au clic, il copie dans le presse-papier l'ensemble des contenus actuellement générés pour les 10 encarts, dans l'ordre, avec un titre clair pour chaque section (par exemple "=== SEO/GEO ===" suivi du contenu, puis "=== FB/Instagram organique ===", etc.). Si un encart n'a pas encore été généré, il est simplement ignoré dans l'export, sans erreur.
+
+RECHERCHE DANS LA LISTE DES BRIEFS
+Dans la barre latérale gauche, au-dessus de la liste "Briefs récents", ajoute un champ de recherche. La saisie filtre en temps réel la liste des briefs affichés, en cherchant dans le titre du brief et dans le nom du client associé (par exemple "OneDoc"). Si aucun brief ne correspond à la recherche, afficher un message simple comme "Aucun brief trouvé".
+
+Le reste de la mise en page et le fonctionnement des encarts ne changent pas.
+
+Le sommaire de navigation à gauche ne reste pas visible pendant le scroll vers le bas de la page (il défile avec le contenu au lieu de rester fixe à l'écran). Corrige ce comportement : le sommaire doit rester visible en permanence à l'écran, à une position fixe, quelle que soit la hauteur à laquelle on a scrollé sur la page du brief.
+
+Sur la page d'un brief, dans chaque encart de génération (SEO/GEO, FB/Instagram organique, LinkedIn organique, Lead magnet, Email, Meta Ads, Google Ads, LinkedIn Ads, Reco de budget, Prompts visuels) :
+
+Transforme le titre principal de chaque encart (par exemple "Générer la stratégie SEO/GEO") en un bandeau distinct : fond noir, texte blanc, avec une taille de police nettement plus grande que le reste du contenu de l'encart. Ce bandeau doit occuper toute la largeur de l'encart, avec un padding confortable (espace intérieur) pour qu'il ressorte clairement comme un repère visuel fort, identifiable même en scrollant rapidement.
+
+Ajoute un pictogramme/emoji devant le texte du titre, à l'intérieur de ce bandeau noir, pour chaque encart :
+
+SEO/GEO : 🔍
+
+FB/Instagram organique : 📱
+
+LinkedIn organique : 💼
+
+Lead magnet : 🧲
+
+Email : ✉️
+
+Meta Ads : 🎯
+
+Google Ads : 🔎
+
+LinkedIn Ads : 📊
+
+Reco de budget : 💰
+
+Prompts visuels : 🎨
+
+Le drapeau français qui marque le contenu généré en français ne doit jamais apparaître à l'intérieur de ce bandeau noir, ni juste à côté de lui. Il reste positionné comme actuellement, en dessous du bandeau, au-dessus du contenu généré en français.
+
+Ce changement concerne uniquement le titre principal de chaque encart, pas le contenu généré en dessous, ni les boutons "Copier", "Régénérer", ni les drapeaux de traduction.
+
+Sur la page d'un brief, rends chaque encart de génération (SEO/GEO, FB/Instagram organique, LinkedIn organique, Lead magnet, Email, Meta Ads, Google Ads, LinkedIn Ads, Reco de budget, Prompts visuels) repliable et dépliable.
+
+Comportement :
+
+Par défaut, tous les encarts sont dépliés (affichage actuel inchangé)
+
+Dans le bandeau noir du titre de chaque encart, ajoute une flèche ou un chevron à l'extrémité droite, qui indique l'état actuel (par exemple chevron vers le bas quand l'encart est déplié, chevron vers le haut ou pivoté quand il est replié)
+
+Au clic sur ce chevron, l'encart se replie ou se déplie : quand il est replié, seul le bandeau noir du titre reste visible, tout le contenu en dessous (drapeau français, contenu généré, boutons Copier/Régénérer, drapeaux de traduction, traductions déjà générées) est masqué
+
+L'état replié ou déplié de chaque encart doit être indépendant des autres encarts
+
+Le sommaire de navigation à gauche continue de fonctionner normalement : cliquer sur un élément du sommaire fait défiler jusqu'à l'encart correspondant, et si cet encart est replié, il se déplie automatiquement pour afficher son contenu
+
+Dans l'encart "Reco de budget", le tableau en haut intitulé "Répartition budgétaire" avec les colonnes "Canal / Budget CHF / % / Budget/jour" reste vide alors que les données existent dans la réponse de l'agent.
+
+La structure JSON reçue contient un champ "repartition" avec trois sous-objets : "meta_ads", "google_ads", "linkedin_ads". Chacun contient les champs "budget_chf", "pourcentage", "budget_jour" et "justification".
+
+Corrige l'affichage de ce tableau pour qu'il lise ces trois sous-objets et affiche une ligne par canal (Meta Ads, Google Ads, LinkedIn Ads) avec leurs valeurs respectives de budget_chf, pourcentage et budget_jour. Si un canal a budget_chf à 0 (canal non activé), affiche quand même la ligne avec "0" dans les colonnes, plutôt que de masquer la ligne ou de laisser le tableau vide.
+
+Dans l'encart "Meta Ads", le bloc "Ciblage recommandé" n'est plus affiché alors que la donnée existe dans la réponse de l'agent (champ "ciblage" avec "audiences_principales", "exclusions", "retargeting"). Corrige l'affichage pour qu'il réapparaisse, sous forme d'un bloc distinct après les sections "Feed Image" et "Reels", avec :
+
+Une liste des audiences principales
+
+Une liste des exclusions
+
+Le texte de stratégie retargeting
+
+Dans l'encart "Google Ads", ajoute un nouveau bloc "Stratégie de mots-clés et structure de campagne" après le bloc "Mots-clés négatifs". La donnée arrive dans un champ "strategie_mots_cles" avec : "type_correspondance_recommande" (texte), "longue_traine_suggeree" (liste de mots-clés), "structure_campagnes" (texte), "recommandation_landing_page" (texte). Affiche ces quatre éléments clairement, chacun avec son propre sous-titre.
+
+Dans le sommaire de navigation à gauche, le clic sur un élément ne fait pas défiler la page jusqu'au bon encart : il saute parfois à l'encart suivant au lieu de l'encart cliqué. Par exemple, cliquer sur "FB/Instagram organique" depuis "SEO/GEO" amène à "LinkedIn organique", et cliquer sur "Email" depuis "Lead magnet" amène à "Meta Ads".
+
+Corrige le calcul du point de défilement pour qu'il pointe exactement sur le bandeau noir du titre de l'encart correspondant au clic, pas sur l'encart suivant. Ce décalage est probablement lié à la hauteur du bandeau noir des titres ajouté récemment, qui n'est plus pris en compte correctement dans le calcul de la position de scroll.
+
+Le bloc "Lead magnet — Contenu rédigé" (qui apparaît après avoir cliqué sur "Rédiger le contenu complet") n'affiche plus le contenu textuel généré (introduction, sections, conclusion). Seuls le titre du bloc, le drapeau français, et les trois boutons de traduction (Allemand/Italien/Anglais) sont visibles. Le contenu rédigé en français a disparu de l'affichage, alors que la donnée existe bien dans la réponse de l'agent (champ "lead_magnet_redige" avec "introduction", "sections", "conclusion_cta").
+
+Ce problème ne touche que ce bloc spécifique. Restaure l'affichage du contenu français rédigé dans ce bloc, sans toucher au reste de la mise en page (sommaire, bandeaux noirs des titres, pliage/dépliage, bouton copier tout).
+
+Le bloc "Lead magnet — Contenu rédigé" n'affiche pas le contenu textuel (introduction, sections, conclusion_cta) malgré plusieurs tentatives de correction. Seul le titre, le drapeau français, et les boutons de traduction s'affichent.
+
+Avant de corriger, vérifie dans le code : est-ce que le composant qui affiche ce bloc essaie de lire le contenu rédigé depuis le même état (state) ou la même variable que celui utilisé pour les traductions ? Est-ce qu'une condition d'affichage (if/condition de rendu) empêche le texte français de s'afficher quand les boutons de traduction sont présents ? Identifie la cause exacte avant de modifier le code, puis corrige uniquement ce point précis sans toucher au reste du composant.
+
+Dans le bloc "Lead magnet — Contenu rédigé", ajoute temporairement un affichage de débogage : juste au-dessus du rendu normal du contenu, affiche en texte brut (dans une balise <pre> ou équivalent) le JSON complet exact tel qu'il est reçu par ce composant, avant tout traitement ou parsing. Je veux voir précisément ce que le composant reçoit en entrée, pour identifier si la donnée arrive correctement jusqu'à lui ou si elle se perd avant.
+
+Retire le bloc de débogage temporaire qu'on avait ajouté dans le bloc "Lead magnet — Contenu rédigé" (celui qui affichait le JSON brut en texte). Restaure l'affichage normal du contenu rédigé (introduction, sections, conclusion) une fois que la donnée arrive correctement formatée.
+
+Le bloc "Lead magnet — Contenu rédigé" n'affiche jamais le texte rédigé (introduction, sections, conclusion), malgré deux tentatives de correction précédentes. Voici exactement la structure JSON réelle que ce composant reçoit en entrée, confirmée directement depuis les logs du backend :
+
+{
+
+"response": "{"lead_magnet_redige":{"titre":"...","introduction":"...","sections":[{"numero":1,"titre":"...","contenu_redige":"..."}],"conclusion_cta":"..."}}"
+
+}
+
+Points importants sur cette structure :
+
+Le niveau racine contient un seul champ "response", qui est une chaîne de texte (string), pas un objet
+
+Cette chaîne de texte, une fois parsée avec JSON.parse(), donne un objet contenant "lead_magnet_redige"
+
+"lead_magnet_redige" contient : "titre" (string), "introduction" (string), "sections" (tableau d'objets avec "numero", "titre", "contenu_redige"), et "conclusion_cta" (string)
+
+Vérifie précisément, dans le code du composant qui affiche ce bloc :
+
+Est-ce que le composant fait bien un JSON.parse() sur le champ "response" avant de tenter de lire "lead_magnet_redige" ?
+
+Est-ce que le chemin d'accès utilisé dans le code correspond exactement à cette structure (par exemple data.lead_magnet_redige.introduction, pas data.introduction ou un autre chemin) ?
+
+Y a-t-il un try/catch qui échouerait silencieusement sur le parsing, sans afficher d'erreur visible, laissant le composant vide au lieu de planter ?
+
+Corrige le code pour qu'il lise correctement cette structure exacte, puis affiche l'introduction, chaque section avec son titre et son contenu_redige, et la conclusion_cta dans le même style que les autres blocs de contenu déjà fonctionnels (Email, par exemple).
+
+Les contenus générés par le bouton "Rédiger le contenu complet" (sur l'encart Lead magnet) et les contenus générés par les boutons de traduction (Allemand/Italien/Anglais, présents sur tous les encarts) ne sont pas sauvegardés en base de données. Ils disparaissent au rafraîchissement de la page, contrairement aux contenus générés par les boutons "Générer" de base sur les 10 encarts, qui persistent correctement.
+
+Corrige ce comportement : sauvegarde dans Supabase, de la même façon que les générations de base, à la fois le contenu rédigé complet (lead_magnet_redige) et chaque contenu traduit (par langue et par encart). Au chargement de la page d'un brief, si ces contenus existent déjà en base, ils doivent s'afficher automatiquement, exactement comme le contenu français de base le fait déjà.
+
+Avant de répondre, vérifie concrètement et démontre que la persistance fonctionne pour le contenu rédigé complet (lead_magnet_redige) et pour chaque traduction (Allemand/Italien/Anglais) sur tous les encarts.
+
+Pour chacun de ces deux types de contenu :
+
+Confirme que l'écriture en base de données (table contenus) se déclenche bien immédiatement après la réception de la réponse de l'agent, pas seulement dans l'état local du composant (React state)
+
+Confirme que la clé utilisée pour l'écriture (par exemple canal__redige ou canal__trad_allemand) est exactement la même que celle utilisée pour la lecture au chargement de la page
+
+Simule mentalement le scénario suivant et dis-moi ce qui se passerait : un utilisateur génère un contenu rédigé, attend la fin de la génération, recharge complètement la page (F5), puis retourne sur le même brief. Le contenu rédigé doit réapparaître automatiquement sans qu'il ait besoin de re-cliquer sur le bouton.
+
+Si tu identifies un point de cette chaîne qui ne fonctionne pas comme décrit, corrige-le et précise exactement ce qui ne fonctionnait pas avant ta correction.
+
