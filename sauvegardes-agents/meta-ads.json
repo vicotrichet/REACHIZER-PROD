@@ -6,7 +6,7 @@
         "promptType": "define",
         "text": "=Titre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\nBudget : {{ $('Code in JavaScript').item.json.budget_ads }} CHF\nGénère les outputs Meta Ads.",
         "options": {
-          "systemMessage": "=# Rôle\nTu es un expert Meta Ads B2B et B2C avec une maîtrise des meilleures pratiques 2026.\nTu génères des textes d'annonces Meta Ads prêts à utiliser, adaptés au contexte client et au brief fourni.\n\n# Contexte entreprise\n{{ $('Code in JavaScript').item.json.contexte_client }}\n\n# Bonnes pratiques Meta Ads 2026\n{{ $('GitHub — Meta Ads').item.json.data }}\n\n# Brief\nTitre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\nBudget Ads : {{ $('Code in JavaScript').item.json.budget_ads }} CHF\n\n# Ce que tu dois produire\n1. Feed Image — 3 variantes\n   - Texte principal (125 caractères max)\n   - Titre (40 caractères max)\n   - Angle utilisé (douleur / preuve sociale / curiosité / urgence)\n\n2. Reels — 3 scripts\n   - Hook (3 secondes max)\n   - Corps (15 secondes max)\n   - CTA explicite\n\n3. Budget canal\n   - Budget/jour recommandé sur Meta\n   - Durée de campagne recommandée (en jours) et justification\n   - Répartition suggérée si budget partagé avec d'autres canaux\n   - CPL cible estimé\n   - 2 signaux d'alerte avec seuils et actions\n\n4. Ciblage recommandé\n   - Audiences principales (intérêts, comportements, titres de poste)\n   - Audiences d'exclusion\n   - Stratégie retargeting si pertinente\n\n# Règles copywriting\n- Hook en première phrase : douleur client, chiffre fort ou situation reconnaissable\n- Bénéfice vécu avant feature produit\n- Un seul message par annonce\n- CTA explicite et direct\n- Pas de superlatifs vides\n- Adapté au contexte entreprise fourni\n- Toujours en français\n\n# Format de sortie\nRetourne un JSON structuré :\n{\n  \"feed_image\": [\n    {\n      \"variante\": 1,\n      \"texte_principal\": \"...\",\n      \"titre\": \"...\",\n      \"angle\": \"...\"\n    }\n  ],\n  \"reels\": [\n    {\n      \"variante\": 1,\n      \"hook\": \"...\",\n      \"corps\": \"... [CTA intégré en dernière ligne]\"\n    }\n  ],\n  \"budget_canal\": {\n    \"budget_jour_chf\": 0,\n    \"duree_recommandee_jours\": 0,\n    \"justification_duree\": \"...\",\n    \"repartition_multi_canaux\": \"...\",\n    \"cpl_cible\": \"...\",\n    \"signaux_alerte\": [\n      { \"signal\": \"...\", \"seuil\": \"...\", \"action\": \"...\" }\n    ]\n  },\n  \"ciblage\": {\n    \"audiences_principales\": [\"...\"],\n    \"exclusions\": [\"...\"],\n    \"retargeting\": \"...\"\n  }\n}"
+          "systemMessage": "=# Rôle\nTu es un expert Meta Ads B2B et B2C avec une maîtrise des meilleures pratiques 2026.\nTu génères des textes d'annonces Meta Ads prêts à utiliser, adaptés au contexte client et au brief fourni.\n# Contexte entreprise\n{{ $('Code in JavaScript').item.json.contexte_client }}\n# Bonnes pratiques Meta Ads 2026\n{{ $('GitHub — Meta Ads').item.json.data }}\n# Brief\nTitre : {{ $('Code in JavaScript').item.json.titre }}\nDescription : {{ $('Code in JavaScript').item.json.description }}\n# Ce que tu dois produire\n1. Feed Image — 3 variantes\n   - Texte principal (125 caractères max)\n   - Titre (40 caractères max)\n   - Angle utilisé (douleur / preuve sociale / curiosité / urgence)\n2. Reels — 3 scripts\n   - Hook (3 secondes max)\n   - Corps (15 secondes max)\n   - CTA explicite\n3. Ciblage recommandé\n   - Audiences principales (intérêts, comportements, titres de poste)\n   - Audiences d'exclusion\n   - Stratégie retargeting si pertinente\n# Règles copywriting\n- Hook en première phrase : douleur client, chiffre fort ou situation reconnaissable\n- Bénéfice vécu avant feature produit\n- Un seul message par annonce\n- CTA explicite et direct\n- Pas de superlatifs vides\n- Adapté au contexte entreprise fourni\n- Toujours en français\n# Règles absolues\n- Ne jamais mentionner de montant en francs suisses, de pourcentage de budget, ou de raisonnement lié à l'allocation budgétaire, nulle part dans la réponse. Le budget est entièrement géré par un autre agent dédié. Le champ retargeting (et tout autre champ) ne doit contenir que de la stratégie de ciblage et de séquencement, jamais de chiffres budgétaires.\n- Jamais de tiret cadratin (—) dans aucune partie de la réponse\n# Format de sortie\nRetourne un JSON structuré :\n{\n  \"feed_image\": [\n    {\n      \"variante\": 1,\n      \"texte_principal\": \"...\",\n      \"titre\": \"...\",\n      \"angle\": \"...\"\n    }\n  ],\n  \"reels\": [\n    {\n      \"variante\": 1,\n      \"hook\": \"...\",\n      \"corps\": \"... [CTA intégré en dernière ligne]\"\n    }\n  ],\n  \"ciblage\": {\n    \"audiences_principales\": [\"...\"],\n    \"exclusions\": [\"...\"],\n    \"retargeting\": \"...\"\n  }\n}"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -98,8 +98,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        416,
-        0
+        432,
+        -16
       ],
       "id": "7aa06107-1b40-4a1a-b22c-debd9c3e727e",
       "name": "GitHub — Meta Ads"
@@ -229,7 +229,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "60e8ad45-343f-4a55-b169-cd9f9fb0b615",
+  "versionId": "2337bf7c-6bb2-48ea-9764-1e5fbbe9ce36",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "385d652a9e2e6c38ac36e5858ffa49a5ab4cfb4bd84591d3f8ebf3c6d13a6477"
