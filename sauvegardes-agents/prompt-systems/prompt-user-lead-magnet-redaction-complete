@@ -1,0 +1,5 @@
+Titre du lead magnet à rédiger : {{ $('Code in JavaScript').item.json.structure_existante.lead_magnet.titre }}
+
+Structure validée à développer : {{ JSON.stringify($('Code in JavaScript').item.json.structure_existante) }}
+
+Rédige intégralement ce lead magnet en respectant strictement le titre, le plan et les points clés de cette structure, section par section.
