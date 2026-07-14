@@ -25,17 +25,18 @@ En 2026, la visibilité organique ne se joue plus uniquement sur Google. Une par
 ## 2. SEO technique — la fondation non négociable
 
 ### Core Web Vitals (facteur de classement Google)
-Google mesure l'expérience utilisateur réelle via 3 métriques :
+Google mesure l'expérience utilisateur réelle via des métriques :
 
-| Métrique | Seuil cible | Ce que ça mesure |
-|----------|-------------|-----------------|
-| LCP (Largest Contentful Paint) | < 2,5 secondes | Vitesse de chargement du contenu principal |
-| INP (Interaction to Next Paint) | < 200 ms | Réactivité aux interactions utilisateur |
-| CLS (Cumulative Layout Shift) | < 0,1 | Stabilité visuelle (éléments qui bougent) |
-| VSI (Visual Stability Index) | Nouveau 2026 | Stabilité sur toute la session (scroll, interactions) |
+| Métrique | Seuil cible | Ce que ça mesure | Statut |
+|----------|-------------|-----------------|--------|
+| LCP (Largest Contentful Paint) | < 2,5 secondes (seuil officiel Google) ; certaines analyses SEO 2026 rapportent un resserrement à 2,0s suite à la mise à jour de mars 2026, non confirmé par la documentation officielle Google à ce jour | Vitesse de chargement du contenu principal | Facteur de classement confirmé |
+| INP (Interaction to Next Paint) | < 200 ms | Réactivité aux interactions utilisateur | Facteur de classement confirmé |
+| CLS (Cumulative Layout Shift) | < 0,1 | Stabilité visuelle (éléments qui bougent) | Facteur de classement confirmé |
+| VSI (Visual Stability Index) | Non défini officiellement | Stabilité sur toute la session (scroll, interactions) | **Signal émergent, introduit début 2026, pas encore un facteur de classement primaire** — à surveiller et anticiper, pas encore à traiter comme prioritaire |
 
 **Outils de mesure :** Google Search Console (données terrain réelles), PageSpeed Insights, Lighthouse.
 Les améliorations deviennent visibles dans les classements sous 4 à 8 semaines (fenêtre de données de 28 jours).
+Par prudence, viser 2,0s de LCP plutôt que 2,5s permet de couvrir les deux versions du seuil selon les sources.
 
 ### Mobile-First Indexing
 Google indexe et classe la version mobile en priorité. 60%+ des recherches se font sur mobile.
@@ -169,16 +170,22 @@ Un passage de 40 à 80 mots contenant :
 - Définitions claires en début de section
 - FAQ structurée (schema FAQPage) : format question/réponse = format natif des LLM
 
-### Fichier llms.txt
-Nouveau standard 2026 (inspiré de robots.txt) pour indiquer aux LLM quelles pages crawler et citer.
-Placer à la racine du site : `https://monsite.com/llms.txt`
-Contenu : liste des pages importantes, descriptions, instructions pour les crawlers IA.
+### Fichier llms.txt — à relativiser
+Proposé en 2024 comme standard (inspiré de robots.txt) pour indiquer aux LLM quelles pages crawler et citer. Placé à la racine du site : `https://monsite.com/llms.txt`.
+
+**État réel courant 2026, à connaître avant d'investir du temps dessus :**
+- Adoption encore faible et hétérogène (autour de 9 à 10% des grands domaines analysés selon plusieurs études, secteur santé/finance parmi les plus lents à adopter)
+- Aucune corrélation mesurée à ce jour entre la présence d'un llms.txt et une meilleure fréquence de citation par les IA
+- Les crawlers des principaux moteurs de réponse (GPTBot, ClaudeBot, PerplexityBot) ignorent très largement ce fichier en pratique lors de leurs requêtes de recherche/réponse
+- Google a explicitement indiqué ne pas l'utiliser comme signal
+
+**Recommandation pragmatique :** l'implémentation coûte peu (un fichier Markdown à la racine), donc ça reste une option à faible risque si le temps de développement est disponible — mais ce n'est pas un levier GEO prioritaire, et il ne faut pas le présenter comme une action qui améliore la citation IA. Les vrais leviers restent le contenu structuré, les schémas FAQPage/Article, et le SEO technique sain.
 
 ### Présence multicanale
-Distribuer son contenu sur plusieurs canaux (LinkedIn, newsletters sectorielles, presse spécialisée) augmente les citations IA jusqu'à 325% par rapport à publier uniquement sur son site. Les LLM perçoivent la cohérence d'entité multi-source comme un signal d'autorité fort.
+Distribuer son contenu sur plusieurs canaux (LinkedIn, newsletters sectorielles, presse spécialisée) renforce la cohérence d'entité perçue par les LLM comme signal d'autorité, en complément du site principal. Éviter d'attacher un pourcentage précis à cet effet, faute de donnée fiable et vérifiable sur ce point.
 
 ### Robots.txt IA-friendly
-Vérifier que les crawlers des LLM (GPTBot, ClaudeBot, PerplexityBot) ne sont pas bloqués dans le robots.txt — sauf si volonté délibérée de ne pas être indexé par les IA.
+Vérifier que les crawlers des LLM (GPTBot, ClaudeBot, PerplexityBot) ne sont pas bloqués dans le robots.txt — sauf si volonté délibérée de ne pas être indexé par les IA. C'est un levier plus fiable que llms.txt, car ce sont ces mêmes crawlers qui alimentent réellement les réponses génératives.
 
 ---
 
