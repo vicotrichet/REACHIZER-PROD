@@ -12,13 +12,13 @@ Produire des recommandations stratégiques Google Ads et du contenu publicitaire
 
 **Contexte favorable :**
 - Intention de recherche existante (les prospects cherchent activement la solution)
-- Budget ≥ 30 CHF/jour pour Search (en dessous → apprentissage permanent, perfs instables)
+- Budget suffisant pour sortir de la phase d'apprentissage sur Search
 - Lead gen B2B avec mots-clés transactionnels clairs
 - E-commerce avec catalogue produit ou pages produits structurés
 
 **Contexte défavorable :**
 - Produit/marché trop nouveau (pas de volume de recherche) → Content ou Social en premier
-- Budget < 1 500 CHF/mois → pas de PMax, Search uniquement
+- Budget restreint → pas de PMax, Search uniquement
 - Mots-clés trop génériques sans budget suffisant pour être compétitif → longue traîne obligatoire
 
 ---
@@ -40,13 +40,11 @@ Ce qui détermine la performance :
 ## 3. Structure de campagne recommandée
 
 **B2B Lead Gen :**
-```
 Campagne 1 — Brand Search (exact, protéger la marque)
 Campagne 2 — Search intention forte (mots-clés transactionnels, tCPA dès 30 conv/mois)
-Campagne 3 — PMax (15–25% du budget, uniquement si 50+ conv/mois)
-```
+Campagne 3 — PMax (uniquement si 50+ conv/mois)
 
-**Budget < 1 500 CHF/mois :** Search uniquement, 1 à 2 campagnes max. PMax sans historique = budget gaspillé.
+**Budget restreint :** Search uniquement, 1 à 2 campagnes max. PMax sans historique = budget gaspillé.
 
 **Groupes d'annonces :** 7 à 10 max par campagne. Chaque groupe = une intention précise. Trop de mots-clés par groupe → Quality Score bas → CPC élevé.
 
@@ -54,13 +52,13 @@ Campagne 3 — PMax (15–25% du budget, uniquement si 50+ conv/mois)
 
 ## 4. Mots-clés et types de correspondance
 
-**Règle 2026 :** Broad Match + Smart Bidding + listes de négatifs solides = souvent le plus performant.
+**Règle 2026 :** Broad Match + Smart Bidding + listes de négatifs solides = souvent le plus performant, mais seulement une fois l'historique de conversions établi.
 
 | Type | Usage |
 |------|-------|
 | Exact Match | Mots-clés marque, termes ultra-haute valeur |
-| Phrase Match | Termes spécifiques avec variation acceptable |
-| Broad Match | Uniquement avec Smart Bidding actif + négatifs solides |
+| Phrase Match | Termes spécifiques avec variation acceptable, recommandé en phase de démarrage sans historique |
+| Broad Match | Uniquement avec Smart Bidding actif, historique de conversions établi, et négatifs solides |
 
 **Négatifs à construire systématiquement :**
 - Informationnels : "gratuit", "comment", "tuto", "formation", "avis", "wikipedia"
@@ -99,7 +97,7 @@ Descriptions (90 caractères max) :
 | Sitelinks (4 min) | Titre court + description 2 lignes par page clé |
 | Callouts | Avantages courts : "Sans engagement", "Réponse en 24h" |
 | Structured Snippets | Liste des services ou produits |
-| Lead Form | Titre + description + questions formulaire (CPL souvent inférieur au trafic site) |
+| Lead Form | Titre + description + questions formulaire (CPL souvent inférieur au trafic site) — pertinent uniquement si l'objectif du brief est la génération de leads |
 
 ---
 
@@ -113,7 +111,7 @@ Descriptions (90 caractères max) :
 | tCPA trop agressif dès le départ | Campagne en sous-diffusion permanente | Partir d'une cible réaliste, baisser de -10% toutes les 2 semaines |
 | Envoyer tout le trafic vers la homepage | QS faible, CVR effondré | Landing page dédiée par intention |
 | PMax qui cannibalise la campagne Brand | Budget marque gaspillé | Exclure les mots-clés marque de PMax |
-| Budget < 30€/jour avec Smart Bidding | Apprentissage permanent | CPC manuel ou consolider sur moins de campagnes |
+| Un seul groupe d'annonces fourre-tout | Quality Score bas, CPC élevé | 7 à 10 groupes max par campagne, une intention par groupe |
 
 ---
 
@@ -125,5 +123,3 @@ Descriptions (90 caractères max) :
 | CVR bonne landing page B2B | 3–6% |
 | Quality Score cible | 7+ |
 | Taux de conversion bon compte | > 4% |
-| Budget minimum Search B2B | 25 CHF/jour |
-| Budget minimum PMax | 45 CHF/jour + 50 conv/mois |
