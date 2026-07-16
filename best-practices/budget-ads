@@ -1,0 +1,96 @@
+# Budgets Ads — Référence consultant 2026
+> Fichier de référence injecté par l'orchestrateur Reachizer dans le sous-agent Reco de budget.
+> Devise de référence : CHF. Les sources internationales citent souvent CHF/EUR/USD indifféremment vu leur quasi-parité actuelle ; les montants ci-dessous sont donnés directement en CHF, à ajuster légèrement selon le taux du moment si un écart significatif apparaît.
+
+---
+
+## Principe fondamental : minimum technique ≠ minimum pratique
+
+Chaque plateforme accepte techniquement des budgets très bas (parfois 1 à 10 CHF/jour). Mais en dessous d'un certain seuil, l'algorithme ne reçoit jamais assez de données (impressions, clics, conversions) pour sortir de sa phase d'apprentissage. Résultat : coûts instables, diffusion erratique, performance qui ne reflète jamais le potentiel réel du canal.
+
+**Toute recommandation budgétaire doit se baser sur le minimum pratique, jamais sur le minimum technique.** Un budget sous le minimum pratique n'est pas "un budget réduit qui donne des résultats réduits", c'est un budget qui ne permet aucune optimisation exploitable.
+
+---
+
+## 1. Meta Ads (Facebook + Instagram)
+
+Facebook et Instagram partagent le même moteur (Meta Ads Manager, algorithme Andromeda/GEM). Un budget Meta englobe les deux plateformes, sauf choix de placement manuel.
+
+| Seuil | Valeur | Contexte |
+|-------|--------|----------|
+| Minimum technique | 1 à 5 CHF/jour | Fait tourner la campagne, aucune donnée exploitable |
+| Minimum pratique — notoriété/reach | 10 à 25 CHF/jour | Suffisant pour de l'impression pure, pas pour une conversion |
+| Minimum pratique — trafic/engagement | 25 à 50 CHF/jour | Phase d'apprentissage réaliste en 5 à 7 jours |
+| Minimum pratique — conversion (lead, vente) | 50 CHF/jour minimum, 50-150 CHF/jour idéalement | Seuil sous lequel un objectif de conversion reste en apprentissage permanent |
+| Budget mensuel de test minimum | 1 000 à 1 500 CHF/mois | Pour générer assez de conversions et tester plusieurs créatifs |
+
+**Règle de l'algorithme :** environ 50 événements de conversion par ensemble de publicités par semaine pour sortir de l'apprentissage. En dessous, statut "Learning Limited" : coûts instables, diffusion imprévisible.
+
+**Reels vs Feed :** les Reels affichent un CPM 30 à 50% inférieur au Feed classique, avec une part croissante des impressions Instagram (33% début 2026). À budget égal, prioriser un format vidéo court 9:16 plutôt que de l'image statique 1:1 pour un meilleur rapport coût/résultat.
+
+**Benchmarks de marché (Suisse/France, B2B services) :**
+- CPC : 0,20 à 2,50 CHF selon secteur (B2B et finance en haut de fourchette)
+- CPM : 5 à 15 CHF pour 1000 impressions
+- Budget mensuel confortable pour tester audiences + créatifs : 1 000 à 2 000 CHF/mois
+
+**Erreur fréquente :** fragmenter un petit budget entre plusieurs ensembles de publicités au lieu de le concentrer. Un seul ensemble bien doté sort de l'apprentissage plus vite que trois ensembles sous-dotés.
+
+---
+
+## 2. Google Ads (Search)
+
+| Seuil | Valeur | Contexte |
+|-------|--------|----------|
+| Minimum technique | 10 CHF/jour | En dessous, apprentissage bloqué, volume d'impressions trop faible |
+| Minimum pratique | 20 à 40 CHF/jour | Suffisant pour une intention de recherche précise et bien ciblée (longue traîne) |
+| Minimum pratique — mots-clés compétitifs | 45 CHF/jour et plus | Nécessaire si le secteur a des CPC élevés (B2B généraliste, finance, assurance) |
+| Seuil PMax | 45 CHF/jour + 50 conversions/mois | En dessous, ne pas activer PMax, rester en Search uniquement |
+
+**Particularité Google par rapport à Meta :** contrairement à un canal de découverte (Meta), Google capte une intention déjà existante. Une requête très qualifiée et peu concurrentielle (longue traîne, niche précise) peut être rentable à un budget journalier plus bas qu'un mot-clé générique, à condition que le volume de recherche existe.
+
+**Repère de calcul :** budget quotidien recommandé équivalent à 10 fois le CPA cible, pour sortir rapidement de la phase d'apprentissage.
+
+**Benchmarks de marché (B2B services) :**
+- CPC moyen Search : 4 à 10 CHF (jusqu'à 20 CHF sur secteurs compétitifs)
+- Quality Score cible : 7+
+- CVR bonne landing page B2B : 3 à 6%
+
+---
+
+## 3. LinkedIn Ads
+
+Le canal le plus cher par clic de tous (3 à 6 fois le CPM Meta), donc le plus exigeant en budget minimum pour produire un signal exploitable.
+
+| Seuil | Valeur | Contexte |
+|-------|--------|----------|
+| Minimum technique | 10 CHF/jour (plateforme) | Fait tourner la campagne, aucune donnée exploitable |
+| Minimum pratique | 30 à 50 CHF/jour | Seuil sous lequel le budget journalier s'épuise avant que l'algorithme ait pu apprendre |
+| Minimum pratique pour optimisation réelle (conversions) | 150 CHF/jour et plus | Nécessaire pour atteindre un rythme de conversions qui permette un vrai pilotage par la donnée |
+| Budget mensuel plancher absolu | 900 à 1 500 CHF/mois | En dessous, ne pas activer LinkedIn en acquisition froide |
+
+**CPM de référence :** 30 à 65 CHF pour un ciblage B2B classique (contre 5 à 15 CHF sur Meta). Cette prime reflète la qualité du ciblage professionnel (titre de poste, séniorité, taille d'entreprise), pas un défaut du canal.
+
+**Règle de décision pour petit budget (moins de 900-1500 CHF/mois dédiés à LinkedIn) :** ne pas activer de campagne d'acquisition froide. Si un pixel LinkedIn Insight Tag est déjà posé sur le site, le retargeting pur reste une option viable même à budget contraint, car les audiences chaudes convertissent 3 à 5 fois mieux que le froid et nécessitent moins de volume pour être rentables.
+
+---
+
+## 4. Répartition entre canaux à budget contraint (moins de 1000 CHF/mois au total)
+
+Quand le budget total ne permet pas d'atteindre le minimum pratique de plusieurs canaux simultanément, la priorité va au(x) canal(aux) qui peuvent effectivement atteindre leur seuil, plutôt que de saupoudrer sur tous les canaux en dessous de leur seuil respectif.
+
+**Logique de priorisation :**
+1. Un canal sous son minimum pratique n'apporte aucune donnée exploitable : il vaut mieux ne pas l'activer que l'activer sous-dosé.
+2. Vérifier, pour chaque canal envisagé, si (budget alloué ÷ jours de la période de test) atteint le minimum pratique de ce canal.
+3. Si le budget total ne permet pas d'atteindre le minimum pratique d'au moins deux canaux sur la durée de test prévue, concentrer sur un seul canal plutôt que diviser.
+4. Toujours vérifier que (budget/jour retenu × durée du plan de test) ne dépasse jamais le budget total disponible.
+
+---
+
+## 5. Erreurs stratégiques transversales à éviter
+
+| Erreur | Pourquoi c'est un problème | Correction |
+|--------|---------------------------|------------|
+| Activer un canal sous son minimum pratique "pour tester quand même" | Aucune donnée exploitable produite, budget perdu sans apprentissage | Ne pas activer, ou concentrer le budget sur moins de canaux |
+| Diviser un petit budget entre 3 canaux | Aucun des 3 n'atteint son seuil d'apprentissage | 1 à 2 canaux maximum à budget contraint |
+| Modifier le budget quotidien tous les 2-3 jours | Réinitialise la phase d'apprentissage à chaque changement | Fixer le budget pour toute la durée du test (minimum 1 à 2 semaines) |
+| Calculer un plan de test sans vérifier la cohérence budget/jour × durée | Le plan dépense plus que le budget total disponible | Toujours vérifier cette multiplication avant de finaliser une recommandation |
