@@ -10,6 +10,8 @@ Chaque plateforme accepte techniquement des budgets très bas (parfois 1 à 10 C
 
 **Toute recommandation budgétaire doit se baser sur le minimum pratique, jamais sur le minimum technique.** Un budget sous le minimum pratique n'est pas "un budget réduit qui donne des résultats réduits", c'est un budget qui ne permet aucune optimisation exploitable.
 
+**Principe complémentaire : ne jamais choisir le palier le plus élevé par prudence.** Chaque canal a plusieurs paliers selon le contexte (objectif de campagne, type de mots-clés, niveau de concurrence). Toujours choisir le palier correspondant réellement au brief, pas le plus haut "au cas où".
+
 ---
 
 ## 1. Meta Ads (Facebook + Instagram)
@@ -23,6 +25,8 @@ Facebook et Instagram partagent le même moteur (Meta Ads Manager, algorithme An
 | Minimum pratique — trafic/engagement | 25 à 50 CHF/jour | Phase d'apprentissage réaliste en 5 à 7 jours |
 | Minimum pratique — conversion (lead, vente) | 50 CHF/jour minimum, 50-150 CHF/jour idéalement | Seuil sous lequel un objectif de conversion reste en apprentissage permanent |
 | Budget mensuel de test minimum | 1 000 à 1 500 CHF/mois | Pour générer assez de conversions et tester plusieurs créatifs |
+
+**Critère de choix entre les paliers Meta :** aligner le palier budgétaire sur l'objectif de campagne déjà retenu pour ce brief (notoriété, trafic, ou conversion), jamais sur le palier le plus élevé par défaut. Un objectif de trafic vers un contenu (article, page produit) relève du palier trafic/engagement (25-50 CHF/jour), pas du palier conversion, même si l'intention finale est commerciale à terme.
 
 **Règle de l'algorithme :** environ 50 événements de conversion par ensemble de publicités par semaine pour sortir de l'apprentissage. En dessous, statut "Learning Limited" : coûts instables, diffusion imprévisible.
 
@@ -45,6 +49,8 @@ Facebook et Instagram partagent le même moteur (Meta Ads Manager, algorithme An
 | Minimum pratique | 20 à 40 CHF/jour | Suffisant pour une intention de recherche précise et bien ciblée (longue traîne) |
 | Minimum pratique — mots-clés compétitifs | 45 CHF/jour et plus | Nécessaire si le secteur a des CPC élevés (B2B généraliste, finance, assurance) |
 | Seuil PMax | 45 CHF/jour + 50 conversions/mois | En dessous, ne pas activer PMax, rester en Search uniquement |
+
+**Critère de choix entre les paliers Google Ads :** le palier 20-40 CHF/jour est le défaut à utiliser dès que la stratégie de mots-clés retenue est de la longue traîne précise et ciblée (ex. "réduire no-shows cabinet ostéopathie", "agenda en ligne ostéopathe Genève"), ce qui est le cas de la grande majorité des briefs B2B de niche. Le palier 45 CHF/jour et plus ne s'applique que si le brief cible explicitement des mots-clés génériques et concurrentiels au niveau national ou sectoriel large (ex. "logiciel gestion cabinet médical" sans qualificatif de niche). En cas de doute, se référer à la stratégie de mots-clés déjà recommandée par l'agent Google Ads pour ce même brief plutôt que de supposer par prudence un contexte concurrentiel.
 
 **Particularité Google par rapport à Meta :** contrairement à un canal de découverte (Meta), Google capte une intention déjà existante. Une requête très qualifiée et peu concurrentielle (longue traîne, niche précise) peut être rentable à un budget journalier plus bas qu'un mot-clé générique, à condition que le volume de recherche existe.
 
@@ -94,3 +100,4 @@ Quand le budget total ne permet pas d'atteindre le minimum pratique de plusieurs
 | Diviser un petit budget entre 3 canaux | Aucun des 3 n'atteint son seuil d'apprentissage | 1 à 2 canaux maximum à budget contraint |
 | Modifier le budget quotidien tous les 2-3 jours | Réinitialise la phase d'apprentissage à chaque changement | Fixer le budget pour toute la durée du test (minimum 1 à 2 semaines) |
 | Calculer un plan de test sans vérifier la cohérence budget/jour × durée | Le plan dépense plus que le budget total disponible | Toujours vérifier cette multiplication avant de finaliser une recommandation |
+| Choisir le palier budgétaire le plus élevé par prudence, sans vérifier le contexte réel du brief | Recommandation artificiellement gonflée, budget total surestimé | Toujours croiser avec l'objectif de campagne ou la stratégie de mots-clés déjà retenue pour ce brief |
